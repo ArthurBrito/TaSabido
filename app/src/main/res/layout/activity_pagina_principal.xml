@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingBottom="@dimen/main_vertical_margin"
     android:paddingLeft="@dimen/main_horizontal_margin"
     android:paddingRight="@dimen/main_horizontal_margin"
@@ -21,6 +22,7 @@
         android:id="@+id/sliding_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/MyCustomTabLayout" />
+        style="@style/MyCustomTabLayout"
+        app:tabBackground="@drawable/tab_color_selector"/>
 
 </LinearLayout>

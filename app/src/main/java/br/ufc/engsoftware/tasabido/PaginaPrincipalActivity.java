@@ -1,19 +1,13 @@
 package br.ufc.engsoftware.tasabido;
 
-import android.graphics.drawable.Drawable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -32,8 +26,8 @@ public class PaginaPrincipalActivity extends FragmentActivity {
      * * Alterações na página de GPS devem ser feita na classe
      * GpsFragment e no layout fragment_gps
      *
-     * * Alterações na página de DUVIDAS devem ser feita na classe
-     * DuvidaFragment e no layout fragment_duvidas
+     * * Alterações na página de MATERIAS devem ser feita na classe
+     * MateriaFragment e no layout fragment_materias
      *
      * Sabendo disso caso você faça alguma alteração NESTA classe
      * você deve ter um bom motivo :D
@@ -93,7 +87,7 @@ public class PaginaPrincipalActivity extends FragmentActivity {
 
         // Atributo com os icones que vão ser usado nas abas do TabLayout
         private int[] imageResId = {
-                R.drawable.help_icon_1 ,
+                R.drawable.book_icon_1 ,
                 R.drawable.gps_icon_1,
                 R.drawable.user_icon_1
         };
@@ -106,7 +100,7 @@ public class PaginaPrincipalActivity extends FragmentActivity {
         @Override
         public Fragment getItem(int position) {
             if (position == 0) {
-                return new DuvidaFragment();
+                return new MateriaFragment();
             } else if (position == 1) {
                 return new GpsFragment();
             } else if (position == 2) {

@@ -11,7 +11,6 @@
     <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
         <item name="tabIndicatorColor">#0000FF</item>
         <item name="tabSelectedTextColor">#0000FF</item>
-        <item name="tabBackground">@color/color1</item>
         <item name="tabTextAppearance">@style/MyCustomTextAppearance</item>
     </style>
 
