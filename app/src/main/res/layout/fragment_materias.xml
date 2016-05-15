@@ -14,12 +14,11 @@
         android:background="@color/colorPrimary">
 
         <br.ufc.engsoftware.tasabido.RoundedImageView
-            android:id="@+id/iv_foto_usuario"
+            android:id="@+id/riv_foto_usuario"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="25dp"
-            android:src="@drawable/user_image_default"/>
+            android:layout_marginRight="25dp" />
 
         <!--Nome e Email -->
         <LinearLayout
@@ -32,14 +31,12 @@
                 android:id="@+id/tv_nome_usuario"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:text="Visitante"/>
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/tv_email_usuario"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="email@example.com"/>
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
         

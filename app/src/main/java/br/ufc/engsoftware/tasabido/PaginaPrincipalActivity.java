@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 
+
 public class PaginaPrincipalActivity extends FragmentActivity {
 
     /******************* A T E N Ç Ã O *******************/
@@ -34,7 +35,8 @@ public class PaginaPrincipalActivity extends FragmentActivity {
      */
 
 
-
+    // Nome do arquivo de preferencias compartilhadas
+    public static final String PREFERENCES_FILE_NAME = "TaSabidoSharedPreferences";
 
     // Número de páginas que devem ser criadas do ViewPager
     private static final int NUM_PAGES = 3;
