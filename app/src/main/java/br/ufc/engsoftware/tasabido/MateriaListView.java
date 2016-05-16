@@ -7,6 +7,7 @@ import android.os.Build;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
 import android.widget.ListView;
 
 import java.util.Collections;
@@ -21,6 +22,7 @@ import br.ufc.engsoftware.models.Materia;
 public class MateriaListView {
 
     ListView listview;
+    Filter filter;
 
 
     public MateriaListView(ListView listview, Context view, Vector<Materia> vector) {
@@ -29,40 +31,45 @@ public class MateriaListView {
         setListView(view, vector);
     }
 
+    // Seta as configurações do ListView
     public void setListView(Context view, Vector<Materia> vector){
 
+        // Seta o layout e os valores do ListView
         final ArrayAdapter<Materia> adapter = new ArrayAdapter<Materia>(view,
                 R.layout.materias_listview_rowlayout, R.id.label, vector);
         listview.setAdapter(adapter);
 
-        /*
+        this.filter = adapter.getFilter();
+
+        // Seta a ação quando clicar em um item do ListView
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
+
                 final Materia item = (Materia) parent.getItemAtPosition(position);
-
-                int itemId = vectorOriginal.getId(item);
-
-                chamarEditPostActivity(view.getContext(), item, itemId);
+                chamarSubtopicoActivity(view.getContext(), item);
             }
 
-        });*/
+        });
     }
 
-    /*
-    private void chamarEditPostActivity(Context view, Materia item, int id){
-        Intent intent = new Intent();
-        intent.setAction("br.ufc.dc.dspm.action.EDITTWEETER");
+    // Intent para quando clicar no item da lista de matérias ir para a pagina de subtopicos
+    private void chamarSubtopicoActivity(Context view, Materia item){
+        Intent intent = new Intent(view, SubtopicoActivity.class);
+        intent.setAction("br.ufc.engsoftware.tasabido.SUBTOPICOS");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setComponent(null);
-        intent.addCategory("br.ufc.dc.dspm.category.CATEGORIA");
-        intent.putExtra("TEXT", item.getText());
-        intent.putExtra("ID", id);
+
+        // Passa o nome da matéria para ser exibido na activity, e o id para pesquisar no banco
+        intent.putExtra("MATERIA", item.getNome());
+        intent.putExtra("ID", item.getId());
 
         view.startActivity(intent);
     }
-    */
+
+    public Filter getFilter() {
+        return filter;
+    }
 }

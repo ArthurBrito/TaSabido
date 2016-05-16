@@ -14,4 +14,19 @@
         android:text="GPS"
         android:textSize="20sp"/>
 
+    <!-- Pode apagar, botão para teste -->
+    <Button
+        android:id="@+id/btn_logar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Login"/>
+
+    <Button
+        android:id="@+id/btn_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Logout"/>
+
 </LinearLayout>

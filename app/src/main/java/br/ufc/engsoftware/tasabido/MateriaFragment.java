@@ -2,18 +2,18 @@ package br.ufc.engsoftware.tasabido;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+
 
 import br.ufc.engsoftware.DAO.MateriaDAO;
 
@@ -58,6 +58,13 @@ public class MateriaFragment extends Fragment {
         //Metodo responsável por montar o ListView das Dúvidas
         montarListViewMaterias();
 
+        // Configurando barra de busca
+        listviewMaterias.setTextFilterEnabled(true);
+        Filter filter = gerenciadorMateriasLV.getFilter();
+
+        SearchView searchviewMaterias = (SearchView) rootView.findViewById(R.id.searchview_materias);
+        MateriaSearchView configSearchView = new MateriaSearchView(listviewMaterias, searchviewMaterias, filter);
+
         return rootView;
     }
 
@@ -68,24 +75,6 @@ public class MateriaFragment extends Fragment {
         MateriaDAO materiaDAO = new MateriaDAO();
 
         gerenciadorMateriasLV = new MateriaListView(listviewMaterias, getActivity(), materiaDAO.list());
-
-        /*
-        swipeRefresh.setOnRefreshListener(
-                new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                        listView.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                listViewExample.setListView(getApplicationContext(), tweeterVector.list());
-                            }
-                        });
-
-                        swipeRefresh.setRefreshing(false);
-                    }
-                }
-        );
-        */
 
     }
 
