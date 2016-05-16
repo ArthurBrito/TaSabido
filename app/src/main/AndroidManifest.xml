@@ -24,6 +24,13 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".MonitoriaActivity">
+            <intent-filter>
+                <action android:name="br.ufc.engsoftware.tasabido.MONITORIA" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
