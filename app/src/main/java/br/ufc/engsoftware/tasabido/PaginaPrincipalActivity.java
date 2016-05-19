@@ -12,9 +12,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.PriorityQueue;
+
+import br.ufc.engsoftware.DAO.PerfilDAO;
+import br.ufc.engsoftware.aux.GetServerDataAsync;
+import br.ufc.engsoftware.aux.PostServerDataAsync;
+import br.ufc.engsoftware.aux.Statics;
+import br.ufc.engsoftware.models.Perfil;
+
 
 public class PaginaPrincipalActivity extends FragmentActivity {
-
+    JSONObject obj;
+    ArrayList<Perfil> arrayPerfilList;
     /******************* A T E N Ç Ã O *******************/
 
     /* As alterações de cada página NÃO devem ser feitas aqui.
@@ -61,12 +75,64 @@ public class PaginaPrincipalActivity extends FragmentActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(mPager);
 
+        Perfil perfil = new Perfil("Joaozim", "joazim@gmail.com", "123");
+
+        listaUsuarios();
+//        cadastrarUsuario(perfil);
+
 
         // Muda o layout das abas para colocar os ícones
         for (int i = 0; i < tabLayout.getTabCount(); i++) {
             TabLayout.Tab tab = tabLayout.getTabAt(i);
             tab.setCustomView(((ScreenSlidePagerAdapter) mPagerAdapter).getTabView(i));
         }
+    }
+
+    public void listaUsuarios(){
+        arrayPerfilList = new ArrayList<Perfil>();
+
+        try {
+            new GetServerDataAsync(new GetServerDataAsync.AsyncResponse(){
+
+                @Override
+                public void processFinish(String output){
+                    //Here you will receive the result fired from async class
+                    //of onPostExecute(result) method.
+                    try {
+                        obj = new JSONObject(output);
+                        JSONArray arraySupermarketJson = obj.getJSONArray("results");
+
+                        arrayPerfilList = new ArrayList<Perfil>();
+                        Perfil perfil;
+
+                        for (int i = 0; i < arraySupermarketJson.length(); i++) {
+
+                            JSONObject jo_inside = arraySupermarketJson.getJSONObject(i);
+
+                            String nome_usuario = jo_inside.getString("nome_usuario");
+                            String email = jo_inside.getString("email");
+
+                            perfil = new Perfil(nome_usuario, email);
+
+                            arrayPerfilList.add(perfil);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+//                    supermarketAdapter = new SupermarketAdapter(getActivity(), arrayPerfilList);
+//                    supermarketAdapter.notifyDataSetChanged();
+//                    supermarkets.setAdapter(supermarketAdapter);
+                }
+            }).execute(Statics.LISTAR_USUARIOS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void cadastrarUsuario(Perfil perfil){
+        PerfilDAO dao = new PerfilDAO();
+        dao.add(perfil);
     }
 
     // Metodo que seta a funcionalidade do botão de voltar
