@@ -56,6 +56,7 @@ public class GpsFragment extends Fragment {
             }
         });
 
+
         /*********************/
 
         return rootView;

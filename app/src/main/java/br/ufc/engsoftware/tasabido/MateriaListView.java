@@ -10,10 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.ListView;
 
-import java.util.Collections;
 import java.util.Vector;
 
-import br.ufc.engsoftware.DAO.MateriaDAO;
 import br.ufc.engsoftware.models.Materia;
 
 /**

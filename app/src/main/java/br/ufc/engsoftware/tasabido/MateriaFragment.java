@@ -15,12 +15,15 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 
-import br.ufc.engsoftware.DAO.MateriaDAO;
+import br.ufc.engsoftware.DAO.GetMaterias;
 
 /**
  * Created by Thiago on 09/05/2016.
  */
 public class MateriaFragment extends Fragment {
+
+    // Referencia para o SearchView da interface
+    SearchView searchviewMaterias;
 
     // Referencia para o ListView da interface
     ListView listviewMaterias;
@@ -28,10 +31,13 @@ public class MateriaFragment extends Fragment {
     // Estado do ListView e suas informações
     MateriaListView gerenciadorMateriasLV;
 
+
     // Referencia para os elementos da barra de usuario
     RoundedImageView rivFotoUsuario;
     TextView tvNomeUsuario;
     TextView tvEmailUsuario;
+
+    GetMaterias getMaterias;
 
 
     // Método principal do fragment, respectivo ao onCreate nas activities
@@ -58,23 +64,27 @@ public class MateriaFragment extends Fragment {
         //Metodo responsável por montar o ListView das Dúvidas
         montarListViewMaterias();
 
-        // Configurando barra de busca
-        listviewMaterias.setTextFilterEnabled(true);
-        Filter filter = gerenciadorMateriasLV.getFilter();
-
-        SearchView searchviewMaterias = (SearchView) rootView.findViewById(R.id.searchview_materias);
-        MateriaSearchView configSearchView = new MateriaSearchView(listviewMaterias, searchviewMaterias, filter);
+        // Captura referencia pro SearchView
+        searchviewMaterias = (SearchView) rootView.findViewById(R.id.searchview_materias);
 
         return rootView;
     }
 
+    // Metodo chamado pelo AsyncTask ao terminar de montar o ListView de Materias
+    // Esse metodo configura o SearchView
+    public void montarSearchViewMaterias(){
+        gerenciadorMateriasLV = getMaterias.getGerenciadorMateriasLV();
+
+        listviewMaterias.setTextFilterEnabled(true);
+        Filter filter = gerenciadorMateriasLV.getFilter();
+
+        MateriaSearchView configSearchView = new MateriaSearchView(listviewMaterias, searchviewMaterias, filter);
+    }
+
     private void montarListViewMaterias(){
-
-        // Apagar quando mudar para o banco de dados, pois como  vai ser uma classe estatica
-        // não precisa ser instanciada
-        MateriaDAO materiaDAO = new MateriaDAO();
-
-        gerenciadorMateriasLV = new MateriaListView(listviewMaterias, getActivity(), materiaDAO.list());
+        // Executa o AsyncTask responsavel por preencher o ListView de materias
+        getMaterias = new GetMaterias(getContext(), listviewMaterias, this);
+        getMaterias.execute();
 
     }
 
