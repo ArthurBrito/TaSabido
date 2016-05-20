@@ -11,9 +11,9 @@ public class Perfil {
     int moedas;
 
     //construtor pro login
-    public Perfil(String login, String email){
+    public Perfil(String usuario, String senha){
         this.usuario = usuario;
-        this.email = email;
+        this.senha = senha;
     }
 
     public Perfil(String nome, String usuario, String email, String senha){
