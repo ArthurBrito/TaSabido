@@ -55,14 +55,8 @@ public class GetServerDataAsync extends AsyncTask<String, String, Void> {
             result = sBuilder.toString();
             httpClient.disconnect();
 
-        } catch (UnsupportedEncodingException e1) {
-            Log.e("UnsupportedEncoding", e1.toString());
-            e1.printStackTrace();
-        } catch (IllegalStateException e3) {
-            Log.e("IllegalStateException", e3.toString());
-            e3.printStackTrace();
-        } catch (IOException e4) {
-            Log.e("IOException", e4.toString());
+        } catch (Exception e4) {
+            Log.e("Exception", e4.toString());
             e4.printStackTrace();
         }
         return null;
@@ -71,23 +65,6 @@ public class GetServerDataAsync extends AsyncTask<String, String, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-
-        //parse JSON data
-        try {
-            JSONArray jArray = new JSONArray(result);
-            for(int i=0; i < jArray.length(); i++) {
-
-                JSONObject jObject = jArray.getJSONObject(i);
-
-                String name = jObject.getString("nome");
-                String tab1_text = jObject.getString("tab1_text");
-                int active = jObject.getInt("active");
-
-            } // End Loop
-//            this.progressDialog.dismiss();
-        } catch (JSONException e) {
-            Log.e("JSONException", "Error: " + e.toString());
-        } // catch (JSONException e)
         delegate.processFinish(result);
     }
 }

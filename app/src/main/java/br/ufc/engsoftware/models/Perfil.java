@@ -7,15 +7,18 @@ public class Perfil {
     String nome;
     String senha;
     String email;
+    String usuario;
     int moedas;
 
-    public Perfil(String nome, String email){
-        this.nome = nome;
+    //construtor pro login
+    public Perfil(String login, String email){
+        this.usuario = usuario;
         this.email = email;
     }
 
-    public Perfil(String nome, String email, String senha){
+    public Perfil(String nome, String usuario, String email, String senha){
         this.nome = nome;
+        this.usuario = usuario;
         this.email = email;
         this.senha = senha;
     }
@@ -30,7 +33,7 @@ public class Perfil {
 
     public String getSenha() {
 
-        return email;
+        return senha;
     }
 
     public void setSenha(String senha) {
@@ -53,5 +56,14 @@ public class Perfil {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getUsuario() {
+
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 }

@@ -1,4 +1,4 @@
-package br.ufc.engsoftware.tasabido;
+package br.ufc.engsoftware.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -16,6 +16,11 @@ import com.squareup.picasso.Picasso;
 
 
 import br.ufc.engsoftware.DAO.MateriaDAO;
+import br.ufc.engsoftware.tasabido.MateriaListView;
+import br.ufc.engsoftware.tasabido.MateriaSearchView;
+import br.ufc.engsoftware.tasabido.PaginaPrincipalActivity;
+import br.ufc.engsoftware.tasabido.R;
+import br.ufc.engsoftware.tasabido.RoundedImageView;
 
 /**
  * Created by Thiago on 09/05/2016.

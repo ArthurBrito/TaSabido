@@ -17,12 +17,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.PriorityQueue;
 
 import br.ufc.engsoftware.DAO.PerfilDAO;
 import br.ufc.engsoftware.aux.GetServerDataAsync;
-import br.ufc.engsoftware.aux.PostServerDataAsync;
 import br.ufc.engsoftware.aux.Statics;
+import br.ufc.engsoftware.fragments.GpsFragment;
+import br.ufc.engsoftware.fragments.MateriaFragment;
+import br.ufc.engsoftware.fragments.PerfilFragment;
 import br.ufc.engsoftware.models.Perfil;
 
 
@@ -75,7 +76,7 @@ public class PaginaPrincipalActivity extends FragmentActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(mPager);
 
-        Perfil perfil = new Perfil("Joaozim", "joazim@gmail.com", "123");
+        Perfil perfil = new Perfil("Joaozim", "joao", "joazim@gmail.com", "123");
 
         listaUsuarios();
 //        cadastrarUsuario(perfil);
@@ -155,9 +156,9 @@ public class PaginaPrincipalActivity extends FragmentActivity {
 
         // Atributo com os icones que vão ser usado nas abas do TabLayout
         private int[] imageResId = {
-                R.drawable.book_icon_1 ,
-                R.drawable.gps_icon_1,
-                R.drawable.user_icon_1
+                R.drawable.listazul ,
+                R.drawable.gps,
+                R.drawable.walter
         };
 
         public ScreenSlidePagerAdapter(FragmentManager fm) {

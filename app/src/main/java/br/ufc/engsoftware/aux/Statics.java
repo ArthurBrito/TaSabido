@@ -13,6 +13,11 @@ public class Statics {
     public static String LISTAR_DUVIDAS = "https://avalan.herokuapp.com/tasabido/listar_duvidas/";
     public static String LISTAR_MATERIAS = "https://avalan.herokuapp.com/tasabido/listar_materias/";
     public static String LISTAR_SUBTOPICOS = "https://avalan.herokuapp.com/tasabido/listar_subtopicos/";
+    public static String AUTENTICAR_USUARIO = "https://avalan.herokuapp.com/tasabido/autenticar_usuario/";
+    public static String AUTENTICAR_USUARIO_LOCAL = "http://10.0.2.2:8000/tasabido/autenticar_usuario/";
+    public static String CADASTRAR_USUARIO_LOCAL = "http://10.0.2.2:8000/tasabido/cadastrar_usuario/";
+
+
 
 
 }

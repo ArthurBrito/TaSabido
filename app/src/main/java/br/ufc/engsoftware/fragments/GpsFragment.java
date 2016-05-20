@@ -1,4 +1,4 @@
-package br.ufc.engsoftware.tasabido;
+package br.ufc.engsoftware.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -8,6 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import br.ufc.engsoftware.tasabido.PaginaPrincipalActivity;
+import br.ufc.engsoftware.tasabido.R;
 
 /**
  * Created by Thiago on 09/05/2016.

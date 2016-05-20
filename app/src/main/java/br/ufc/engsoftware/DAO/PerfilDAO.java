@@ -16,16 +16,26 @@ public class PerfilDAO {
     private Vector<Perfil> perfis = new Vector<Perfil>();
     private ArrayList<Perfil> arraySupermarketList;
 
-    public void add(Perfil perfil) {
+    public String add(Perfil perfil) {
 
         //transforma o objeto perfil em uma string pra ser mandada pras requisições
         String param = concatenateParam(perfil);
+        String result;
 
 //        if (perfis.contains(perfil)) {
 //            //throw perfil já existente
 //        }else{
-            new PostServerDataAsync(param).execute(Statics.CADASTRAR_USUARIO);
+        try {
+            new PostServerDataAsync(param, new PostServerDataAsync.AsyncResponse(){
+                public void processFinish(String output){
+
+                }
+            }).execute(Statics.CADASTRAR_USUARIO);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 //        }
+        return null;
     }
 
     public void delete(Perfil perfil) {
