@@ -82,8 +82,10 @@ public class CadastroActivity extends AppCompatActivity {
                     Intent myIntent = new Intent(CadastroActivity.this, LoginActivity.class);
                     CadastroActivity.this.startActivity(myIntent);
                 }else{
+                    Utils.progressDialog.setMessage("Cadastrado não efetuado");
+                    Utils.delayMessage();
+                    _signupButton.setEnabled(true);
                 }
-
             }
         }).execute(Statics.CADASTRAR_USUARIO);
 

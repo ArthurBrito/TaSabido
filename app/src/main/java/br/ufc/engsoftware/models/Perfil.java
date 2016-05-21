@@ -1,14 +1,25 @@
 package br.ufc.engsoftware.models;
 
+import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
+import io.realm.annotations.RealmClass;
+
 /**
  * Created by arthurbrito on 16/05/16.
  */
-public class Perfil {
-    String nome;
+@RealmClass
+public class Perfil extends RealmObject{
+    private int id_usuario;
+    private String nome;
+    private String email;
+    private String usuario;
+
+    @Ignore
     String senha;
-    String email;
-    String usuario;
     int moedas;
+
+    public Perfil(){}
+
 
     //construtor pro login
     public Perfil(String usuario, String senha){
@@ -23,16 +34,7 @@ public class Perfil {
         this.senha = senha;
     }
 
-//    public int getMoedas() {
-//        return moedas;
-//    }
-//
-//    public void setMoedas(int moedas) {
-//        this.moedas = moedas;
-//    }
-
     public String getSenha() {
-
         return senha;
     }
 
@@ -41,7 +43,6 @@ public class Perfil {
     }
 
     public String getEmail() {
-
         return email;
     }
 
@@ -50,7 +51,6 @@ public class Perfil {
     }
 
     public String getNome() {
-
         return nome;
     }
 
@@ -59,11 +59,19 @@ public class Perfil {
     }
 
     public String getUsuario() {
-
         return usuario;
     }
 
     public void setUsuario(String usuario) {
         this.usuario = usuario;
     }
+
+    public int getId_usuario() {
+        return id_usuario;
+    }
+
+    public void setId_usuario(int id_usuario) {
+        this.id_usuario = id_usuario;
+    }
+
 }

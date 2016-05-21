@@ -17,7 +17,7 @@ import br.ufc.engsoftware.tasabido.MateriaSearchView;
 import br.ufc.engsoftware.tasabido.PaginaPrincipalActivity;
 import br.ufc.engsoftware.tasabido.R;
 import br.ufc.engsoftware.tasabido.RoundedImageView;
-import br.ufc.engsoftware.DAO.GetMaterias;
+import br.ufc.engsoftware.auxiliar.GetMaterias;
 
 /**
  * Created by Thiago on 09/05/2016.

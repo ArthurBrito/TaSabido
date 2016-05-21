@@ -1,4 +1,4 @@
-package br.ufc.engsoftware.DAO;
+package br.ufc.engsoftware.auxiliar;
 
 
 import android.app.ProgressDialog;
@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.Vector;
 
+import br.ufc.engsoftware.auxiliar.WebRequest;
 import br.ufc.engsoftware.fragments.MateriaFragment;
 import br.ufc.engsoftware.models.Materia;
 import br.ufc.engsoftware.tasabido.MateriaListView;
@@ -60,7 +61,7 @@ public class GetMaterias extends AsyncTask<Void, Void, Void> {
         super.onPreExecute();
         // Showing progress loading dialog
         proDialog = new ProgressDialog(context);
-        proDialog.setMessage("Please wait...");
+        proDialog.setMessage("Carregando Informações...");
         proDialog.setCancelable(false);
         proDialog.show();
     }

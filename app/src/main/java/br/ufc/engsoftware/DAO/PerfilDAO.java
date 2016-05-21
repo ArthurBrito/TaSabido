@@ -28,7 +28,6 @@ public class PerfilDAO {
         try {
             new PostServerDataAsync(param, new PostServerDataAsync.AsyncResponse(){
                 public void processFinish(String output){
-
                 }
             }).execute(Statics.CADASTRAR_USUARIO);
         } catch (Exception e) {

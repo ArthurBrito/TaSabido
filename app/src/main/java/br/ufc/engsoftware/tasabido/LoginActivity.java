@@ -1,5 +1,6 @@
 package br.ufc.engsoftware.tasabido;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import br.ufc.engsoftware.auxiliar.PostServerDataAsync;
 import br.ufc.engsoftware.auxiliar.Statics;
@@ -19,18 +21,37 @@ import butterknife.InjectView;
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
-
+    private Activity activity;
 
     @InjectView(R.id.input_login) EditText _loginText;
     @InjectView(R.id.input_password) EditText _passwordText;
     @InjectView(R.id.btn_login) Button _loginButton;
     @InjectView(R.id.link_signup) TextView _signupLink;
+    @InjectView(R.id.btn_conexao) Button btn_conexao;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.inject(this);
+
+       activity = this;
+
+        btn_conexao.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                boolean ok = Utils.checkConnection(activity);
+                if(ok){
+                    Toast.makeText(getBaseContext(), "SIM", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getBaseContext(), "NAO", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+
 
         _loginButton.setOnClickListener(new View.OnClickListener() {
 
@@ -86,7 +107,6 @@ public class LoginActivity extends AppCompatActivity {
                         Utils.delayMessage();
                         onLoginFailed();
                     }
-                    
                 }
             }).execute(Statics.AUTENTICAR_USUARIO);
         } catch (Exception e) {

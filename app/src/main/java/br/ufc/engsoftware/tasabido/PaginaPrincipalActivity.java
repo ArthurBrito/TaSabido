@@ -12,15 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import br.ufc.engsoftware.DAO.DuvidasDAO;
 import br.ufc.engsoftware.DAO.PerfilDAO;
-import br.ufc.engsoftware.auxiliar.GetServerDataAsync;
-import br.ufc.engsoftware.auxiliar.Statics;
 import br.ufc.engsoftware.fragments.GpsFragment;
 import br.ufc.engsoftware.fragments.MateriaFragment;
 import br.ufc.engsoftware.fragments.PerfilFragment;
@@ -78,7 +75,7 @@ public class PaginaPrincipalActivity extends FragmentActivity {
 
         Perfil perfil = new Perfil("Joaozim", "joao", "joazim@gmail.com", "123");
 
-        listaUsuarios();
+        listarDuvidas();
 //        cadastrarUsuario(perfil);
 
 
@@ -89,51 +86,15 @@ public class PaginaPrincipalActivity extends FragmentActivity {
         }
     }
 
-    public void listaUsuarios(){
-        arrayPerfilList = new ArrayList<Perfil>();
-
-        try {
-            new GetServerDataAsync(new GetServerDataAsync.AsyncResponse(){
-
-                @Override
-                public void processFinish(String output){
-                    //Here you will receive the result fired from async class
-                    //of onPostExecute(result) method.
-                    try {
-                        obj = new JSONObject(output);
-                        JSONArray arraySupermarketJson = obj.getJSONArray("results");
-
-                        arrayPerfilList = new ArrayList<Perfil>();
-                        Perfil perfil;
-
-                        for (int i = 0; i < arraySupermarketJson.length(); i++) {
-
-                            JSONObject jo_inside = arraySupermarketJson.getJSONObject(i);
-
-                            String nome_usuario = jo_inside.getString("nome_usuario");
-                            String email = jo_inside.getString("email");
-
-                            perfil = new Perfil(nome_usuario, email);
-
-                            arrayPerfilList.add(perfil);
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-//                    supermarketAdapter = new SupermarketAdapter(getActivity(), arrayPerfilList);
-//                    supermarketAdapter.notifyDataSetChanged();
-//                    supermarkets.setAdapter(supermarketAdapter);
-                }
-            }).execute(Statics.LISTAR_USUARIOS);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public void cadastrarUsuario(Perfil perfil){
         PerfilDAO dao = new PerfilDAO();
         dao.add(perfil);
+    }
+
+
+    public void listarDuvidas(){
+        DuvidasDAO dDAO = new DuvidasDAO();
+        dDAO.pegarDuvidasServidor(this);
     }
 
     // Metodo que seta a funcionalidade do botão de voltar
