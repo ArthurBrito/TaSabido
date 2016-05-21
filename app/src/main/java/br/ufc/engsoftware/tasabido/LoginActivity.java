@@ -1,6 +1,5 @@
 package br.ufc.engsoftware.tasabido;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -9,10 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import br.ufc.engsoftware.aux.PostServerDataAsync;
-import br.ufc.engsoftware.aux.Statics;
+import br.ufc.engsoftware.auxiliar.PostServerDataAsync;
+import br.ufc.engsoftware.auxiliar.Statics;
+import br.ufc.engsoftware.auxiliar.Utils;
 import br.ufc.engsoftware.models.Perfil;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -20,7 +19,7 @@ import butterknife.InjectView;
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
-    public static ProgressDialog progressDialog;
+
 
     @InjectView(R.id.input_login) EditText _loginText;
     @InjectView(R.id.input_password) EditText _passwordText;
@@ -65,12 +64,7 @@ public class LoginActivity extends AppCompatActivity {
 
         _loginButton.setEnabled(false);
 
-        progressDialog = new ProgressDialog(LoginActivity.this,
-                R.style.AppTheme_Dark_Dialog);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Autenticando ...");
-        progressDialog.show();
-
+        Utils.callProgressDialog(this, "Autenticando ...");
 
         if (usuario.equals("") && password.equals(""))
             onLoginSuccess();
@@ -84,8 +78,12 @@ public class LoginActivity extends AppCompatActivity {
                 public void processFinish(String output){
 
                     if (output.equals("0")){
+                        Utils.progressDialog.setMessage("Autenticado");
+                        Utils.delayMessage();
                         onLoginSuccess();
                     }else{
+                        Utils.progressDialog.setMessage("Usuario ou Senha Incorretos");
+                        Utils.delayMessage();
                         onLoginFailed();
                     }
                     
@@ -125,7 +123,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onLoginFailed() {
-        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+//        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
 
         _loginButton.setEnabled(true);
     }

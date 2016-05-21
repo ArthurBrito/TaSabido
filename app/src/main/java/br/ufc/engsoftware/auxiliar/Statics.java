@@ -1,4 +1,4 @@
-package br.ufc.engsoftware.aux;
+package br.ufc.engsoftware.auxiliar;
 
 /**
  * Created by limaneto on 18/05/16.

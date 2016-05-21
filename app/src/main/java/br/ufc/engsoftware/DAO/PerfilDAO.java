@@ -7,9 +7,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Vector;
 
-import br.ufc.engsoftware.aux.GetServerDataAsync;
-import br.ufc.engsoftware.aux.PostServerDataAsync;
-import br.ufc.engsoftware.aux.Statics;
+import br.ufc.engsoftware.auxiliar.GetServerDataAsync;
+import br.ufc.engsoftware.auxiliar.PostServerDataAsync;
+import br.ufc.engsoftware.auxiliar.Statics;
 import br.ufc.engsoftware.models.Perfil;
 
 public class PerfilDAO {

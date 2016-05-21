@@ -1,6 +1,5 @@
 package br.ufc.engsoftware.tasabido;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,8 +10,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import br.ufc.engsoftware.aux.PostServerDataAsync;
-import br.ufc.engsoftware.aux.Statics;
+import br.ufc.engsoftware.auxiliar.PostServerDataAsync;
+import br.ufc.engsoftware.auxiliar.Statics;
+import br.ufc.engsoftware.auxiliar.Utils;
 import br.ufc.engsoftware.models.Perfil;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -59,11 +59,7 @@ public class CadastroActivity extends AppCompatActivity {
 
         _signupButton.setEnabled(false);
 
-        final ProgressDialog progressDialog = new ProgressDialog(CadastroActivity.this,
-                R.style.AppTheme_Dark_Dialog);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Cadastrando ...");
-        progressDialog.show();
+        Utils.callProgressDialog(this, "Cadastrando ...");
 
         String nome = _nomeText.getText().toString();
         String usuario = _usuarioText.getText().toString();
@@ -80,7 +76,9 @@ public class CadastroActivity extends AppCompatActivity {
 
                 if (output.equals("0")){
 //                    Toast.makeText(getBaseContext(), "Cadastro Realizado", Toast.LENGTH_LONG).show();
-                    progressDialog.setMessage("Cadastrado com Sucesso");
+                    Utils.progressDialog.setMessage("Cadastrado com Sucesso");
+                    Utils.delayMessage();
+
                     Intent myIntent = new Intent(CadastroActivity.this, LoginActivity.class);
                     CadastroActivity.this.startActivity(myIntent);
                 }else{

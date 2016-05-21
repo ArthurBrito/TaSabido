@@ -1,20 +1,16 @@
-package br.ufc.engsoftware.aux;
+package br.ufc.engsoftware.auxiliar;
 
 import android.os.AsyncTask;
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
-import javax.net.ssl.HttpsURLConnection;
+
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
-
-import br.ufc.engsoftware.tasabido.LoginActivity;
 
 
 public class PostServerDataAsync extends AsyncTask<String, String, Void>{

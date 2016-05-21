@@ -19,8 +19,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import br.ufc.engsoftware.DAO.PerfilDAO;
-import br.ufc.engsoftware.aux.GetServerDataAsync;
-import br.ufc.engsoftware.aux.Statics;
+import br.ufc.engsoftware.auxiliar.GetServerDataAsync;
+import br.ufc.engsoftware.auxiliar.Statics;
 import br.ufc.engsoftware.fragments.GpsFragment;
 import br.ufc.engsoftware.fragments.MateriaFragment;
 import br.ufc.engsoftware.fragments.PerfilFragment;

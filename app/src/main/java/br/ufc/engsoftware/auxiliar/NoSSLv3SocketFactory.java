@@ -1,4 +1,4 @@
-package br.ufc.engsoftware.aux;
+package br.ufc.engsoftware.auxiliar;
 
 import java.io.IOException;
 import java.io.InputStream;
