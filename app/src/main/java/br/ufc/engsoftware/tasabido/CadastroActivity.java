@@ -1,6 +1,7 @@
 package br.ufc.engsoftware.tasabido;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -61,7 +62,7 @@ public class CadastroActivity extends AppCompatActivity {
         final ProgressDialog progressDialog = new ProgressDialog(CadastroActivity.this,
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Creating Account...");
+        progressDialog.setMessage("Cadastrando ...");
         progressDialog.show();
 
         String nome = _nomeText.getText().toString();
@@ -78,7 +79,10 @@ public class CadastroActivity extends AppCompatActivity {
             public void processFinish(String output){
 
                 if (output.equals("0")){
-                    Toast.makeText(getBaseContext(), output, Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getBaseContext(), "Cadastro Realizado", Toast.LENGTH_LONG).show();
+                    progressDialog.setMessage("Cadastrado com Sucesso");
+                    Intent myIntent = new Intent(CadastroActivity.this, LoginActivity.class);
+                    CadastroActivity.this.startActivity(myIntent);
                 }else{
                 }
 
