@@ -7,16 +7,14 @@ import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.widget.ListView;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.Vector;
 
+import br.ufc.engsoftware.fragments.MateriaFragment;
 import br.ufc.engsoftware.models.Materia;
-import br.ufc.engsoftware.tasabido.MateriaFragment;
 import br.ufc.engsoftware.tasabido.MateriaListView;
 
 

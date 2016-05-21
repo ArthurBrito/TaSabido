@@ -90,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     
                 }
-            }).execute(Statics.AUTENTICAR_USUARIO_LOCAL);
+            }).execute(Statics.AUTENTICAR_USUARIO);
         } catch (Exception e) {
             e.printStackTrace();
         }

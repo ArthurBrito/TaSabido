@@ -77,13 +77,13 @@ public class CadastroActivity extends AppCompatActivity {
         new PostServerDataAsync(param, new PostServerDataAsync.AsyncResponse(){
             public void processFinish(String output){
 
-                if (output.equals("Usuario cadastrado")){
+                if (output.equals("0")){
                     Toast.makeText(getBaseContext(), output, Toast.LENGTH_LONG).show();
                 }else{
                 }
 
             }
-        }).execute(Statics.CADASTRAR_USUARIO_LOCAL);
+        }).execute(Statics.CADASTRAR_USUARIO);
 
     }
 
