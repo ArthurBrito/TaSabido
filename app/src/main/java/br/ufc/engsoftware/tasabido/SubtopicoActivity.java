@@ -28,8 +28,13 @@ public class SubtopicoActivity extends AppCompatActivity {
         tvMateria.setText(materia);
     }
 
-    public void onClickMonitorias(View view){
+    public void onClickMonitorias(View view) {
         chamarMonitoriaActivity();
+    }
+
+    public void verDuvidas(View view){
+        Intent intent = new Intent(this, CriarDuvidasActivity.class);
+        startActivity(intent);
     }
 
     // Chama a activity de monitoria

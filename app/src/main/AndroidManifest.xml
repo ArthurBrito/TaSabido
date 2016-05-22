@@ -20,17 +20,21 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".SubtopicoActivity"
+        <activity
+            android:name=".SubtopicoActivity"
             android:theme="@style/AppTheme.Dark">
             <intent-filter>
                 <action android:name="br.ufc.engsoftware.tasabido.SUBTOPICOS" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".MonitoriaActivity"
+        <activity
+            android:name=".MonitoriaActivity"
             android:theme="@style/AppTheme.Dark">
             <intent-filter>
                 <action android:name="br.ufc.engsoftware.tasabido.MONITORIA" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -40,6 +44,7 @@
             android:theme="@style/AppTheme.Dark">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -49,10 +54,14 @@
             android:theme="@style/AppTheme.Dark">
             <intent-filter>
                 <action android:name="br.ufc.engsoftware.tasabido.CADASTRO" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".CriarDuvidasActivity"
+            android:label="@string/title_activity_criar_duvidas"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
-
 
 </manifest>

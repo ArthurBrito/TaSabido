@@ -2,6 +2,8 @@ package br.ufc.engsoftware.BDLocalManager;
 
 import android.app.Activity;
 import java.util.ArrayList;
+
+import br.ufc.engsoftware.models.Duvida;
 import br.ufc.engsoftware.models.Materia;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -48,6 +50,11 @@ public class MateriaBDManager {
     public ArrayList<Materia> pegarMaterias(){
         RealmResults<Materia> resultInRealm = realm.where(Materia.class).findAll();
         return castRealmQuery(resultInRealm);
+    }
+
+    public Materia pegarMateriaPorIdSubtopico(int id_materia){
+        Materia materia = realm.where(Materia.class).equalTo("id_materia", id_materia).findFirst();
+        return materia;
     }
 
     public void deleteTodasMaterias(){

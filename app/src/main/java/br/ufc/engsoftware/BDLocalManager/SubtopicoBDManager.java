@@ -2,6 +2,8 @@ package br.ufc.engsoftware.BDLocalManager;
 
 import android.app.Activity;
 import java.util.ArrayList;
+
+import br.ufc.engsoftware.models.Materia;
 import br.ufc.engsoftware.models.Subtopico;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -48,6 +50,11 @@ public class SubtopicoBDManager {
     /* METODOS PRA PEGAR DUVIDAS SALVAS NO BANDO DE DADOS DO APARELHO */
     public ArrayList<Subtopico> pegarSubtopicos(){
         RealmResults<Subtopico> resultInRealm = realm.where(Subtopico.class).findAll();
+        return castRealmQuery(resultInRealm);
+    }
+
+    public ArrayList<Subtopico> pegarSubtopicosPorIdMateria(int id_materia){
+        RealmResults<Subtopico> resultInRealm = realm.where(Subtopico.class).equalTo("id_materia", id_materia).findAll();
         return castRealmQuery(resultInRealm);
     }
 
