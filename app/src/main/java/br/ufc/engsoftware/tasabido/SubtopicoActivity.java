@@ -7,12 +7,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
+
+import br.ufc.engsoftware.DAO.MateriasDAO;
+import br.ufc.engsoftware.DAO.SubtopicosDAO;
 
 
 public class SubtopicoActivity extends AppCompatActivity {
 
+    // Informaçoes da materia selecionada
     String materia;
     int id_materia;
+
+    // Referencia para o ListView da interface
+    ListView listviewSubtopicos;
+
+    // Estado do ListView e suas informações
+    SubtopicoListView gerenciadorSubtopicosLV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +36,22 @@ public class SubtopicoActivity extends AppCompatActivity {
         materia = intent.getStringExtra("MATERIA");
         id_materia = intent.getIntExtra("ID", 0);
 
+        // Seta as configurações da ActionBar
         ActionBar ab = getSupportActionBar();
         ab.setTitle(materia);
         ab.setDisplayHomeAsUpEnabled(true);
 
+        // Captura a referencia pro ListView a partir do id
+        listviewSubtopicos = (ListView) findViewById(R.id.listview_subtopicos);
 
+        //Metodo responsável por montar o ListView das Dúvidas
+        montarListViewSubtopicos();
+
+    }
+
+    private void montarListViewSubtopicos(){
+        // Executa o AsyncTask responsavel por preencher o ListView de Subtopicos
+        new SubtopicosDAO(this, listviewSubtopicos).execute();
     }
 
     public void onClickMonitorias(View view){

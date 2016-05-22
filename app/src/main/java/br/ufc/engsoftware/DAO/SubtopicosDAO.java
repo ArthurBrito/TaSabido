@@ -1,5 +1,4 @@
-package br.ufc.engsoftware.auxiliar;
-
+package br.ufc.engsoftware.DAO;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -7,52 +6,48 @@ import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.widget.ListView;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.Vector;
 
+import br.ufc.engsoftware.auxiliar.Statics;
 import br.ufc.engsoftware.auxiliar.WebRequest;
-import br.ufc.engsoftware.fragments.MateriaFragment;
-import br.ufc.engsoftware.models.Materia;
-import br.ufc.engsoftware.tasabido.MateriaListView;
-
+import br.ufc.engsoftware.models.Subtopico;
+import br.ufc.engsoftware.tasabido.SubtopicoListView;
 
 import static java.lang.Integer.parseInt;
 
 /**
- * Created by Thiago on 18/05/2016.
+ * Created by Thiago on 21/05/2016.
  */
-public class GetMaterias extends AsyncTask<Void, Void, Void> {
+public class SubtopicosDAO extends AsyncTask<Void, Void, Void> {
 
-    // URL para pegar as materias via JSON
-    private static String url = "http://avalan.herokuapp.com/tasabido/listar_materias/?format=json";
+    // URL para pegar os Subtopicos via JSON
+    // private static String url = "http://avalan.herokuapp.com/tasabido/listar_materias/?format=json";
+    private static String url = Statics.LISTAR_SUBTOPICOS + "?format=json";
 
-    // Referencia ao fragmenta que está sendo mostrado
-    Fragment fragment;
+    // Contexto da activity que chamou esta classe
     Context context;
 
-    // Referencia ao ListView do MateriaFragment
-    ListView listviewMaterias;
-
-    public MateriaListView getGerenciadorMateriasLV() {
-        return gerenciadorMateriasLV;
-    }
+    // Referencia ao ListView do SubtopicosActivity
+    ListView listviewSubtopicos;
 
     // Classe responsável por montar o ListView
-    MateriaListView gerenciadorMateriasLV;
+    SubtopicoListView gerenciadorSubtopicosLV;
 
-    // Lista das materias obbtidas do web service
-    Vector<Materia> listaMaterias;
+    // Lista dos subtopicos obtidos do web service
+    Vector<Subtopico> listaSubtopicos;
 
     // Dialog com barra de progresso mostrado na tela
     ProgressDialog proDialog;
 
-    public GetMaterias(Context context, ListView listviewMaterias, Fragment fragment) {
+    public SubtopicosDAO(Context context, ListView listviewSubtopicos) {
         this.context = context;
-        this.listviewMaterias = listviewMaterias;
-        this.fragment = fragment;
+        this.listviewSubtopicos = listviewSubtopicos;
     }
 
     // Mostra a barra de progresso na tela
@@ -66,7 +61,7 @@ public class GetMaterias extends AsyncTask<Void, Void, Void> {
         proDialog.show();
     }
 
-    // Pega o JSON do web service com a lista de materias
+    // Pega o JSON do web service com a lista de subtopicos
     @Override
     protected Void doInBackground(Void... arg0) {
         String jsonStr = null;
@@ -81,8 +76,8 @@ public class GetMaterias extends AsyncTask<Void, Void, Void> {
 
         Log.d("Response: ", "> " + jsonStr);
 
-        // Monta a lista de materias
-        listaMaterias = parseJsonMaterias(jsonStr);
+        // Monta a lista de subtopicos
+        listaSubtopicos = parseJsonMaterias(jsonStr);
 
         return null;
     }
@@ -96,40 +91,40 @@ public class GetMaterias extends AsyncTask<Void, Void, Void> {
             proDialog.dismiss();
 
         // Monta o ListView com os dados obtidos do web service
-        gerenciadorMateriasLV = new MateriaListView(listviewMaterias, context, listaMaterias);
+        gerenciadorSubtopicosLV = new SubtopicoListView(listviewSubtopicos, context, listaSubtopicos);
 
-        // Chama o metodo do MateriaFragment responsavel por configurar o SearchView
-        ((MateriaFragment)fragment).montarSearchViewMaterias();
     }
 
-    // Metodo responsavel por quebrar o JSON em Materias
-    private Vector<Materia> parseJsonMaterias(String json){
+    // Metodo responsavel por quebrar o JSON em Subtopicos
+    private Vector<Subtopico> parseJsonMaterias(String json){
         if (json != null)
         {
             try {
 
-                Vector<Materia> listaMaterias = new Vector<Materia>();
+                Vector<Subtopico> listarSubtopicos = new Vector<Subtopico>();
 
                 // Transforma a string JSON em objeto
                 JSONObject jsonObj = new JSONObject(json);
 
                 // Extrai o array results do objeto JSON
-                JSONArray materiasJson = jsonObj.getJSONArray("results");
+                JSONArray subtopicosJson = jsonObj.getJSONArray("results");
 
-                // Percorrendo todas as Materias
-                for (int i = 0; i < materiasJson.length(); i++)
+                // Percorrendo todas os Subtopicos
+                for (int i = 0; i < subtopicosJson.length(); i++)
                 {
                     // Extrai o i-esimo objeto
-                    JSONObject mJson = materiasJson.getJSONObject(i);
+                    JSONObject sJson = subtopicosJson.getJSONObject(i);
 
                     // Extrai as informações do objeto
-                    int id = parseInt(mJson.getString("id"));
-                    String nome = mJson.getString("nome");
+                    int id_subtopico = parseInt(sJson.getString("id"));
+                    //int id_materia = parseInt(sJson.getString("id_materia"));
+                    int id_materia = 0;
+                    String nome = sJson.getString("nome");
 
-                    // Adiciona a Materia obtida da lista de materias
-                    listaMaterias.add(new Materia(id, nome));
+                    // Adiciona o Subtopico obtido da lista de subtopicos
+                    listarSubtopicos.add(new Subtopico(id_subtopico, id_materia, nome));
                 }
-                return listaMaterias;
+                return listarSubtopicos;
             } catch (JSONException e) {
                 e.printStackTrace();
                 return null;
@@ -139,5 +134,9 @@ public class GetMaterias extends AsyncTask<Void, Void, Void> {
             return null;
         }
 
+    }
+
+    public SubtopicoListView getGerenciadorSubtopicosLV() {
+        return gerenciadorSubtopicosLV;
     }
 }

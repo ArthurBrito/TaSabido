@@ -14,6 +14,11 @@ public class MateriaBDManager {
     private Realm realm;
     private RealmConfiguration realmConfig;
 
+    public Materia pegarMateriaPorIdSubtopico(int id_materia){
+        Materia materia = realm.where(Materia.class).equalTo("id_materia", id_materia).findFirst();
+        return materia;
+    }
+
     public void activateRealm (Activity activity){
         // Create the Realm configuration
         realmConfig = new RealmConfiguration.Builder(activity).deleteRealmIfMigrationNeeded().build();

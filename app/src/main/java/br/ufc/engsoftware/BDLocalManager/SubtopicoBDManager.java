@@ -14,6 +14,11 @@ public class SubtopicoBDManager {
     private Realm realm;
     private RealmConfiguration realmConfig;
 
+    public ArrayList<Subtopico> pegarSubtopicosPorIdMateria(int id_materia){
+        RealmResults<Subtopico> resultInRealm = realm.where(Subtopico.class).equalTo("id_materia", id_materia).findAll();
+        return castRealmQuery(resultInRealm);
+    }
+
     public void activateRealm (Activity activity){
         // Create the Realm configuration
         realmConfig = new RealmConfiguration.Builder(activity).deleteRealmIfMigrationNeeded().build();
