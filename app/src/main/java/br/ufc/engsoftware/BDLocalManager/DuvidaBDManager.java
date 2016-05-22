@@ -51,17 +51,20 @@ public class DuvidaBDManager {
 
 
     /* METODOS PRA PEGAR DUVIDAS SALVAS NO BANDO DE DADOS DO APARELHO */
-    public ArrayList<Duvida> pegarDuvidas(){
+    public ArrayList<Duvida> pegarDuvidas(Activity activity){
+        activateRealm(activity);
         RealmResults<Duvida> resultInRealm = realm.where(Duvida.class).findAll();
         return castRealmQuery(resultInRealm);
     }
 
-    public ArrayList<Duvida> pegarDuvidasUsuario(int id_usuario){
+    public ArrayList<Duvida> pegarDuvidasUsuario(Activity activity, int id_usuario){
+        activateRealm(activity);
         RealmResults<Duvida> resultInRealm = realm.where(Duvida.class).equalTo("id_usuario", id_usuario).findAll();
         return castRealmQuery(resultInRealm);
     }
 
-    public void deleteTodasDuvidas(){
+    public void deleteTodasDuvidas(Activity activity){
+        activateRealm(activity);
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {

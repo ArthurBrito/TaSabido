@@ -1,4 +1,4 @@
-package br.ufc.engsoftware.auxiliar;
+package br.ufc.engsoftware.DAO;
 
 
 import android.app.ProgressDialog;
@@ -11,12 +11,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
-import java.util.Vector;
+import java.util.ArrayList;
 
+import br.ufc.engsoftware.BDLocalManager.MateriaBDManager;
 import br.ufc.engsoftware.auxiliar.WebRequest;
 import br.ufc.engsoftware.fragments.MateriaFragment;
 import br.ufc.engsoftware.models.Materia;
-import br.ufc.engsoftware.tasabido.MateriaListView;
+import br.ufc.engsoftware.views.MateriaListView;
 
 
 import static java.lang.Integer.parseInt;
@@ -24,7 +25,7 @@ import static java.lang.Integer.parseInt;
 /**
  * Created by Thiago on 18/05/2016.
  */
-public class GetMaterias extends AsyncTask<Void, Void, Void> {
+public class MateriasDAO extends AsyncTask<Void, Void, Void> {
 
     // URL para pegar as materias via JSON
     private static String url = "http://avalan.herokuapp.com/tasabido/listar_materias/?format=json";
@@ -44,12 +45,12 @@ public class GetMaterias extends AsyncTask<Void, Void, Void> {
     MateriaListView gerenciadorMateriasLV;
 
     // Lista das materias obbtidas do web service
-    Vector<Materia> listaMaterias;
+    ArrayList<Materia> listaMaterias;
 
     // Dialog com barra de progresso mostrado na tela
     ProgressDialog proDialog;
 
-    public GetMaterias(Context context, ListView listviewMaterias, Fragment fragment) {
+    public MateriasDAO(Context context, ListView listviewMaterias, Fragment fragment) {
         this.context = context;
         this.listviewMaterias = listviewMaterias;
         this.fragment = fragment;
@@ -95,6 +96,10 @@ public class GetMaterias extends AsyncTask<Void, Void, Void> {
         if (proDialog.isShowing())
             proDialog.dismiss();
 
+        //atualiza o banco de dados local com os dados vindos do servidor
+        MateriaBDManager sinc = new MateriaBDManager();
+        sinc.atualizarMaterias(fragment.getActivity(), listaMaterias);
+
         // Monta o ListView com os dados obtidos do web service
         gerenciadorMateriasLV = new MateriaListView(listviewMaterias, context, listaMaterias);
 
@@ -103,12 +108,12 @@ public class GetMaterias extends AsyncTask<Void, Void, Void> {
     }
 
     // Metodo responsavel por quebrar o JSON em Materias
-    private Vector<Materia> parseJsonMaterias(String json){
+    private ArrayList<Materia> parseJsonMaterias(String json){
         if (json != null)
         {
             try {
 
-                Vector<Materia> listaMaterias = new Vector<Materia>();
+                ArrayList<Materia> listaMaterias = new ArrayList<Materia>();
 
                 // Transforma a string JSON em objeto
                 JSONObject jsonObj = new JSONObject(json);

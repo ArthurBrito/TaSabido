@@ -1,4 +1,4 @@
-package br.ufc.engsoftware.tasabido;
+package br.ufc.engsoftware.views;
 
 import android.text.TextUtils;
 import android.widget.Adapter;

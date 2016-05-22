@@ -13,7 +13,7 @@ import com.squareup.picasso.Picasso;
 
 import br.ufc.engsoftware.tasabido.PaginaPrincipalActivity;
 import br.ufc.engsoftware.tasabido.R;
-import br.ufc.engsoftware.tasabido.RoundedImageView;
+import br.ufc.engsoftware.views.RoundedImageView;
 
 /**
  * Created by Thiago on 09/05/2016.

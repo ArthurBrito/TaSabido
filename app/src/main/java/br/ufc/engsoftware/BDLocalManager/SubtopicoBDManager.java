@@ -48,17 +48,20 @@ public class SubtopicoBDManager {
 
 
     /* METODOS PRA PEGAR DUVIDAS SALVAS NO BANDO DE DADOS DO APARELHO */
-    public ArrayList<Subtopico> pegarSubtopicos(){
+    public ArrayList<Subtopico> pegarSubtopicos(Activity activity){
+        activateRealm(activity);
         RealmResults<Subtopico> resultInRealm = realm.where(Subtopico.class).findAll();
         return castRealmQuery(resultInRealm);
     }
 
-    public ArrayList<Subtopico> pegarSubtopicosPorIdMateria(int id_materia){
+    public ArrayList<Subtopico> pegarSubtopicosPorIdMateria(Activity activity, int id_materia){
+        activateRealm(activity);
         RealmResults<Subtopico> resultInRealm = realm.where(Subtopico.class).equalTo("id_materia", id_materia).findAll();
         return castRealmQuery(resultInRealm);
     }
 
-    public void deleteTodasSubtopicos(){
+    public void deleteTodasSubtopicos(Activity activity){
+        activateRealm(activity);
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
@@ -69,7 +72,7 @@ public class SubtopicoBDManager {
 
     // esse metodo verifica se a duvida ja existe no banco de dados
     public boolean subtopicoJaSalvo(int id_subtopico){
-        final RealmResults<Subtopico> results = realm.where(Subtopico.class).equalTo("id", id_subtopico).findAll();
+        final RealmResults<Subtopico> results = realm.where(Subtopico.class).equalTo("id_subtopico", id_subtopico).findAll();
         if (results.size() > 0){
             return true;
         }else{

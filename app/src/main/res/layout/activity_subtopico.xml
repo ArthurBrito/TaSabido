@@ -7,29 +7,46 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="br.ufc.engsoftware.tasabido.SubtopicoActivity"
+    tools:context=".SubtopicosActivity"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_materia"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textSize="20sp"/>
+    <!--&lt;!&ndash; Botão Monitorias &ndash;&gt;-->
+    <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_marginBottom="20pt"-->
+        <!--android:text="Monitoria"-->
+        <!--android:onClick="onClickMonitorias"/>-->
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="20pt"
-        android:text="Monitoria"
-        android:onClick="onClickMonitorias"/>
+    <ListView
+        android:id="@+id/listview_subtopicos"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
-    <Button
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Duvidas"
-        android:onClick="verDuvidas"/>
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <!--&lt;!&ndash; Botao Criar Duvida &ndash;&gt;-->
+        <!--<Button-->
+            <!--android:layout_width="140dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginRight="8dp"-->
+            <!--android:text="@string/btn_criar_duvida"-->
+            <!--android:onClick="onClickCriarDuvida"/>-->
+
+        <!--&lt;!&ndash; Botão Criar Monitoria &ndash;&gt;-->
+        <!--<Button-->
+            <!--android:layout_width="150dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="8dp"-->
+            <!--android:text="@string/btn_criar_monitoria"/>-->
+
+    </LinearLayout>
 
 </LinearLayout>

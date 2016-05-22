@@ -47,17 +47,20 @@ public class MateriaBDManager {
 
 
     /* METODOS PRA PEGAR DUVIDAS SALVAS NO BANDO DE DADOS DO APARELHO */
-    public ArrayList<Materia> pegarMaterias(){
+    public ArrayList<Materia> pegarMaterias(Activity activity){
+        activateRealm(activity);
         RealmResults<Materia> resultInRealm = realm.where(Materia.class).findAll();
         return castRealmQuery(resultInRealm);
     }
 
-    public Materia pegarMateriaPorIdSubtopico(int id_materia){
+    public Materia pegarMateriaPorIdSubtopico(Activity activity, int id_materia){
+        activateRealm(activity);
         Materia materia = realm.where(Materia.class).equalTo("id_materia", id_materia).findFirst();
         return materia;
     }
 
-    public void deleteTodasMaterias(){
+    public void deleteTodasMaterias(Activity activity){
+        activateRealm(activity);
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
@@ -68,7 +71,7 @@ public class MateriaBDManager {
 
     // esse metodo verifica se a duvida ja existe no banco de dados
     public boolean materiaJaSalva(int id_materia){
-        final RealmResults<Materia> results = realm.where(Materia.class).equalTo("id", id_materia).findAll();
+        final RealmResults<Materia> results = realm.where(Materia.class).equalTo("id_materia", id_materia).findAll();
         if (results.size() > 0){
             return true;
         }else{

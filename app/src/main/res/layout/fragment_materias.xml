@@ -13,7 +13,7 @@
         android:orientation="horizontal"
         android:background="@color/colorPrimary">
 
-        <br.ufc.engsoftware.tasabido.RoundedImageView
+        <br.ufc.engsoftware.views.RoundedImageView
             android:id="@+id/riv_foto_usuario"
             android:layout_width="45dp"
             android:layout_height="45dp"

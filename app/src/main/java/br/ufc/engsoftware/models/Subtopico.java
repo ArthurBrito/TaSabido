@@ -13,6 +13,15 @@ public class Subtopico extends RealmObject{
     private int id_materia;
     private String nome_subtopico;
 
+    public Subtopico(int id_subtopico, int id_materia, String nome_subtopico) {
+        this.id_subtopico = id_subtopico;
+        this.id_materia = id_materia;
+        this.nome_subtopico = nome_subtopico;
+    }
+
+    public Subtopico() {
+    }
+
     public int getId_subtopico() {
         return id_subtopico;
     }
@@ -35,5 +44,10 @@ public class Subtopico extends RealmObject{
 
     public void setNome_subtopico(String nome_subtopico) {
         this.nome_subtopico = nome_subtopico;
+    }
+
+    @Override
+    public String toString() {
+        return this.nome_subtopico;
     }
 }

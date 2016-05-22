@@ -34,8 +34,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.inject(this);
+        activity = this;
 
-       activity = this;
+
+        // pega login e senha que ja foi usado pra logar
+        lembrarLoginSenha();
 
         btn_conexao.setOnClickListener(new View.OnClickListener() {
 
@@ -50,8 +53,6 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
-
-
 
         _loginButton.setOnClickListener(new View.OnClickListener() {
 
@@ -137,6 +138,8 @@ public class LoginActivity extends AppCompatActivity {
         _loginButton.setEnabled(true);
 //        finish();
         // Start the Signup activity
+        salvarLoginSenha(_loginText.getText().toString(), _passwordText.getText().toString());
+
         Intent myIntent = new Intent(LoginActivity.this, PaginaPrincipalActivity.class);
         LoginActivity.this.startActivity(myIntent);
 
@@ -181,5 +184,19 @@ public class LoginActivity extends AppCompatActivity {
         param += perfil.getSenha();
 
         return param;
+    }
+
+    public void lembrarLoginSenha(){
+        Utils utils = new Utils(this);
+        String login = utils.getFromSharedPreferences("login", "");
+        String senha = utils.getFromSharedPreferences("senha", "");
+        _loginText.setText(utils.getFromSharedPreferences("login", ""));
+        _passwordText.setText(utils.getFromSharedPreferences("senha", ""));
+    }
+
+    public void salvarLoginSenha(String login, String senha){
+        Utils utils = new Utils(this);
+        utils.saveInSharedPreferences("login", login);
+        utils.saveInSharedPreferences("senha", senha);
     }
 }

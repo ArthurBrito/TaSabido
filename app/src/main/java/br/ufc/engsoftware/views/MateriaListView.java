@@ -1,4 +1,4 @@
-package br.ufc.engsoftware.tasabido;
+package br.ufc.engsoftware.views;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -10,9 +10,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.ListView;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 import br.ufc.engsoftware.models.Materia;
+import br.ufc.engsoftware.tasabido.R;
+import br.ufc.engsoftware.tasabido.SubtopicosActivity;
 
 /**
  * Created by Thiago on 14/05/2016.
@@ -23,14 +25,14 @@ public class MateriaListView {
     Filter filter;
 
 
-    public MateriaListView(ListView listview, Context view, Vector<Materia> vector) {
+    public MateriaListView(ListView listview, Context view, ArrayList<Materia> vector) {
         this.listview = listview;
 
         setListView(view, vector);
     }
 
     // Seta as configurações do ListView
-    public void setListView(Context view, Vector<Materia> vector){
+    public void setListView(Context view, ArrayList<Materia> vector){
 
         // Seta o layout e os valores do ListView
         final ArrayAdapter<Materia> adapter = new ArrayAdapter<Materia>(view,
@@ -56,7 +58,7 @@ public class MateriaListView {
 
     // Intent para quando clicar no item da lista de matérias ir para a pagina de subtopicos
     private void chamarSubtopicoActivity(Context view, Materia item){
-        Intent intent = new Intent(view, SubtopicoActivity.class);
+        Intent intent = new Intent(view, SubtopicosActivity.class);
         intent.setAction("br.ufc.engsoftware.tasabido.SUBTOPICOS");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 

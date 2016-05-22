@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ListView;
 
 import org.json.JSONObject;
 
@@ -18,10 +19,12 @@ import java.util.ArrayList;
 
 import br.ufc.engsoftware.DAO.DuvidasDAO;
 import br.ufc.engsoftware.DAO.PerfilDAO;
+import br.ufc.engsoftware.DAO.SubtopicosDAO;
 import br.ufc.engsoftware.fragments.GpsFragment;
 import br.ufc.engsoftware.fragments.MateriaFragment;
 import br.ufc.engsoftware.fragments.PerfilFragment;
 import br.ufc.engsoftware.models.Perfil;
+import br.ufc.engsoftware.views.SubtopicoListView;
 
 
 public class PaginaPrincipalActivity extends FragmentActivity {
@@ -45,6 +48,13 @@ public class PaginaPrincipalActivity extends FragmentActivity {
      * Sabendo disso caso você faça alguma alteração NESTA classe
      * você deve ter um bom motivo :D
      */
+
+
+    // Referencia para o ListView da interface
+    ListView listviewSubtopicos;
+
+    // Estado do ListView e suas informações
+    SubtopicoListView gerenciadorSubtopicosLV;
 
 
     // Nome do arquivo de preferencias compartilhadas
@@ -73,28 +83,14 @@ public class PaginaPrincipalActivity extends FragmentActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(mPager);
 
-        Perfil perfil = new Perfil("Joaozim", "joao", "joazim@gmail.com", "123");
 
-        listarDuvidas();
-//        cadastrarUsuario(perfil);
-
+        sincronizarInfo();
 
         // Muda o layout das abas para colocar os ícones
         for (int i = 0; i < tabLayout.getTabCount(); i++) {
             TabLayout.Tab tab = tabLayout.getTabAt(i);
             tab.setCustomView(((ScreenSlidePagerAdapter) mPagerAdapter).getTabView(i));
         }
-    }
-
-    public void cadastrarUsuario(Perfil perfil){
-        PerfilDAO dao = new PerfilDAO();
-        dao.add(perfil);
-    }
-
-
-    public void listarDuvidas(){
-        DuvidasDAO dDAO = new DuvidasDAO();
-        dDAO.pegarDuvidasServidor(this);
     }
 
     // Metodo que seta a funcionalidade do botão de voltar
@@ -165,6 +161,12 @@ public class PaginaPrincipalActivity extends FragmentActivity {
             return v;
         }
 
+    }
+
+
+
+    public void sincronizarInfo(){
+        new SubtopicosDAO(this, this, listviewSubtopicos).execute();
     }
 
 }

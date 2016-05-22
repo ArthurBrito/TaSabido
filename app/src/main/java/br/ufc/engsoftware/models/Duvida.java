@@ -19,7 +19,7 @@ public class Duvida implements RealmModel {
 
     public Duvida(){}
 
-    public Duvida(int id_duvida, int id_materia, int id_usuario, int id_subtopico, String titulo, String descricao){
+    public Duvida(int id_duvida, int id_usuario, int id_materia, int id_subtopico, String titulo, String descricao){
         this.id_duvida = id_duvida;
         this.id_usuario = id_usuario;
         this.id_materia = id_materia;

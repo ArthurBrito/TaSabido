@@ -2,11 +2,10 @@ package br.ufc.engsoftware.auxiliar;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-
-import java.net.InetAddress;
-
 import br.ufc.engsoftware.tasabido.R;
 
 /**
@@ -14,6 +13,14 @@ import br.ufc.engsoftware.tasabido.R;
  */
 public class Utils {
     public static ProgressDialog progressDialog;
+    public static final String MyPREFERENCES = "MyPrefs" ;
+    public Context context;
+
+    public Utils(Context context){
+        this.context = context;
+    }
+
+
 
     public static void delayMessage() {
         new android.os.Handler().postDelayed(
@@ -21,7 +28,7 @@ public class Utils {
                     public void run() {
                         progressDialog.dismiss();
                     }
-                }, 3000);
+                }, 10000);
     }
 
     public static void callProgressDialog(Activity ac, String message){
@@ -56,6 +63,28 @@ public class Utils {
 //        } catch (Exception e) {
 //            return false;
 //        }
+    }
+
+    public SharedPreferences sharedPreferences(){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        return sharedPreferences;
+    }
+
+    public boolean sharedPreferencesContains(String key){
+        return sharedPreferences().contains(key);
+    }
+
+    public String getFromSharedPreferences(String key, String value){
+        if (sharedPreferencesContains(key))
+             return sharedPreferences().getString(key, value);
+        else
+            return "";
+    }
+
+    public void saveInSharedPreferences(String key, String value){
+        SharedPreferences.Editor editor = sharedPreferences().edit();
+        editor.putString(key, value);
+        editor.commit();
     }
 
 }

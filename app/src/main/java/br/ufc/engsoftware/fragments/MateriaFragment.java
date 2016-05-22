@@ -12,12 +12,12 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import com.squareup.picasso.Picasso;
-import br.ufc.engsoftware.tasabido.MateriaListView;
-import br.ufc.engsoftware.tasabido.MateriaSearchView;
+import br.ufc.engsoftware.views.MateriaListView;
+import br.ufc.engsoftware.views.MateriaSearchView;
 import br.ufc.engsoftware.tasabido.PaginaPrincipalActivity;
 import br.ufc.engsoftware.tasabido.R;
-import br.ufc.engsoftware.tasabido.RoundedImageView;
-import br.ufc.engsoftware.auxiliar.GetMaterias;
+import br.ufc.engsoftware.views.RoundedImageView;
+import br.ufc.engsoftware.DAO.MateriasDAO;
 
 /**
  * Created by Thiago on 09/05/2016.
@@ -39,7 +39,7 @@ public class MateriaFragment extends Fragment {
     TextView tvNomeUsuario;
     TextView tvEmailUsuario;
 
-    GetMaterias getMaterias;
+    MateriasDAO getMaterias;
 
 
     // Método principal do fragment, respectivo ao onCreate nas activities
@@ -85,7 +85,7 @@ public class MateriaFragment extends Fragment {
 
     private void montarListViewMaterias(){
         // Executa o AsyncTask responsavel por preencher o ListView de materias
-        getMaterias = new GetMaterias(getContext(), listviewMaterias, this);
+        getMaterias = new MateriasDAO(getContext(), listviewMaterias, this);
         getMaterias.execute();
 
     }

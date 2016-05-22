@@ -14,7 +14,7 @@
         android:id="@+id/relativeLayout">
 
 
-        <br.ufc.engsoftware.tasabido.RoundedImageView
+        <br.ufc.engsoftware.views.RoundedImageView
             android:id="@+id/riv_foto_usuario"
             android:layout_width="120dp"
             android:layout_height="120dp"
