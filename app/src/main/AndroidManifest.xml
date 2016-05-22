@@ -20,8 +20,7 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".SubtopicoActivity"
-            android:theme="@style/AppTheme.Dark">
+        <activity android:name=".SubtopicoActivity">
             <intent-filter>
                 <action android:name="br.ufc.engsoftware.tasabido.SUBTOPICOS" />
                 <category android:name="android.intent.category.DEFAULT" />

@@ -2,6 +2,8 @@
     <string name="app_name">Ta Sabido</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_cadastro">CadastroActivity</string>
+    <string name="btn_criar_duvida">Criar Dúvida</string>
+    <string name="btn_criar_monitoria">Criar Monitoria</string>
 </resources>
 
 

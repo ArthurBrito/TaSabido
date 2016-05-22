@@ -10,18 +10,34 @@
     tools:context="br.ufc.engsoftware.tasabido.SubtopicoActivity"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_materia"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textSize="20sp"/>
-
+    <!-- Botão Monitorias -->
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="Monitoria"
         android:onClick="onClickMonitorias"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <!-- Botao Criar Duvida -->
+        <Button
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:text="@string/btn_criar_duvida"/>
+
+        <!-- Botão Criar Monitoria -->
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="@string/btn_criar_monitoria"/>
+
+    </LinearLayout>
 
 </LinearLayout>
