@@ -7,7 +7,7 @@ import android.widget.TextView;
 public class DuvidaActivity extends AppCompatActivity {
 
     TextView titulo;
-    Text
+//    Text
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
