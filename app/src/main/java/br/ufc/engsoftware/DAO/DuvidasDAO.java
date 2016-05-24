@@ -139,7 +139,7 @@ public class DuvidasDAO extends AsyncTask<Void, Void, Void> {
                     listarDuvidas.add(new Duvida(id_duvida, id_usuario, id_materia, id_subtopico, titulo, descricao));
                 }
 
-                return listaDuvidas;
+                return listarDuvidas;
             } catch (JSONException e) {
                 e.printStackTrace();
                 return null;

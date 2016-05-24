@@ -53,8 +53,8 @@ public class SubtopicosActivity extends AppCompatActivity {
 
     private void montarListViewSubtopicos(){
         //pega os subtopicos salvos no banco de dados local pela requisição com o servidor
-        SubtopicoBDManager duvidaDB = new SubtopicoBDManager();
-        gerenciadorSubtopicosLV = new SubtopicoListView(listviewSubtopicos, this, duvidaDB.pegarSubtopicosPorIdMateria(this, id_materia));
+        SubtopicoBDManager subtopicoDB = new SubtopicoBDManager();
+        gerenciadorSubtopicosLV = new SubtopicoListView(listviewSubtopicos, this, subtopicoDB.pegarSubtopicosPorIdMateria(this, id_materia));
 
         /* não precisa mais dessa parte porque ele vai pegar do banco de dados local
         * o DAO só vai pegar as info do servidor no momento que a gente decidir que o app vai sincronizar*/

@@ -51,7 +51,7 @@ public class PaginaPrincipalActivity extends FragmentActivity {
 
 
     // Referencia para o ListView da interface
-    ListView listviewSubtopicos;
+    ListView listviewGenerica;
 
     // Estado do ListView e suas informações
     SubtopicoListView gerenciadorSubtopicosLV;
@@ -84,6 +84,7 @@ public class PaginaPrincipalActivity extends FragmentActivity {
         tabLayout.setupWithViewPager(mPager);
 
 
+        listviewGenerica = (ListView) findViewById(R.id.listview_generic);
         sincronizarInfo();
 
         // Muda o layout das abas para colocar os ícones
@@ -166,7 +167,8 @@ public class PaginaPrincipalActivity extends FragmentActivity {
 
 
     public void sincronizarInfo(){
-        new SubtopicosDAO(this, this, listviewSubtopicos).execute();
+        new SubtopicosDAO(this, this, listviewGenerica).execute();
+        new DuvidasDAO(this, this, listviewGenerica).execute();
     }
 
 }

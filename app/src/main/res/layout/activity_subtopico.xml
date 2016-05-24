@@ -32,20 +32,20 @@
         android:orientation="horizontal"
         android:gravity="center">
 
-        <!--&lt;!&ndash; Botao Criar Duvida &ndash;&gt;-->
-        <!--<Button-->
-            <!--android:layout_width="140dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginRight="8dp"-->
-            <!--android:text="@string/btn_criar_duvida"-->
-            <!--android:onClick="onClickCriarDuvida"/>-->
+        <!-- Botao Criar Duvida -->
+        <Button
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:text="@string/btn_criar_duvida"
+            android:onClick="onClickCriarDuvida"/>
 
-        <!--&lt;!&ndash; Botão Criar Monitoria &ndash;&gt;-->
-        <!--<Button-->
-            <!--android:layout_width="150dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="8dp"-->
-            <!--android:text="@string/btn_criar_monitoria"/>-->
+        <!-- Botão Criar Monitoria -->
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="@string/btn_criar_monitoria"/>
 
     </LinearLayout>
 

@@ -65,7 +65,6 @@ public class MateriaListView {
         // Passa o nome da matéria para ser exibido na activity, e o id para pesquisar no banco
         intent.putExtra("MATERIA", item.getNome());
         intent.putExtra("ID", item.getId());
-
         view.startActivity(intent);
     }
 

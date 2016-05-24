@@ -51,9 +51,9 @@ public class DuvidaBDManager {
 
 
     /* METODOS PRA PEGAR DUVIDAS SALVAS NO BANDO DE DADOS DO APARELHO */
-    public ArrayList<Duvida> pegarDuvidas(Activity activity){
+    public ArrayList<Duvida> pegarDuvidasPorIdSubtopico(Activity activity, int id_subtopico){
         activateRealm(activity);
-        RealmResults<Duvida> resultInRealm = realm.where(Duvida.class).findAll();
+        RealmResults<Duvida> resultInRealm = realm.where(Duvida.class).equalTo("id_subtopico", id_subtopico).findAll();
         return castRealmQuery(resultInRealm);
     }
 

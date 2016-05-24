@@ -13,6 +13,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import br.ufc.engsoftware.models.Duvida;
+import br.ufc.engsoftware.tasabido.DuvidaActivity;
 import br.ufc.engsoftware.tasabido.DuvidasActivity;
 import br.ufc.engsoftware.tasabido.R;
 
@@ -58,7 +59,7 @@ public class DuvidaListView {
 
     // Intent para quando clicar no item da lista de matérias ir para a pagina de subtopicos
     private void chamarDuvidaActivity(Context view, Duvida item){
-        Intent intent = new Intent(view, DuvidasActivity.class);
+        Intent intent = new Intent(view, DuvidaActivity.class);
         intent.setAction("br.ufc.engsoftware.tasabido.DUVIDA");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 

@@ -12,6 +12,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 
+import br.ufc.engsoftware.models.Duvida;
 import br.ufc.engsoftware.models.Subtopico;
 import br.ufc.engsoftware.tasabido.DuvidasActivity;
 import br.ufc.engsoftware.tasabido.R;
@@ -60,9 +61,9 @@ public class SubtopicoListView {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         // Passa as informações do subtopico selecionado para poder fazer a pesquisa das duvidas
-        intent.putExtra("NOME", item.getNome_subtopico());
         intent.putExtra("ID_MATERIA", item.getId_materia());
         intent.putExtra("ID_SUBTOPICO", item.getId_subtopico());
+        intent.putExtra("NOME_SUBTOPICO", item.getNome_subtopico());
 
         view.startActivity(intent);
     }

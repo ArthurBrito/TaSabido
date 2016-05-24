@@ -25,10 +25,9 @@ public class SubtopicoBDManager {
 
     public void atualizarSubtopicos(Activity activity, final ArrayList<Subtopico> listaSubtopicosDoServidor){
         activateRealm(activity);
-
         realm.executeTransaction(new Realm.Transaction() {
             @Override
-            public void execute(Realm realm) {
+            public void execute(Realm realmm) {
                 for (Subtopico subtopico : listaSubtopicosDoServidor) {
                         salvarSubtopico(subtopico);
                 }
@@ -56,8 +55,8 @@ public class SubtopicoBDManager {
 
     public ArrayList<Subtopico> pegarSubtopicosPorIdMateria(Activity activity, int id_materia){
         activateRealm(activity);
-        RealmResults<Subtopico> resultInRealm = realm.where(Subtopico.class).equalTo("id_materia", id_materia).findAll();
-        return castRealmQuery(resultInRealm);
+        final RealmResults<Subtopico> results = realm.where(Subtopico.class).equalTo("id_materia", id_materia).findAll();
+        return castRealmQuery(results);
     }
 
     public void deleteTodasSubtopicos(Activity activity){
@@ -73,7 +72,12 @@ public class SubtopicoBDManager {
     // esse metodo verifica se a duvida ja existe no banco de dados
     public boolean subtopicoJaSalvo(int id_subtopico){
         final RealmResults<Subtopico> results = realm.where(Subtopico.class).equalTo("id_subtopico", id_subtopico).findAll();
+
         if (results.size() > 0){
+            Subtopico sub = results.first();
+            int materia = sub.getId_materia();
+            int subtopico = sub.getId_subtopico();
+            String nome = sub.getNome_subtopico();
             return true;
         }else{
             return false;

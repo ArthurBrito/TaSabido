@@ -8,17 +8,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
+import br.ufc.engsoftware.BDLocalManager.DuvidaBDManager;
+import br.ufc.engsoftware.BDLocalManager.SubtopicoBDManager;
 import br.ufc.engsoftware.DAO.DuvidasDAO;
 import br.ufc.engsoftware.DAO.SubtopicosDAO;
 import br.ufc.engsoftware.views.DuvidaListView;
+import br.ufc.engsoftware.views.SubtopicoListView;
 
 
 public class DuvidasActivity extends AppCompatActivity {
 
     // Informaçoes da duvida selecionada
-    String titulo;
-    String descricao;
-    int id_duvida;
+    String nome_subtopico;
     int id_materia;
     int id_subtopico;
 
@@ -37,10 +38,9 @@ public class DuvidasActivity extends AppCompatActivity {
 
         // Pega a intent que chamou essa activity
         Intent intent = getIntent();
-        titulo = intent.getStringExtra("TITULO");
-        descricao = intent.getStringExtra("DESCRICAO");
-        id_duvida = intent.getIntExtra("ID_DUVIDA", 0);
-        id_materia = intent.getIntExtra("ID", 0);
+        nome_subtopico = intent.getStringExtra("NOME_SUBTOPICO");
+        id_subtopico = intent.getIntExtra("ID_SUBTOPICO", 0);
+        id_materia = intent.getIntExtra("ID_MATERIA", 0);
 
         // Seta as configurações da ActionBar
 //        ActionBar ab = getSupportActionBar();
@@ -56,8 +56,15 @@ public class DuvidasActivity extends AppCompatActivity {
     }
 
     private void montarListViewDuvidas(){
+        //pega os subtopicos salvos no banco de dados local pela requisição com o servidor
+        DuvidaBDManager duvidaDB = new DuvidaBDManager();
+        gerenciadorDuvidasLV = new DuvidaListView(listviewDuvidas, this, duvidaDB.pegarDuvidasPorIdSubtopico(this, id_subtopico));
+
+        /* não precisa mais dessa parte porque ele vai pegar do banco de dados local
+        * o DAO só vai pegar as info do servidor no momento que a gente decidir que o app vai sincronizar*/
+        // Monta o ListView com os dados obtidos do web service
         // Executa o AsyncTask responsavel por preencher o ListView de Subtopicos
-        new DuvidasDAO(this, this, listviewDuvidas).execute();
+//        new SubtopicosDAO(this, this, listviewSubtopicos).execute();
     }
 
     public void onClickMonitorias(View view) {
