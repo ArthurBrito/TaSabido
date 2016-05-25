@@ -38,11 +38,6 @@ public class SubtopicosActivity extends AppCompatActivity {
         materia = intent.getStringExtra("MATERIA");
         id_materia = intent.getIntExtra("ID", 0);
 
-        // Seta as configurações da ActionBar
-//        ActionBar ab = getSupportActionBar();
-//        ab.setTitle(materia);
-//        ab.setDisplayHomeAsUpEnabled(true);
-
         // Captura a referencia pro ListView a partir do id
         listviewSubtopicos = (ListView) findViewById(R.id.listview_subtopicos);
 
@@ -63,29 +58,19 @@ public class SubtopicosActivity extends AppCompatActivity {
 //        new SubtopicosDAO(this, this, listviewSubtopicos).execute();
     }
 
-    public void onClickMonitorias(View view) {
+    public void onClickCriarMonitoria(View view) {
         chamarMonitoriaActivity();
-    }
-
-    public void onClickCriarDuvida(View view){
-        Intent intent = new Intent(this, DuvidasActivity.class);
-        startActivity(intent);
-    }
-
-    public void verDuvidas(View view){
-        Intent intent = new Intent(this, DuvidasActivity.class);
-        startActivity(intent);
     }
 
     // Chama a activity de monitoria
     private void chamarMonitoriaActivity(){
-        Intent intent = new Intent(this, MonitoriaActivity.class);
-        intent.setAction("br.ufc.engsoftware.tasabido.MONITORIA");
+        Intent intent = new Intent(this, CriarMonitoriaActivity.class);
+        intent.setAction("br.ufc.engsoftware.tasabido.CRIAR_MONITORIA");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         // Passa o nome da matéria para ser exibido na activity, e o id para pesquisar no banco
-        //intent.putExtra("MATERIA", item.getNome());
-        //intent.putExtra("ID", item.getId());
+        intent.putExtra("MATERIA", materia);
+        intent.putExtra("ID", id_materia);
 
         startActivity(intent);
     }

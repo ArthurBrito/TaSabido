@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 
 import br.ufc.engsoftware.models.Duvida;
@@ -24,14 +25,14 @@ public class SubtopicoListView {
 
     ListView listview;
 
-    public SubtopicoListView(ListView listview, Context view, ArrayList<Subtopico> vector) {
+    public SubtopicoListView(ListView listview, Context view, Vector<Subtopico> vector) {
         this.listview = listview;
 
         setListView(view, vector);
     }
 
     // Seta as configurações do ListView
-    public void setListView(Context view, ArrayList<Subtopico> vector){
+    public void setListView(Context view, Vector<Subtopico> vector){
 
         // Seta o layout e os valores do ListView
         final ArrayAdapter<Subtopico> adapter = new ArrayAdapter<Subtopico>(view,

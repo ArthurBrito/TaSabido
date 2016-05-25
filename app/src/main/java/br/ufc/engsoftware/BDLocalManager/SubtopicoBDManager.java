@@ -2,6 +2,7 @@ package br.ufc.engsoftware.BDLocalManager;
 
 import android.app.Activity;
 import java.util.ArrayList;
+import java.util.Vector;
 
 import br.ufc.engsoftware.models.Materia;
 import br.ufc.engsoftware.models.Subtopico;
@@ -23,7 +24,7 @@ public class SubtopicoBDManager {
         realm = Realm.getInstance(realmConfig);
     }
 
-    public void atualizarSubtopicos(Activity activity, final ArrayList<Subtopico> listaSubtopicosDoServidor){
+    public void atualizarSubtopicos(Activity activity, final Vector<Subtopico> listaSubtopicosDoServidor){
         activateRealm(activity);
         realm.executeTransaction(new Realm.Transaction() {
             @Override
@@ -47,13 +48,13 @@ public class SubtopicoBDManager {
 
 
     /* METODOS PRA PEGAR DUVIDAS SALVAS NO BANDO DE DADOS DO APARELHO */
-    public ArrayList<Subtopico> pegarSubtopicos(Activity activity){
+    public Vector<Subtopico> pegarSubtopicos(Activity activity){
         activateRealm(activity);
         RealmResults<Subtopico> resultInRealm = realm.where(Subtopico.class).findAll();
         return castRealmQuery(resultInRealm);
     }
 
-    public ArrayList<Subtopico> pegarSubtopicosPorIdMateria(Activity activity, int id_materia){
+    public Vector<Subtopico> pegarSubtopicosPorIdMateria(Activity activity, int id_materia){
         activateRealm(activity);
         final RealmResults<Subtopico> results = realm.where(Subtopico.class).equalTo("id_materia", id_materia).findAll();
         return castRealmQuery(results);
@@ -74,18 +75,14 @@ public class SubtopicoBDManager {
         final RealmResults<Subtopico> results = realm.where(Subtopico.class).equalTo("id_subtopico", id_subtopico).findAll();
 
         if (results.size() > 0){
-            Subtopico sub = results.first();
-            int materia = sub.getId_materia();
-            int subtopico = sub.getId_subtopico();
-            String nome = sub.getNome_subtopico();
             return true;
         }else{
             return false;
         }
     }
 
-    public ArrayList<Subtopico> castRealmQuery(RealmResults<Subtopico> resultInRealm){
-        ArrayList<Subtopico> subtopicosLista = new ArrayList<Subtopico>();
+    public Vector<Subtopico> castRealmQuery(RealmResults<Subtopico> resultInRealm){
+        Vector<Subtopico> subtopicosLista = new Vector<Subtopico>();
         for (Subtopico subtopico : resultInRealm) {
             subtopicosLista.add(subtopico);
         }

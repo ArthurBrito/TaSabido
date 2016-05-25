@@ -10,15 +10,6 @@
     tools:context=".SubtopicosActivity"
     android:orientation="vertical">
 
-    <!--&lt;!&ndash; Botão Monitorias &ndash;&gt;-->
-    <!--<Button-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="center"-->
-        <!--android:layout_marginBottom="20pt"-->
-        <!--android:text="Monitoria"-->
-        <!--android:onClick="onClickMonitorias"/>-->
-
     <ListView
         android:id="@+id/listview_subtopicos"
         android:layout_width="match_parent"
@@ -32,20 +23,13 @@
         android:orientation="horizontal"
         android:gravity="center">
 
-        <!-- Botao Criar Duvida -->
-        <Button
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="8dp"
-            android:text="@string/btn_criar_duvida"
-            android:onClick="onClickCriarDuvida"/>
-
         <!-- Botão Criar Monitoria -->
         <Button
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:text="@string/btn_criar_monitoria"/>
+            android:layout_gravity="center_horizontal"
+            android:text="@string/btn_criar_monitoria"
+            android:onClick="onClickCriarMonitoria"/>
 
     </LinearLayout>
 

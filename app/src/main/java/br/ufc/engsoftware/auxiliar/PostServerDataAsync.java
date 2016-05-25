@@ -1,6 +1,9 @@
 package br.ufc.engsoftware.auxiliar;
 
 import android.os.AsyncTask;
+
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -77,7 +80,10 @@ public class PostServerDataAsync extends AsyncTask<String, String, Void>{
                 response.append(inputLine);
             }
 
-            result = response.toString();
+            JSONObject jsonResponse = new JSONObject(response.toString());
+            String value = jsonResponse.getString("success");
+
+            result = value;
 
             in.close();
         } catch (Exception e) {

@@ -98,8 +98,7 @@ public class LoginActivity extends AppCompatActivity {
         try {
             new PostServerDataAsync(param, new PostServerDataAsync.AsyncResponse(){
                 public void processFinish(String output){
-
-                    if (output.equals("0")){
+                    if (output.equals("true")){
                         Utils.progressDialog.setMessage("Autenticado");
                         Utils.delayMessage();
                         onLoginSuccess();

@@ -6,6 +6,7 @@
     <string name="btn_criar_duvida">Criar Dúvida</string>
     <string name="btn_criar_monitoria">Criar Monitoria</string>
     <string name="title_activity_duvida">DuvidaActivity</string>
+    <string name="title_activity_criar_monitoria">CriarMonitoriaActivity</string>
 </resources>
 
 

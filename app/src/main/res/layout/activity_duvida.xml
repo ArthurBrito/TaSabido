@@ -11,17 +11,18 @@
     android:weightSum="1">
 
 
-    <!--<EditText-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:id="@+id/editText"-->
-        <!--android:layout_gravity="center_vertical"-->
-        <!--android:gravity="center|center_vertical|center_horizontal" />-->
+    <include layout="@layout/content_duvida" />
+    <EditText
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:id="@+id/descricao_duvida"
+        android:layout_gravity="center_vertical"
+        android:gravity="center|center_vertical|center_horizontal" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="New Text"
-        android:id="@+id/textView2"
+        android:id="@+id/titulo_duvida"
         android:gravity="center|top" />
 </LinearLayout>

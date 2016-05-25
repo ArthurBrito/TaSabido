@@ -13,6 +13,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Vector;
 
 import br.ufc.engsoftware.BDLocalManager.SubtopicoBDManager;
 import br.ufc.engsoftware.auxiliar.Statics;
@@ -44,7 +45,7 @@ public class SubtopicosDAO extends AsyncTask<Void, Void, Void> {
     SubtopicoListView gerenciadorSubtopicosLV;
 
     // Lista dos subtopicos obtidos do web service
-    ArrayList<Subtopico> listaSubtopicos;
+    Vector<Subtopico> listaSubtopicos;
 
     // Dialog com barra de progresso mostrado na tela
     ProgressDialog proDialog;
@@ -105,15 +106,19 @@ public class SubtopicosDAO extends AsyncTask<Void, Void, Void> {
     }
 
     // Metodo responsavel por quebrar o JSON em Subtopicos
-    private ArrayList<Subtopico> parseJsonMaterias(String json){
+    private Vector<Subtopico> parseJsonMaterias(String json){
         if (json != null)
         {
             try {
 
-                ArrayList<Subtopico> listarSubtopicos = new ArrayList<>();
+                Vector<Subtopico> listarSubtopicos = new Vector<>();
 
                 // Transforma a string JSON em objeto
                 JSONObject jsonObj = new JSONObject(json);
+
+
+                //tem que bolar a logica do next depois viu
+//                String nextPage = jsonObj.getString("next");
 
                 // Extrai o array results do objeto JSON
                 JSONArray subtopicosJson = jsonObj.getJSONArray("results");
