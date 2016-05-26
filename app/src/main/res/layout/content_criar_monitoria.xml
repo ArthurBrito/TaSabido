@@ -4,7 +4,6 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:fitsSystemWindows="true">
-
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -12,12 +11,6 @@
         android:paddingTop="56dp"
         android:paddingLeft="24dp"
         android:paddingRight="24dp">
-
-        <!--<ImageView android:src="@drawable/logo"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="72dp"-->
-        <!--android:layout_marginBottom="24dp"-->
-        <!--android:layout_gravity="center_horizontal" />-->
 
         <!--  Titulo Label -->
         <android.support.design.widget.TextInputLayout
@@ -45,6 +38,48 @@
                 android:hint="Descricao" />
         </android.support.design.widget.TextInputLayout>
 
+        <Spinner
+            android:id="@+id/spinner_lista_subtopicos"
+            android:layout_width="fill_parent"
+            android:layout_height="150dp"
+            android:gravity="center"/>
+
+        <Spinner
+            android:id="@+id/spinner_lista_subtopicos_dois"
+            android:layout_width="fill_parent"
+            android:layout_height="150dp"
+            android:gravity="center"/>
+
+        <Spinner
+            android:id="@+id/spinner_lista_subtopicos_tres"
+            android:layout_width="fill_parent"
+            android:layout_height="150dp"
+            android:gravity="center"/>
+
+        <Spinner
+            android:id="@+id/spinner_lista_subtopicos_quatro"
+            android:layout_width="fill_parent"
+            android:layout_height="150dp"
+            android:gravity="center"/>
+
+        <TextView android:id="@+id/date_picker"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:text="Escolher Data"
+            android:gravity="center"
+            android:textSize="16dip"
+            android:onClick="escolherData"/>
+
+        <TextView android:id="@+id/time_picker"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:text="Escolher Horário"
+            android:gravity="center"
+            android:textSize="16dip"
+            android:onClick="escolherHorario"/>
+
         <!-- Confirmar Monitoria Button -->
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_confirmar_monitoria"
@@ -55,19 +90,6 @@
             android:padding="12dp"
             android:text="Confirmar Monitoria"/>
 
-
-        <Spinner
-            android:id="@+id/spinner_lista_subtopicos"
-            android:layout_width="fill_parent"
-            android:layout_height="200dp" />
-
-        <TextView android:id="@+id/link_login"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:text="Voltar pra tela de Login"
-            android:gravity="center"
-            android:textSize="16dip"/>
 
     </LinearLayout>
 </ScrollView>
