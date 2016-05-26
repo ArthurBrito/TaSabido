@@ -67,8 +67,13 @@ public class MateriaFragment extends Fragment {
         // Captura referencia pro SearchView
         searchviewMaterias = (SearchView) rootView.findViewById(R.id.searchview_materias);
 
+        listviewMaterias.setTextFilterEnabled(true);
+        Filter filter = gerenciadorMateriasLV.getFilter();
+
+        MateriaSearchView configSearchView = new MateriaSearchView(listviewMaterias, searchviewMaterias, filter);
+
         // Metodo responsável por montar o SearchView das Materias
-        montarSearchViewMaterias();
+        //montarSearchViewMaterias();
 
         return rootView;
     }

@@ -2,6 +2,7 @@ package br.ufc.engsoftware.tasabido;
 
 
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -28,7 +29,6 @@ public class DuvidasActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_duvidas);
 
@@ -39,9 +39,9 @@ public class DuvidasActivity extends AppCompatActivity {
         id_materia = intent.getIntExtra("ID_MATERIA", 0);
 
         // Seta as configurações da ActionBar
-//        ActionBar ab = getSupportActionBar();
-//        ab.setTitle(materia);
-//        ab.setDisplayHomeAsUpEnabled(true);
+        ActionBar ab = getSupportActionBar();
+        ab.setTitle(nome_subtopico);
+        ab.setDisplayHomeAsUpEnabled(true);
 
         // Captura a referencia pro ListView a partir do id
         listviewDuvidas = (ListView) findViewById(R.id.listview_duvidas);

@@ -14,7 +14,7 @@
         <activity android:name=".PaginaPrincipalActivity" />
         <activity
             android:name=".SubtopicosActivity"
-            android:theme="@style/AppTheme.Dark">
+            android:theme="@style/AppTheme.Dark.ActionBar">
             <intent-filter>
                 <action android:name="br.ufc.engsoftware.tasabido.SUBTOPICOS" />
 
@@ -61,7 +61,7 @@
         </activity>
         <activity
             android:name=".DuvidasActivity"
-            android:theme="@style/AppTheme.Dark">
+            android:theme="@style/AppTheme.Dark.ActionBar">
             <intent-filter>
                 <action android:name="br.ufc.engsoftware.tasabido.DUVIDAS" />
 

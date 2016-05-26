@@ -2,6 +2,7 @@ package br.ufc.engsoftware.tasabido;
 
 
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -34,6 +35,11 @@ public class SubtopicosActivity extends AppCompatActivity {
         Intent intent = getIntent();
         materia = intent.getStringExtra("MATERIA");
         id_materia = intent.getIntExtra("ID", 0);
+
+        // Seta as configurações da ActionBar
+        ActionBar ab = getSupportActionBar();
+        ab.setTitle(materia);
+        ab.setDisplayHomeAsUpEnabled(true);
 
         // Captura a referencia pro ListView a partir do id
         listviewSubtopicos = (ListView) findViewById(R.id.listview_subtopicos);
