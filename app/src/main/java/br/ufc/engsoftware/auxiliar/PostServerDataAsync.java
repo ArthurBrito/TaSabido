@@ -12,6 +12,7 @@ import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 
@@ -58,9 +59,8 @@ public class PostServerDataAsync extends AsyncTask<String, String, Void>{
 
             //descomentar quando for fazer requisições pro servidor
 //            HttpsURLConnection.setDefaultSSLSocketFactory(NoSSLv3Factory);
-//            HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+            HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type",
                     "application/x-www-form-urlencoded");
