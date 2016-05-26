@@ -1,6 +1,8 @@
 package br.ufc.engsoftware.BDLocalManager;
 
 import android.app.Activity;
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -17,15 +19,15 @@ public class SubtopicoBDManager {
     private Realm realm;
     private RealmConfiguration realmConfig;
 
-    public void activateRealm (Activity activity){
+    public void activateRealm (Context context){
         // Create the Realm configuration
-        realmConfig = new RealmConfiguration.Builder(activity).deleteRealmIfMigrationNeeded().build();
+        realmConfig = new RealmConfiguration.Builder(context).deleteRealmIfMigrationNeeded().build();
         // Open the Realm for the UI thread.
         realm = Realm.getInstance(realmConfig);
     }
 
-    public void atualizarSubtopicos(Activity activity, final Vector<Subtopico> listaSubtopicosDoServidor){
-        activateRealm(activity);
+    public void atualizarSubtopicos(Context context, final Vector<Subtopico> listaSubtopicosDoServidor){
+        activateRealm(context);
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realmm) {

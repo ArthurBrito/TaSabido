@@ -25,9 +25,5 @@
         style="@style/MyCustomTabLayout"
         app:tabBackground="@drawable/tab_color_selector"/>
 
-    <ListView
-        android:id="@+id/listview_generic"
-        android:layout_width="0dp"
-        android:layout_height="0dp" />
 
 </LinearLayout>

@@ -1,6 +1,7 @@
 package br.ufc.engsoftware.DAO;
 
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import br.ufc.engsoftware.BDLocalManager.MateriaBDManager;
+import br.ufc.engsoftware.BDLocalManager.SubtopicoBDManager;
 import br.ufc.engsoftware.auxiliar.WebRequest;
 import br.ufc.engsoftware.fragments.MateriaFragment;
 import br.ufc.engsoftware.models.Materia;
@@ -27,25 +29,15 @@ import static java.lang.Integer.parseInt;
  */
 public class MateriasDAO extends AsyncTask<Void, Void, Void> {
 
-    // URL para pegar as materias via JSON
-    private static String url = "http://avalan.herokuapp.com/tasabido/listar_materias/?format=json";
-
-    // Referencia ao fragmenta que está sendo mostrado
+    // Referencia ao fragment que está sendo mostrado
     Fragment fragment;
     Context context;
 
     // Referencia ao ListView do MateriaFragment
     ListView listviewMaterias;
 
-    public MateriaListView getGerenciadorMateriasLV() {
-        return gerenciadorMateriasLV;
-    }
-
     // Classe responsável por montar o ListView
     MateriaListView gerenciadorMateriasLV;
-
-    // Lista das materias obbtidas do web service
-    ArrayList<Materia> listaMaterias;
 
     // Dialog com barra de progresso mostrado na tela
     ProgressDialog proDialog;
@@ -62,28 +54,16 @@ public class MateriasDAO extends AsyncTask<Void, Void, Void> {
         super.onPreExecute();
         // Showing progress loading dialog
         proDialog = new ProgressDialog(context);
-        proDialog.setMessage("Carregando Informações...");
+        proDialog.setMessage("Carregando Matérias...");
         proDialog.setCancelable(false);
         proDialog.show();
     }
 
-    // Pega o JSON do web service com a lista de materias
+    // Monta ListView com os dados do BD local
     @Override
     protected Void doInBackground(Void... arg0) {
-        String jsonStr = null;
 
-        // Fazendo requisição para o web service pelo metodo estatico httpGet
-        try {
-            jsonStr = WebRequest.httpGet(url);
-        } catch (IOException e) {
-            /** TODO analizar o tratamento de erro */
-            e.printStackTrace();
-        }
 
-        Log.d("Response: ", "> " + jsonStr);
-
-        // Monta a lista de materias
-        listaMaterias = parseJsonMaterias(jsonStr);
 
         return null;
     }
@@ -96,53 +76,15 @@ public class MateriasDAO extends AsyncTask<Void, Void, Void> {
         if (proDialog.isShowing())
             proDialog.dismiss();
 
-        //atualiza o banco de dados local com os dados vindos do servidor
-        MateriaBDManager sinc = new MateriaBDManager();
-        sinc.atualizarMaterias(fragment.getActivity(), listaMaterias);
-
-        // Monta o ListView com os dados obtidos do web service
-        gerenciadorMateriasLV = new MateriaListView(listviewMaterias, context, listaMaterias);
+        MateriaBDManager materiaDB = new MateriaBDManager();
+        gerenciadorMateriasLV = new MateriaListView(listviewMaterias, context, materiaDB.pegarMaterias(context));
 
         // Chama o metodo do MateriaFragment responsavel por configurar o SearchView
         ((MateriaFragment)fragment).montarSearchViewMaterias();
     }
 
-    // Metodo responsavel por quebrar o JSON em Materias
-    private ArrayList<Materia> parseJsonMaterias(String json){
-        if (json != null)
-        {
-            try {
-
-                ArrayList<Materia> listaMaterias = new ArrayList<Materia>();
-
-                // Transforma a string JSON em objeto
-                JSONObject jsonObj = new JSONObject(json);
-
-                // Extrai o array results do objeto JSON
-                JSONArray materiasJson = jsonObj.getJSONArray("results");
-
-                // Percorrendo todas as Materias
-                for (int i = 0; i < materiasJson.length(); i++)
-                {
-                    // Extrai o i-esimo objeto
-                    JSONObject mJson = materiasJson.getJSONObject(i);
-
-                    // Extrai as informações do objeto
-                    int id = parseInt(mJson.getString("id"));
-                    String nome = mJson.getString("nome");
-
-                    // Adiciona a Materia obtida da lista de materias
-                    listaMaterias.add(new Materia(id, nome));
-                }
-                return listaMaterias;
-            } catch (JSONException e) {
-                e.printStackTrace();
-                return null;
-            }
-        } else {
-            Log.e("ServiceHandler", "No data received from HTTP request");
-            return null;
-        }
-
+    public MateriaListView getGerenciadorMateriasLV() {
+        return gerenciadorMateriasLV;
     }
+
 }

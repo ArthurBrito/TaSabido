@@ -11,25 +11,22 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ListView;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import br.ufc.engsoftware.DAO.DuvidasDAO;
-import br.ufc.engsoftware.DAO.PerfilDAO;
-import br.ufc.engsoftware.DAO.SubtopicosDAO;
 import br.ufc.engsoftware.fragments.GpsFragment;
 import br.ufc.engsoftware.fragments.MateriaFragment;
 import br.ufc.engsoftware.fragments.PerfilFragment;
 import br.ufc.engsoftware.models.Perfil;
-import br.ufc.engsoftware.views.SubtopicoListView;
+import br.ufc.engsoftware.serverDAO.GetDuvidasServer;
+import br.ufc.engsoftware.serverDAO.GetMateriasServer;
+import br.ufc.engsoftware.serverDAO.GetSubtopicosServer;
 
 
 public class PaginaPrincipalActivity extends FragmentActivity {
-    JSONObject obj;
-    ArrayList<Perfil> arrayPerfilList;
+
     /******************* A T E N Ç Ã O *******************/
 
     /* As alterações de cada página NÃO devem ser feitas aqui.
@@ -50,12 +47,9 @@ public class PaginaPrincipalActivity extends FragmentActivity {
      */
 
 
-    // Referencia para o ListView da interface
-    ListView listviewGenerica;
 
-    // Estado do ListView e suas informações
-    SubtopicoListView gerenciadorSubtopicosLV;
-
+    JSONObject obj;
+    ArrayList<Perfil> arrayPerfilList;
 
     // Nome do arquivo de preferencias compartilhadas
     public static final String PREFERENCES_FILE_NAME = "TaSabidoSharedPreferences";
@@ -84,7 +78,6 @@ public class PaginaPrincipalActivity extends FragmentActivity {
         tabLayout.setupWithViewPager(mPager);
 
 
-        listviewGenerica = (ListView) findViewById(R.id.listview_generic);
         sincronizarInfo();
 
         // Muda o layout das abas para colocar os ícones
@@ -164,11 +157,11 @@ public class PaginaPrincipalActivity extends FragmentActivity {
 
     }
 
-
-
+    // Baixando dados do servidor e salvando no BD local
     public void sincronizarInfo(){
-        new SubtopicosDAO(this, this, listviewGenerica).execute();
-        new DuvidasDAO(this, this, listviewGenerica).execute();
+        new GetMateriasServer(this).execute();
+        new GetSubtopicosServer(this).execute();
+        new GetDuvidasServer(this).execute();
     }
 
 }

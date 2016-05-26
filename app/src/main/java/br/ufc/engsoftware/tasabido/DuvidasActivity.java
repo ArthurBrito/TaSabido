@@ -9,11 +9,7 @@ import android.view.View;
 import android.widget.ListView;
 
 import br.ufc.engsoftware.BDLocalManager.DuvidaBDManager;
-import br.ufc.engsoftware.BDLocalManager.SubtopicoBDManager;
-import br.ufc.engsoftware.DAO.DuvidasDAO;
-import br.ufc.engsoftware.DAO.SubtopicosDAO;
 import br.ufc.engsoftware.views.DuvidaListView;
-import br.ufc.engsoftware.views.SubtopicoListView;
 
 
 public class DuvidasActivity extends AppCompatActivity {
@@ -60,11 +56,6 @@ public class DuvidasActivity extends AppCompatActivity {
         DuvidaBDManager duvidaDB = new DuvidaBDManager();
         gerenciadorDuvidasLV = new DuvidaListView(listviewDuvidas, this, duvidaDB.pegarDuvidasPorIdSubtopico(this, id_subtopico));
 
-        /* não precisa mais dessa parte porque ele vai pegar do banco de dados local
-        * o DAO só vai pegar as info do servidor no momento que a gente decidir que o app vai sincronizar*/
-        // Monta o ListView com os dados obtidos do web service
-        // Executa o AsyncTask responsavel por preencher o ListView de Subtopicos
-//        new SubtopicosDAO(this, this, listviewSubtopicos).execute();
     }
 
     public void onClickMonitorias(View view) {

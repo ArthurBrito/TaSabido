@@ -1,6 +1,8 @@
 package br.ufc.engsoftware.BDLocalManager;
 
 import android.app.Activity;
+import android.content.Context;
+
 import java.util.ArrayList;
 
 import br.ufc.engsoftware.models.Duvida;
@@ -16,15 +18,15 @@ public class MateriaBDManager {
     private Realm realm;
     private RealmConfiguration realmConfig;
 
-    public void activateRealm (Activity activity){
+    public void activateRealm (Context context){
         // Create the Realm configuration
-        realmConfig = new RealmConfiguration.Builder(activity).deleteRealmIfMigrationNeeded().build();
+        realmConfig = new RealmConfiguration.Builder(context).deleteRealmIfMigrationNeeded().build();
         // Open the Realm for the UI thread.
         realm = Realm.getInstance(realmConfig);
     }
 
-    public void atualizarMaterias(Activity activity, final ArrayList<Materia> listaMateriasDoServidor){
-        activateRealm(activity);
+    public void atualizarMaterias(Context context, final ArrayList<Materia> listaMateriasDoServidor){
+        activateRealm(context);
 
         realm.executeTransaction(new Realm.Transaction() {
             @Override
@@ -47,8 +49,8 @@ public class MateriaBDManager {
 
 
     /* METODOS PRA PEGAR DUVIDAS SALVAS NO BANDO DE DADOS DO APARELHO */
-    public ArrayList<Materia> pegarMaterias(Activity activity){
-        activateRealm(activity);
+    public ArrayList<Materia> pegarMaterias(Context context){
+        activateRealm(context);
         RealmResults<Materia> resultInRealm = realm.where(Materia.class).findAll();
         return castRealmQuery(resultInRealm);
     }

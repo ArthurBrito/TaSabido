@@ -12,12 +12,13 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import com.squareup.picasso.Picasso;
+
+import br.ufc.engsoftware.BDLocalManager.MateriaBDManager;
 import br.ufc.engsoftware.views.MateriaListView;
 import br.ufc.engsoftware.views.MateriaSearchView;
 import br.ufc.engsoftware.tasabido.PaginaPrincipalActivity;
 import br.ufc.engsoftware.tasabido.R;
 import br.ufc.engsoftware.views.RoundedImageView;
-import br.ufc.engsoftware.DAO.MateriasDAO;
 
 /**
  * Created by Thiago on 09/05/2016.
@@ -33,13 +34,10 @@ public class MateriaFragment extends Fragment {
     // Estado do ListView e suas informações
     MateriaListView gerenciadorMateriasLV;
 
-
     // Referencia para os elementos da barra de usuario
     RoundedImageView rivFotoUsuario;
     TextView tvNomeUsuario;
     TextView tvEmailUsuario;
-
-    MateriasDAO getMaterias;
 
 
     // Método principal do fragment, respectivo ao onCreate nas activities
@@ -63,19 +61,21 @@ public class MateriaFragment extends Fragment {
         // Insere os dados da barra de usuario
         setarBarraUsuario();
 
-        //Metodo responsável por montar o ListView das Dúvidas
+        // Metodo responsável por montar o ListView das Materias
         montarListViewMaterias();
 
         // Captura referencia pro SearchView
         searchviewMaterias = (SearchView) rootView.findViewById(R.id.searchview_materias);
 
+        // Metodo responsável por montar o SearchView das Materias
+        montarSearchViewMaterias();
+
         return rootView;
     }
 
-    // Metodo chamado pelo AsyncTask ao terminar de montar o ListView de Materias
+
     // Esse metodo configura o SearchView
     public void montarSearchViewMaterias(){
-        gerenciadorMateriasLV = getMaterias.getGerenciadorMateriasLV();
 
         listviewMaterias.setTextFilterEnabled(true);
         Filter filter = gerenciadorMateriasLV.getFilter();
@@ -83,10 +83,11 @@ public class MateriaFragment extends Fragment {
         MateriaSearchView configSearchView = new MateriaSearchView(listviewMaterias, searchviewMaterias, filter);
     }
 
+    // Monta o ListView Materias com os dados do BD local
     private void montarListViewMaterias(){
-        // Executa o AsyncTask responsavel por preencher o ListView de materias
-        getMaterias = new MateriasDAO(getContext(), listviewMaterias, this);
-        getMaterias.execute();
+
+        MateriaBDManager materiaDB = new MateriaBDManager();
+        gerenciadorMateriasLV = new MateriaListView(listviewMaterias, getContext(), materiaDB.pegarMaterias(getContext()));
 
     }
 

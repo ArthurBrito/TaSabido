@@ -1,6 +1,7 @@
 package br.ufc.engsoftware.BDLocalManager;
 
 import android.app.Activity;
+import android.content.Context;
 
 import java.util.ArrayList;
 
@@ -16,15 +17,15 @@ public class DuvidaBDManager {
     private Realm realm;
     private RealmConfiguration realmConfig;
 
-    public void activateRealm (Activity activity){
+    public void activateRealm (Context context){
         // Create the Realm configuration
-        realmConfig = new RealmConfiguration.Builder(activity).deleteRealmIfMigrationNeeded().build();
+        realmConfig = new RealmConfiguration.Builder(context).deleteRealmIfMigrationNeeded().build();
         // Open the Realm for the UI thread.
         realm = Realm.getInstance(realmConfig);
     }
 
-    public void atualizarDuvidas(Activity activity, final ArrayList<Duvida> listaDuvidasDoServidor){
-        activateRealm(activity);
+    public void atualizarDuvidas(Context context, final ArrayList<Duvida> listaDuvidasDoServidor){
+        activateRealm(context);
 
         realm.executeTransaction(new Realm.Transaction() {
             @Override
