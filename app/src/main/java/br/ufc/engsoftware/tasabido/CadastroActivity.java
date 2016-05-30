@@ -14,6 +14,7 @@ import br.ufc.engsoftware.auxiliar.PostServerDataAsync;
 import br.ufc.engsoftware.auxiliar.Statics;
 import br.ufc.engsoftware.auxiliar.Utils;
 import br.ufc.engsoftware.models.Perfil;
+import br.ufc.engsoftware.serverDAO.PostCadastroUsuario;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -71,18 +72,19 @@ public class CadastroActivity extends AppCompatActivity {
         String param = concatenateParam(perfil);
 
         // TODO: Implement your own signup logic here.
-        new PostServerDataAsync(param, new PostServerDataAsync.AsyncResponse(){
-            public void processFinish(String output){
 
-                if (output.equals("0")){
-//                    Toast.makeText(getBaseContext(), "Cadastro Realizado", Toast.LENGTH_LONG).show();
-                    Utils.progressDialog.setMessage("Cadastrado com Sucesso");
+        new PostCadastroUsuario(param, new PostCadastroUsuario.AsyncResponse(){
+            public void processFinish(String output, String mensagem){
+
+                if (output.equals("true")){
+                    Utils.progressDialog.setMessage(mensagem);
                     Utils.delayMessage();
+                    finish();
 
                     Intent myIntent = new Intent(CadastroActivity.this, LoginActivity.class);
                     CadastroActivity.this.startActivity(myIntent);
                 }else{
-                    Utils.progressDialog.setMessage("Cadastrado não efetuado");
+                    Utils.progressDialog.setMessage(mensagem);
                     Utils.delayMessage();
                     _signupButton.setEnabled(true);
                 }

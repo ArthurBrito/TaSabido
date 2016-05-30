@@ -13,7 +13,7 @@ import br.ufc.engsoftware.BDLocalManager.SubtopicoBDManager;
 import br.ufc.engsoftware.views.SubtopicoListView;
 
 
-public class SubtopicosActivity extends AppCompatActivity {
+public class ListaSubtopicosActivity extends AppCompatActivity {
 
     // Informaçoes da materia selecionada
     String materia;
@@ -37,9 +37,9 @@ public class SubtopicosActivity extends AppCompatActivity {
         id_materia = intent.getIntExtra("ID", 0);
 
         // Seta as configurações da ActionBar
-        ActionBar ab = getSupportActionBar();
-        ab.setTitle(materia);
-        ab.setDisplayHomeAsUpEnabled(true);
+//        ActionBar ab = getSupportActionBar();
+//        ab.setTitle(materia);
+//        ab.setDisplayHomeAsUpEnabled(true);
 
         // Captura a referencia pro ListView a partir do id
         listviewSubtopicos = (ListView) findViewById(R.id.listview_subtopicos);

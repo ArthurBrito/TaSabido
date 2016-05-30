@@ -4,12 +4,15 @@
     <string name="title_activity_cadastro">CadastroActivity</string>
     <string name="title_activity_criar_duvidas">CriarDuvidasActivity</string>
     <string name="btn_criar_duvida">Criar Dúvida</string>
+    <string name="btn_ver_monitorias">Ver Monitorias</string>
+    <string name="btn_atualizar_duvida">Atualizar Duvida</string>
     <string name="btn_criar_monitoria">Criar Monitoria</string>
     <string name="title_activity_duvida">DuvidaActivity</string>
     <string name="title_activity_criar_monitoria">CriarMonitoriaActivity</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_lista_monitorias">ListaMonitoriasActivity</string>
 </resources>
 
 

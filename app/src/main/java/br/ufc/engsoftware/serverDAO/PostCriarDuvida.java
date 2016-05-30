@@ -1,4 +1,4 @@
-package br.ufc.engsoftware.auxiliar;
+package br.ufc.engsoftware.serverDAO;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -7,7 +7,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -19,27 +18,30 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 
+import br.ufc.engsoftware.auxiliar.NoSSLv3SocketFactory;
 
-public class PostServerDataAsync extends AsyncTask<String, String, Void>{
-    static String result;
+
+public class PostCriarDuvida extends AsyncTask<String, String, Void>{
+    static String result, mensagem;
+    int id_duvida_criada;
     public String param;
     private Context context;
 
     // you may separate this or combined to caller class.
     public interface AsyncResponse {
-        void processFinish(String output);
+        void processFinish(String output, int id_duvida_criada, String mensagem);
     }
 
 
     public AsyncResponse delegate = null;
 
-    public PostServerDataAsync(Context context, String param, AsyncResponse delegate){
+    public PostCriarDuvida(Context context, String param, AsyncResponse delegate){
         this.delegate = delegate;
         this.param = param;
         this.context = context;
     }
 
-    public PostServerDataAsync(String param, AsyncResponse delegate){
+    public PostCriarDuvida(String param, AsyncResponse delegate){
         this.delegate = delegate;
         this.param = param;
     }
@@ -82,7 +84,6 @@ public class PostServerDataAsync extends AsyncTask<String, String, Void>{
 
             int responseCode = connection.getResponseCode();
 
-            InputStream error = ((HttpURLConnection) connection).getErrorStream();
             BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             String inputLine;
             StringBuffer response = new StringBuffer();
@@ -93,16 +94,12 @@ public class PostServerDataAsync extends AsyncTask<String, String, Void>{
 
             JSONObject jsonResponse = new JSONObject(response.toString());
             String value = jsonResponse.getString("success");
-
-
-            //salva o id do usuario no shared preferences
-            if (value.equals("true")){
-                String id_usuario = jsonResponse.getString("id");
-                Utils u = new Utils(context);
-                u.saveInSharedPreferences("id_usuario", id_usuario);
-            }
+            String mensagemResponse = jsonResponse.getString("message");
+            int id_duvida = jsonResponse.getInt("id_duvida");
 
             result = value;
+            mensagem = mensagemResponse;
+            id_duvida_criada = id_duvida;
 
             in.close();
         } catch (Exception e) {
@@ -115,7 +112,7 @@ public class PostServerDataAsync extends AsyncTask<String, String, Void>{
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        delegate.processFinish(result);
+        delegate.processFinish(result, id_duvida_criada, mensagem);
 
     }
 }

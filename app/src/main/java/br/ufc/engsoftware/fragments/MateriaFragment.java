@@ -66,6 +66,7 @@ public class MateriaFragment extends Fragment {
 
         // Captura referencia pro SearchView
         searchviewMaterias = (SearchView) rootView.findViewById(R.id.searchview_materias);
+        searchviewMaterias.clearFocus();
 
         listviewMaterias.setTextFilterEnabled(true);
         Filter filter = gerenciadorMateriasLV.getFilter();
@@ -122,7 +123,6 @@ public class MateriaFragment extends Fragment {
                 Picasso.with(context).load(fotoUsuario).into(rivFotoUsuario);
             }
         });
-
     }
 
     @Override

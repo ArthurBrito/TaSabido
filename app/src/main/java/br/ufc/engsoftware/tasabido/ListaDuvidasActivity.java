@@ -2,6 +2,7 @@ package br.ufc.engsoftware.tasabido;
 
 
 import android.content.Intent;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,10 +11,12 @@ import android.view.View;
 import android.widget.ListView;
 
 import br.ufc.engsoftware.BDLocalManager.DuvidaBDManager;
+import br.ufc.engsoftware.fragments.DatePickerFragment;
+import br.ufc.engsoftware.fragments.TimePickerFragment;
 import br.ufc.engsoftware.views.DuvidaListView;
 
 
-public class DuvidasActivity extends AppCompatActivity {
+public class ListaDuvidasActivity extends AppCompatActivity {
 
     // Informaçoes da duvida selecionada
     String nome_subtopico;
@@ -39,9 +42,9 @@ public class DuvidasActivity extends AppCompatActivity {
         id_materia = intent.getIntExtra("ID_MATERIA", 0);
 
         // Seta as configurações da ActionBar
-        ActionBar ab = getSupportActionBar();
-        ab.setTitle(nome_subtopico);
-        ab.setDisplayHomeAsUpEnabled(true);
+//        ActionBar ab = getSupportActionBar();
+//        ab.setTitle(nome_subtopico);
+//        ab.setDisplayHomeAsUpEnabled(true);
 
         // Captura a referencia pro ListView a partir do id
         listviewDuvidas = (ListView) findViewById(R.id.listview_duvidas);
@@ -58,30 +61,12 @@ public class DuvidasActivity extends AppCompatActivity {
 
     }
 
-    public void onClickMonitorias(View view) {
-        chamarMonitoriaActivity();
-    }
-
-    public void onClickCriarDuvida(View view){
-        Intent intent = new Intent(this, DuvidasActivity.class);
-        startActivity(intent);
-    }
-
-    public void verDuvidas(View view){
-        Intent intent = new Intent(this, DuvidasActivity.class);
-        startActivity(intent);
-    }
-
-    // Chama a activity de monitoria
-    private void chamarMonitoriaActivity(){
-        Intent intent = new Intent(this, MonitoriaActivity.class);
-        intent.setAction("br.ufc.engsoftware.tasabido.MONITORIA");
+    public void onClickChamarCriarDuvida(View view){
+        Intent intent = new Intent(this, CriarDuvidaActivity.class);
+        intent.setAction("br.ufc.engsoftware.tasabido.CRIAR_DUVIDA");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-        // Passa o nome da matéria para ser exibido na activity, e o id para pesquisar no banco
-        //intent.putExtra("MATERIA", item.getNome());
-        //intent.putExtra("ID", item.getId());
-
+        intent.putExtra("ID_SUBTOPICO", id_subtopico);
+        intent.putExtra("ID_MATERIA", id_materia);
         startActivity(intent);
     }
 
@@ -94,5 +79,15 @@ public class DuvidasActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void onClickChamarVerMonitorias(View view){
+        Intent intent = new Intent(this, ListaMonitoriasActivity.class);
+        intent.setAction("br.ufc.engsoftware.tasabido.CRIAR_DUVIDA");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("NOME_SUBTOPICO", nome_subtopico);
+        intent.putExtra("ID_SUBTOPICO", id_subtopico);
+        intent.putExtra("ID_MATERIA", id_materia);
+        startActivity(intent);
     }
 }

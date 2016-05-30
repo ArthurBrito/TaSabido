@@ -2,9 +2,7 @@ package br.ufc.engsoftware.BDLocalManager;
 
 import android.app.Activity;
 import android.content.Context;
-
-import java.util.ArrayList;
-
+import java.util.Vector;
 import br.ufc.engsoftware.models.Duvida;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -14,83 +12,110 @@ import io.realm.RealmResults;
  * Created by limaneto on 21/05/16.
  */
 public class DuvidaBDManager {
-    private Realm realm;
-    private RealmConfiguration realmConfig;
+        private Realm realm;
+        private RealmConfiguration realmConfig;
+        private Context context;
 
-    public void activateRealm (Context context){
-        // Create the Realm configuration
-        realmConfig = new RealmConfiguration.Builder(context).deleteRealmIfMigrationNeeded().build();
-        // Open the Realm for the UI thread.
-        realm = Realm.getInstance(realmConfig);
-    }
+        public DuvidaBDManager(){
 
-    public void atualizarDuvidas(Context context, final ArrayList<Duvida> listaDuvidasDoServidor){
-        activateRealm(context);
+        }
 
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                for (Duvida duvida: listaDuvidasDoServidor) {
-                    salvarDuvida(duvida);
+        public DuvidaBDManager(Context context){
+            this.context = context;
+        }
+
+        public void activateRealm (Context context){
+            // Create the Realm configuration
+            this.context = context;
+            realmConfig = new RealmConfiguration.Builder(context).deleteRealmIfMigrationNeeded().build();
+            // Open the Realm for the UI thread.
+            realm = Realm.getInstance(realmConfig);
+        }
+
+        public void atualizarDuvidas(Context context, final Vector<Duvida> listaDuvidasDoServidor){
+            activateRealm(context);
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realmm) {
+                    for (Duvida duvida : listaDuvidasDoServidor) {
+                        salvarDuvida(duvida);
+                    }
+
                 }
+            });
+        }
+
+        // Salva subtopico ao banco de dados local caso não exista
+        public void salvarDuvida(Duvida duvidaParam){
+                activateRealm(context);
+            if (!duvidaJaSalva(duvidaParam.getId_duvida())) {
+                Duvida duvida = realm.createObject(Duvida.class);
+                duvida.setTitulo(duvidaParam.getTitulo());
+                duvida.setDescricao(duvidaParam.getDescricao());
+                duvida.setId_usuario(duvidaParam.getId_usuario());
+                duvida.setId_subtopico(duvidaParam.getId_subtopico());
+                duvida.setId_materia(duvidaParam.getId_materia());
+                duvida.setId_duvida(duvidaParam.getId_duvida());
             }
-        });
-    }
-
-    // Adicionar duvida ao banco de dados local caso não exista
-    public void salvarDuvida(Duvida duvidaParam){
-        if (!duvidaJaSalva(duvidaParam.getId_duvida())) {
-            Duvida duvida = realm.createObject(Duvida.class);
-            duvida.setId_duvida(duvidaParam.getId_duvida());
-            duvida.setId_usuario(duvidaParam.getId_usuario());
-            duvida.setId_materia(duvidaParam.getId_materia());
-            duvida.setId_subtopico(duvidaParam.getId_subtopico());
-            duvida.setTitulo(duvidaParam.getTitulo());
-            duvida.setDescricao(duvidaParam.getDescricao());
         }
-    }
 
+        /* METODOS PRA PEGAR DUVIDAS SALVAS NO BANDO DE DADOS DO APARELHO */
+        public Vector<Duvida> pegarDuvidas(Context context){
+            activateRealm(context);
+            RealmResults<Duvida> resultInRealm = realm.where(Duvida.class).findAll();
+            return castRealmQuery(resultInRealm);
+        }
 
-    /* METODOS PRA PEGAR DUVIDAS SALVAS NO BANDO DE DADOS DO APARELHO */
-    public ArrayList<Duvida> pegarDuvidasPorIdSubtopico(Activity activity, int id_subtopico){
-        activateRealm(activity);
-        RealmResults<Duvida> resultInRealm = realm.where(Duvida.class).equalTo("id_subtopico", id_subtopico).findAll();
-        return castRealmQuery(resultInRealm);
-    }
+        public Vector<Duvida> pegarDuvidasPorIdUsuario(Activity activity, int id_usuario){
+            activateRealm(activity);
+            final RealmResults<Duvida> results = realm.where(Duvida.class).equalTo("id_usuario", id_usuario).findAll();
+            return castRealmQuery(results);
+        }
 
-    public ArrayList<Duvida> pegarDuvidasUsuario(Activity activity, int id_usuario){
-        activateRealm(activity);
-        RealmResults<Duvida> resultInRealm = realm.where(Duvida.class).equalTo("id_usuario", id_usuario).findAll();
-        return castRealmQuery(resultInRealm);
-    }
+         public Vector<Duvida> pegarDuvidasPorIdSubtopico(Activity activity, int id_subtopico){
+            activateRealm(activity);
+            final RealmResults<Duvida> results = realm.where(Duvida.class).equalTo("id_subtopico", id_subtopico).findAll();
+            return castRealmQuery(results);
+        }
 
-    public void deleteTodasDuvidas(Activity activity){
-        activateRealm(activity);
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                realm.delete(Duvida.class);
+        public void deleteTodasDuvidas(Activity activity){
+            activateRealm(activity);
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    realm.delete(Duvida.class);
+                }
+            });
+        }
+
+        public void deleteDuvidaPorIdDuvida(Activity activity, final int id_duvida){
+            activateRealm(activity);
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    final RealmResults<Duvida> results = realm.where(Duvida.class).equalTo("id_duvida", id_duvida).findAll();
+                    results.deleteAllFromRealm();
+                }
+            });
+        }
+
+        // esse metodo verifica se a duvida ja existe no banco de dados
+        public boolean duvidaJaSalva(int id_duvida){
+            final RealmResults<Duvida> results = realm.where(Duvida.class).equalTo("id_duvida", id_duvida).findAll();
+            if (results.size() > 0){
+                return true;
+            }else{
+                return false;
             }
-        });
-    }
+        }
 
-    // esse metodo verifica se a duvida ja existe no banco de dados
-    public boolean duvidaJaSalva(int id_duvidaParam){
-
-        final RealmResults<Duvida> results = realm.where(Duvida.class).equalTo("id_duvida", id_duvidaParam).findAll();
-
-        if (results.size() > 0){
-            return true;
-        }else{
-            return false;
+        public Vector<Duvida> castRealmQuery(RealmResults<Duvida> resultInRealm){
+            Vector<Duvida> duvidasLista = new Vector<Duvida>();
+            for (Duvida duvida : resultInRealm) {
+                String titulo = duvida.getTitulo();
+                int id_duvida = duvida.getId_duvida();
+                duvidasLista.add(duvida);
+            }
+            return duvidasLista;
         }
     }
-
-    public ArrayList<Duvida> castRealmQuery(RealmResults<Duvida> resultInRealm){
-        ArrayList<Duvida> duvidasLista = new ArrayList<Duvida>();
-        for (Duvida duvida : resultInRealm) {
-            duvidasLista.add(duvida);
-        }
-        return duvidasLista;
-    }
-}

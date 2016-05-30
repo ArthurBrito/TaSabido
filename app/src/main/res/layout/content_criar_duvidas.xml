@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="30dp">
             <EditText android:id="@+id/descricao"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -37,13 +37,14 @@
                 android:hint="Descricao"/>
         </android.support.design.widget.TextInputLayout>
 
-        <android.support.v7.widget.AppCompatButton
+        <Button
             android:id="@+id/btn_criar_duvida"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
             android:padding="12dp"
-            android:text="Criar Dúvida"/>
+            android:text="Confirmar"
+            android:onClick="onClickConfirmarDuvida"/>
     </LinearLayout>
 </ScrollView>

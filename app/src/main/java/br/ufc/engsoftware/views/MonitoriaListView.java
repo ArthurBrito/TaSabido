@@ -12,31 +12,31 @@ import android.widget.ListView;
 
 import java.util.Vector;
 
-import br.ufc.engsoftware.models.Duvida;
-import br.ufc.engsoftware.tasabido.DuvidaActivity;
+import br.ufc.engsoftware.models.Monitoria;
+import br.ufc.engsoftware.tasabido.MonitoriaActivity;
 import br.ufc.engsoftware.tasabido.R;
 
 /**
  * Created by Thiago on 14/05/2016.
  */
-public class DuvidaListView {
+public class MonitoriaListView {
 
     ListView listview;
     Filter filter;
 
 
-    public DuvidaListView(ListView listview, Context view, Vector<Duvida> vector) {
+    public MonitoriaListView(ListView listview, Context view, Vector<Monitoria> vector) {
         this.listview = listview;
 
         setListView(view, vector);
     }
 
     // Seta as configurações do ListView
-    public void setListView(Context view, Vector<Duvida> vector){
+    public void setListView(Context view, Vector<Monitoria> vector){
 
         // Seta o layout e os valores do ListView
-        final ArrayAdapter<Duvida> adapter = new ArrayAdapter<Duvida>(view,
-                R.layout.duvidas_listview_rowlayout, R.id.label_duvida, vector);
+        final ArrayAdapter<Monitoria> adapter = new ArrayAdapter<Monitoria>(view,
+                R.layout.materias_listview_rowlayout, R.id.label, vector);
         listview.setAdapter(adapter);
 
         this.filter = adapter.getFilter();
@@ -49,26 +49,25 @@ public class DuvidaListView {
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
 
-                final Duvida item = (Duvida) parent.getItemAtPosition(position);
-                chamarDuvidaActivity(view.getContext(), item);
+                final Monitoria item = (Monitoria) parent.getItemAtPosition(position);
+                chamarMostrarMonitoriaActivity(view.getContext(), item);
             }
 
         });
     }
 
     // Intent para quando clicar no item da lista de matérias ir para a pagina de subtopicos
-    private void chamarDuvidaActivity(Context view, Duvida item){
-        Intent intent = new Intent(view, DuvidaActivity.class);
-        intent.setAction("br.ufc.engsoftware.tasabido.DUVIDA");
+    private void chamarMostrarMonitoriaActivity(Context view, Monitoria item){
+        Intent intent = new Intent(view, MonitoriaActivity.class);
+        intent.setAction("br.ufc.engsoftware.tasabido.LISTA_MONITORIA");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         // Passa o nome da matéria para ser exibido na activity, e o id para pesquisar no banco
         intent.putExtra("TITULO", item.getTitulo());
         intent.putExtra("DESCRICAO", item.getDescricao());
+        intent.putExtra("DATA", item.getData());
+        intent.putExtra("ID_MONITORIA", item.getId_monitoria());
         intent.putExtra("ID_MATERIA", item.getId_materia());
-        intent.putExtra("ID_SUBTOPICO", item.getId_subtopico());
-        intent.putExtra("ID", item.getId_duvida());
-
         view.startActivity(intent);
     }
 

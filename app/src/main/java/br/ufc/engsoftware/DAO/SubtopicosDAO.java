@@ -38,7 +38,7 @@ public class SubtopicosDAO extends AsyncTask<Void, Void, Void> {
     //Activiy the chamou essa classe
     Activity activity;
 
-    // Referencia ao ListView do SubtopicosActivity
+    // Referencia ao ListView do ListaSubtopicosActivity
     ListView listviewSubtopicos;
 
     // Classe responsável por montar o ListView
@@ -98,6 +98,8 @@ public class SubtopicosDAO extends AsyncTask<Void, Void, Void> {
 
         //atualiza o banco de dados local com os dados vindos do servidor
         SubtopicoBDManager sinc = new SubtopicoBDManager();
+        if (listaSubtopicos == null)
+            listaSubtopicos = new Vector<>();
         sinc.atualizarSubtopicos(activity, listaSubtopicos);
 
         // Monta o ListView com os dados obtidos do web service

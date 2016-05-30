@@ -13,6 +13,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Vector;
 
 import br.ufc.engsoftware.BDLocalManager.DuvidaBDManager;
 import br.ufc.engsoftware.auxiliar.Statics;
@@ -35,7 +36,7 @@ public class GetDuvidasServer extends AsyncTask<Void, Void, Void> {
     Context context;
 
     // Lista dos subtopicos obtidos do web service
-    ArrayList<Duvida> listaDuvidas;
+    Vector<Duvida> listaDuvidas;
 
     // Dialog com barra de progresso mostrado na tela
     ProgressDialog proDialog;
@@ -86,17 +87,19 @@ public class GetDuvidasServer extends AsyncTask<Void, Void, Void> {
 
         //atualiza o banco de dados local com os dados vindos do servidor
         DuvidaBDManager sinc = new DuvidaBDManager();
+        if (listaDuvidas == null)
+            listaDuvidas = new Vector<>();
         sinc.atualizarDuvidas(context, listaDuvidas);
 
     }
 
     // Metodo responsavel por quebrar o JSON em Subtopicos
-    private ArrayList<Duvida> parseJsonDuvidas(String json){
+    private Vector<Duvida> parseJsonDuvidas(String json){
         if (json != null)
         {
             try {
 
-                ArrayList<Duvida> listarDuvidas = new ArrayList<>();
+                Vector<Duvida> listarDuvidas = new Vector<>();
 
                 // Transforma a string JSON em objeto
                 JSONObject jsonObj = new JSONObject(json);

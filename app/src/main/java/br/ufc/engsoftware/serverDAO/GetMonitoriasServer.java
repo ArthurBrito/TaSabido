@@ -1,42 +1,50 @@
 package br.ufc.engsoftware.serverDAO;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.ListView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Vector;
 
-import br.ufc.engsoftware.BDLocalManager.SubtopicoBDManager;
+import br.ufc.engsoftware.BDLocalManager.DuvidaBDManager;
+import br.ufc.engsoftware.BDLocalManager.MonitoriaBDManager;
 import br.ufc.engsoftware.auxiliar.Statics;
 import br.ufc.engsoftware.auxiliar.WebRequest;
-import br.ufc.engsoftware.models.Subtopico;
+import br.ufc.engsoftware.models.Duvida;
+import br.ufc.engsoftware.models.Monitoria;
+import br.ufc.engsoftware.views.DuvidaListView;
+import br.ufc.engsoftware.views.MonitoriaListView;
 
 import static java.lang.Integer.parseInt;
 
 /**
  * Created by Thiago on 26/05/2016.
  */
-public class GetSubtopicosServer extends AsyncTask<Void, Void, Void> {
+public class GetMonitoriasServer extends AsyncTask<Void, Void, Void> {
 
     // URL para pegar os Subtopicos via JSON
-    private static String url = Statics.LISTAR_SUBTOPICOS + "?format=json";
+    // private static String url = "http://avalan.herokuapp.com/tasabido/listar_materias/?format=json";
+    private static String url = Statics.LISTAR_MONITORIAS + "?format=json";
 
     // Contexto da activity que chamou esta classe
     Context context;
 
     // Lista dos subtopicos obtidos do web service
-    Vector<Subtopico> listaSubtopicos;
+    Vector<Monitoria> listaMonitorias;
 
     // Dialog com barra de progresso mostrado na tela
     ProgressDialog proDialog;
 
-    public GetSubtopicosServer(Context context) {
+    public GetMonitoriasServer(Context context) {
         this.context = context;
     }
 
@@ -46,7 +54,7 @@ public class GetSubtopicosServer extends AsyncTask<Void, Void, Void> {
         super.onPreExecute();
         // Showing progress loading dialog
         proDialog = new ProgressDialog(context);
-        proDialog.setMessage("Sincronizando Subtopicos...");
+        proDialog.setMessage("Sincronizando Monitorias...");
         proDialog.setCancelable(false);
         proDialog.show();
     }
@@ -67,7 +75,7 @@ public class GetSubtopicosServer extends AsyncTask<Void, Void, Void> {
         Log.d("Response: ", "> " + jsonStr);
 
         // Monta a lista de subtopicos
-        listaSubtopicos = parseJsonMaterias(jsonStr);
+        listaMonitorias = parseJsonMonitorias(jsonStr);
 
         return null;
     }
@@ -81,46 +89,52 @@ public class GetSubtopicosServer extends AsyncTask<Void, Void, Void> {
             proDialog.dismiss();
 
         //atualiza o banco de dados local com os dados vindos do servidor
-        SubtopicoBDManager sinc = new SubtopicoBDManager();
-        if (listaSubtopicos == null)
-            listaSubtopicos = new Vector<>();
-        sinc.atualizarSubtopicos(context, listaSubtopicos);
+        MonitoriaBDManager sinc = new MonitoriaBDManager();
+        if (listaMonitorias == null)
+            listaMonitorias = new Vector<>();
+        sinc.atualizarMonitorias(context, listaMonitorias);
 
     }
 
     // Metodo responsavel por quebrar o JSON em Subtopicos
-    private Vector<Subtopico> parseJsonMaterias(String json){
+    private Vector<Monitoria> parseJsonMonitorias(String json){
         if (json != null)
         {
             try {
 
-                Vector<Subtopico> listarSubtopicos = new Vector<>();
+                Vector<Monitoria> listarMonitorias = new Vector<>();
 
                 // Transforma a string JSON em objeto
                 JSONObject jsonObj = new JSONObject(json);
 
-                //tem que bolar a logica do next depois viu
-                // String nextPage = jsonObj.getString("next");
-
                 // Extrai o array results do objeto JSON
-                JSONArray subtopicosJson = jsonObj.getJSONArray("results");
+                JSONArray monitoriasJson = jsonObj.getJSONArray("results");
 
                 // Percorrendo todas os Subtopicos
-                for (int i = 0; i < subtopicosJson.length(); i++)
+                for (int i = 0; i < monitoriasJson.length(); i++)
                 {
                     // Extrai o i-esimo objeto
-                    JSONObject sJson = subtopicosJson.getJSONObject(i);
+                    JSONObject sJson = monitoriasJson.getJSONObject(i);
+
+
+                    JSONArray subtopicosJson = sJson.getJSONArray("subtopico");
+                    Vector subtopicos = new Vector();
+                    subtopicos.add(subtopicosJson.get(0));
 
                     // Extrai as informações do objeto
-                    int id_subtopico = parseInt(sJson.getString("id"));
+                    int id_subtopico = (int) subtopicos.get(0);
+                    int id_monitoria = parseInt(sJson.getString("id"));
+                    int id_usuario = parseInt(sJson.getString("usuario"));
                     int id_materia = parseInt(sJson.getString("materia"));
-                    String nome = sJson.getString("nome");
+                    String titulo = sJson.getString("titulo");
+                    String descricao = sJson.getString("descricao");
+                    String data = sJson.getString("data_monitoria");
 
                     // Adiciona o Subtopico obtido da lista de subtopicos
-                    listarSubtopicos.add(new Subtopico(id_subtopico, id_materia, nome));
+                    listarMonitorias.add(new Monitoria(id_monitoria, id_usuario, id_materia, id_subtopico, titulo, descricao, data));
                 }
 
-                return listarSubtopicos;
+                return listarMonitorias;
             } catch (JSONException e) {
                 e.printStackTrace();
                 return null;
@@ -132,4 +146,7 @@ public class GetSubtopicosServer extends AsyncTask<Void, Void, Void> {
 
     }
 
+    public MonitoriaListView getGerenciadorMonitoriasLVLV() {
+        return getGerenciadorMonitoriasLVLV();
+    }
 }

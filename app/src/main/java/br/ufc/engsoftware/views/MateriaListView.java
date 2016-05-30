@@ -10,11 +10,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.ListView;
 
-import java.util.ArrayList;
+import java.util.Vector;
 
 import br.ufc.engsoftware.models.Materia;
+import br.ufc.engsoftware.tasabido.ListaSubtopicosActivity;
 import br.ufc.engsoftware.tasabido.R;
-import br.ufc.engsoftware.tasabido.SubtopicosActivity;
 
 /**
  * Created by Thiago on 14/05/2016.
@@ -25,14 +25,14 @@ public class MateriaListView {
     Filter filter;
 
 
-    public MateriaListView(ListView listview, Context view, ArrayList<Materia> vector) {
+    public MateriaListView(ListView listview, Context view, Vector<Materia> vector) {
         this.listview = listview;
 
         setListView(view, vector);
     }
 
     // Seta as configurações do ListView
-    public void setListView(Context view, ArrayList<Materia> vector){
+    public void setListView(Context view, Vector<Materia> vector){
 
         // Seta o layout e os valores do ListView
         final ArrayAdapter<Materia> adapter = new ArrayAdapter<Materia>(view,
@@ -58,13 +58,13 @@ public class MateriaListView {
 
     // Intent para quando clicar no item da lista de matérias ir para a pagina de subtopicos
     private void chamarSubtopicoActivity(Context view, Materia item){
-        Intent intent = new Intent(view, SubtopicosActivity.class);
+        Intent intent = new Intent(view, ListaSubtopicosActivity.class);
         intent.setAction("br.ufc.engsoftware.tasabido.SUBTOPICOS");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         // Passa o nome da matéria para ser exibido na activity, e o id para pesquisar no banco
         intent.putExtra("MATERIA", item.getNome());
-        intent.putExtra("ID", item.getId());
+        intent.putExtra("ID", item.getId_materia());
         view.startActivity(intent);
     }
 

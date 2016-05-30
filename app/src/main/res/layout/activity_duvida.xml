@@ -7,22 +7,51 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="br.ufc.engsoftware.tasabido.DuvidaActivity"
-    android:weightSum="1">
+    tools:context=".CriarDuvidaActivity"
+    android:orientation="vertical">
 
-
-    <include layout="@layout/content_duvida" />
-    <EditText
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:id="@+id/descricao_duvida"
-        android:layout_gravity="center_vertical"
-        android:gravity="center|center_vertical|center_horizontal" />
-
-    <TextView
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/titulo_duvida"
-        android:gravity="center|top" />
+        android:paddingTop="56dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <EditText android:id="@+id/titulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:hint="Titulo" />
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- Password Label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="30dp">
+            <EditText android:id="@+id/descricao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:hint="Descricao"/>
+        </android.support.design.widget.TextInputLayout>
+
+
+        <!-- Botão Ver Monitoria -->
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/btn_atualizar_duvida"
+            android:onClick="onClickAtualizarDuvida"/>
+
+
+    </LinearLayout>
 </LinearLayout>

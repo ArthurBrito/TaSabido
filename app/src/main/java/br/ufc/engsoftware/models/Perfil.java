@@ -1,5 +1,7 @@
 package br.ufc.engsoftware.models;
 
+import java.util.Vector;
+
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.RealmClass;
@@ -22,7 +24,7 @@ public class Perfil extends RealmObject{
 
 
     //construtor pro login
-    public Perfil(String usuario, String senha){
+    public Perfil(String usuario, String senha) {
         this.usuario = usuario;
         this.senha = senha;
     }

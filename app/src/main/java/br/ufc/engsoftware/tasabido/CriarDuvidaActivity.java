@@ -1,57 +1,63 @@
 package br.ufc.engsoftware.tasabido;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import br.ufc.engsoftware.BDLocalManager.DuvidaBDManager;
+import br.ufc.engsoftware.serverDAO.PostCriarDuvida;
 import br.ufc.engsoftware.auxiliar.Statics;
 import br.ufc.engsoftware.auxiliar.Utils;
 import br.ufc.engsoftware.models.Duvida;
-import br.ufc.engsoftware.serverDAO.PostCriarDuvida;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class DuvidaActivity extends AppCompatActivity {
+public class CriarDuvidaActivity extends AppCompatActivity {
 
-    public int id_duvida, id_materia, id_subtopico;
-    String titulo, descricao;
-    Duvida duvida;
-
+    int id_subtopico;
+    int id_materia;
+    private Duvida duvida;
+//    @InjectView(R.id.time_picker) TextView time_picker;
+//    @InjectView(R.id.date_picker) TextView date_picker;
     @InjectView(R.id.titulo) EditText _titulo;
     @InjectView(R.id.descricao) EditText _descricao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_duvida);
+        setContentView(R.layout.activity_criar_duvidas);
         ButterKnife.inject(this);
-
 
         // Pega a intent que chamou essa activity
         Intent intent = getIntent();
         id_subtopico = intent.getIntExtra("ID_SUBTOPICO", 0);
         id_materia = intent.getIntExtra("ID_MATERIA", 0);
-        id_duvida = intent.getIntExtra("ID", 0);
-        descricao = intent.getStringExtra("DESCRICAO");
-        titulo = intent.getStringExtra("TITULO");
 
 
-        _titulo.setText(titulo);
-        _descricao.setText(descricao);
     }
 
-    public void onClickAtualizarDuvida(View view){
+//    public void escolherData(View view) {
+//        DialogFragment newFragment = new DatePickerFragment();
+//        newFragment.show(getSupportFragmentManager(), "datePicker");
+//    }
+//
+//    public void escolherHorario(View view) {
+//        DialogFragment newFragment = new TimePickerFragment();
+//        newFragment.show(getSupportFragmentManager(), "timePicker");
+//    }
+
+
+    public void onClickConfirmarDuvida(View view){
+
         Utils utils = new Utils(this);
         String id_usuario_string = utils.getFromSharedPreferences("id_usuario","");
         int id_usuario = Integer.parseInt(id_usuario_string);
         String titulo = _titulo.getText().toString();
         String descricao = _descricao.getText().toString();
 
-        duvida = new Duvida(id_duvida, id_usuario, id_materia, id_subtopico, titulo, descricao);
+        duvida = new Duvida(id_usuario, id_materia, id_subtopico, titulo, descricao);
         String param = concatenateParam(duvida);
 
         try {
@@ -69,7 +75,7 @@ public class DuvidaActivity extends AppCompatActivity {
 
                     }
                 }
-            }).execute(Statics.ATUALIZAR_DUVIDA);
+            }).execute(Statics.CADASTRAR_DUVIDA);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -77,9 +83,6 @@ public class DuvidaActivity extends AppCompatActivity {
 
     private void salvarDuvidaBDLocal() {
         DuvidaBDManager db = new DuvidaBDManager(this);
-        //deleta duvida antiga
-        db.deleteDuvidaPorIdDuvida(this, id_duvida);
-        //salva nova duvida (duvida atualizada)
         db.salvarDuvida(duvida);
     }
 
@@ -89,9 +92,6 @@ public class DuvidaActivity extends AppCompatActivity {
         param += "&";
         param += "descricao=";
         param += duvida.getDescricao();
-        param += "&";
-        param += "id_duvida=";
-        param += duvida.getId_duvida();
         param += "&";
         param += "id_usuario=";
         param += duvida.getId_usuario();

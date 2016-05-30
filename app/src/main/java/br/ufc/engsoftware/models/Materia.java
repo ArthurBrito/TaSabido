@@ -19,11 +19,11 @@
             this.nome = nome;
         }
 
-        public int getId() {
+        public int getId_materia() {
             return id_materia;
         }
 
-        public void setId(int id_materia) {
+        public void setId_materia(int id_materia) {
             this.id_materia = id_materia;
         }
 

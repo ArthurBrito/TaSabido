@@ -16,12 +16,15 @@
 //import java.util.Vector;
 //
 //import br.ufc.engsoftware.BDLocalManager.DuvidaBDManager;
+//import br.ufc.engsoftware.BDLocalManager.MonitoriaBDManager;
 //import br.ufc.engsoftware.BDLocalManager.SubtopicoBDManager;
 //import br.ufc.engsoftware.auxiliar.Statics;
 //import br.ufc.engsoftware.auxiliar.WebRequest;
 //import br.ufc.engsoftware.models.Duvida;
+//import br.ufc.engsoftware.models.Monitoria;
 //import br.ufc.engsoftware.models.Subtopico;
 //import br.ufc.engsoftware.views.DuvidaListView;
+//import br.ufc.engsoftware.views.MonitoriaListView;
 //import br.ufc.engsoftware.views.SubtopicoListView;
 //
 //import static java.lang.Integer.parseInt;
@@ -29,11 +32,11 @@
 ///**
 // * Created by Thiago on 21/05/2016.
 // */
-//public class DuvidasDAO extends AsyncTask<Void, Void, Void> {
+//public class MonitoriaDAO extends AsyncTask<Void, Void, Void> {
 //
 //    // URL para pegar os Subtopicos via JSON
 //    // private static String url = "http://avalan.herokuapp.com/tasabido/listar_materias/?format=json";
-//    private static String url = Statics.LISTAR_DUVIDAS + "?format=json";
+//    private static String url = Statics.LISTAR_MONITORIAS + "?format=json";
 //
 //    // Contexto da activity que chamou esta classe
 //    Context context;
@@ -42,21 +45,21 @@
 //    Activity activity;
 //
 //    // Referencia ao ListView do ListaSubtopicosActivity
-//    ListView listviewDuvidas;
+//    ListView listviewMonitorias;
 //
 //    // Classe responsável por montar o ListView
-//    DuvidaListView gerenciadorDuvidasLV;
+//    MonitoriaListView gerenciadorMonitoriasLV;
 //
 //    // Lista dos subtopicos obtidos do web service
-//    Vector<Duvida> listaDuvidas;
+//    Vector<Monitoria> listaMonitorias;
 //
 //    // Dialog com barra de progresso mostrado na tela
 //    ProgressDialog proDialog;
 //
-//    public DuvidasDAO(Activity activity, Context context, ListView listviewDuvidas) {
+//    public MonitoriaDAO(Activity activity, Context context, ListView listviewMonitorias) {
 //        this.activity = activity;
 //        this.context = context;
-//        this.listviewDuvidas = listviewDuvidas;
+//        this.listviewMonitorias = listviewMonitorias;
 //    }
 //
 //    // Mostra a barra de progresso na tela
@@ -86,7 +89,7 @@
 //        Log.d("Response: ", "> " + jsonStr);
 //
 //        // Monta a lista de subtopicos
-//        listaDuvidas = parseJsonMaterias(jsonStr);
+//        listaMonitorias = parseJsonMonitorias(jsonStr);
 //
 //        return null;
 //    }
@@ -100,47 +103,48 @@
 //            proDialog.dismiss();
 //
 //        //atualiza o banco de dados local com os dados vindos do servidor
-//        DuvidaBDManager sinc = new DuvidaBDManager();
-//        sinc.atualizarDuvidas(activity, listaDuvidas);
+//        MonitoriaBDManager sinc = new MonitoriaBDManager();
+//        sinc.atualizarMonitorias(activity, listaMonitorias);
 //
 //        // Monta o ListView com os dados obtidos do web service
-//        gerenciadorDuvidasLV = new DuvidaListView(listviewDuvidas, context, listaDuvidas);
+//        gerenciadorMonitoriasLV = new MonitoriaListView(listviewMonitorias, context, listaMonitorias);
 //
 //    }
 //
 //    // Metodo responsavel por quebrar o JSON em Subtopicos
-//    private Vector<Duvida> parseJsonMaterias(String json){
+//    private Vector<Monitoria> parseJsonMonitorias(String json){
 //        if (json != null)
 //        {
 //            try {
 //
-//                Vector<Duvida> listarDuvidas = new Vector<>();
+//                Vector<Monitoria> listarMonitorias = new Vector<>();
 //
 //                // Transforma a string JSON em objeto
 //                JSONObject jsonObj = new JSONObject(json);
 //
 //                // Extrai o array results do objeto JSON
-//                JSONArray subtopicosJson = jsonObj.getJSONArray("results");
+//                JSONArray monitoriasJson = jsonObj.getJSONArray("results");
 //
 //                // Percorrendo todas os Subtopicos
-//                for (int i = 0; i < subtopicosJson.length(); i++)
+//                for (int i = 0; i < monitoriasJson.length(); i++)
 //                {
 //                    // Extrai o i-esimo objeto
-//                    JSONObject sJson = subtopicosJson.getJSONObject(i);
+//                    JSONObject sJson = monitoriasJson.getJSONObject(i);
 //
 //                    // Extrai as informações do objeto
-//                    int id_duvida = parseInt(sJson.getString("id"));
+//                    int id_monitoria = parseInt(sJson.getString("id"));
 //                    int id_usuario = parseInt(sJson.getString("usuario"));
 //                    int id_materia = parseInt(sJson.getString("materia"));
 //                    int id_subtopico = parseInt(sJson.getString("subtopico"));
 //                    String titulo = sJson.getString("titulo");
 //                    String descricao = sJson.getString("descricao");
+//                    String data = sJson.getString("data_monitoria");
 //
 //                    // Adiciona o Subtopico obtido da lista de subtopicos
-//                    listarDuvidas.add(new Duvida(id_duvida, id_usuario, id_materia, id_subtopico, titulo, descricao));
+//                    listarMonitorias.add(new Monitoria(id_monitoria, id_usuario, id_materia, id_subtopico, titulo, descricao, data));
 //                }
 //
-//                return listarDuvidas;
+//                return listarMonitorias;
 //            } catch (JSONException e) {
 //                e.printStackTrace();
 //                return null;
@@ -152,7 +156,7 @@
 //
 //    }
 //
-//    public DuvidaListView getGerenciadorDuvidasLV() {
-//        return gerenciadorDuvidasLV;
+//    public MonitoriaListView getGerenciadorMonitoriasLVLV() {
+//        return gerenciadorMonitoriasLV;
 //    }
 //}

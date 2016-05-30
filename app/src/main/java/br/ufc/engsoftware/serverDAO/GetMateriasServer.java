@@ -11,6 +11,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Vector;
 
 import br.ufc.engsoftware.BDLocalManager.MateriaBDManager;
 import br.ufc.engsoftware.auxiliar.WebRequest;
@@ -31,7 +32,7 @@ public class GetMateriasServer extends AsyncTask<Void, Void, Void> {
     Context context;
 
     // Lista das materias obbtidas do web service
-    ArrayList<Materia> listaMaterias;
+    Vector<Materia> listaMaterias;
 
     // Dialog com barra de progresso mostrado na tela
     ProgressDialog proDialog;
@@ -82,17 +83,19 @@ public class GetMateriasServer extends AsyncTask<Void, Void, Void> {
 
         //atualiza o banco de dados local com os dados vindos do servidor
         MateriaBDManager sinc = new MateriaBDManager();
+        if (listaMaterias == null)
+            listaMaterias = new Vector<>();
         sinc.atualizarMaterias(context, listaMaterias);
 
     }
 
     // Metodo responsavel por quebrar o JSON em Materias
-    private ArrayList<Materia> parseJsonMaterias(String json){
+    private Vector<Materia> parseJsonMaterias(String json){
         if (json != null)
         {
             try {
 
-                ArrayList<Materia> listaMaterias = new ArrayList<Materia>();
+                Vector<Materia> listaMaterias = new Vector<Materia>();
 
                 // Transforma a string JSON em objeto
                 JSONObject jsonObj = new JSONObject(json);

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 import br.ufc.engsoftware.models.Duvida;
 import br.ufc.engsoftware.models.Materia;
@@ -25,7 +26,7 @@ public class MateriaBDManager {
         realm = Realm.getInstance(realmConfig);
     }
 
-    public void atualizarMaterias(Context context, final ArrayList<Materia> listaMateriasDoServidor){
+    public void atualizarMaterias(Context context, final Vector<Materia> listaMateriasDoServidor){
         activateRealm(context);
 
         realm.executeTransaction(new Realm.Transaction() {
@@ -40,16 +41,16 @@ public class MateriaBDManager {
 
     public void salvarDuvida(Materia materiaParam){
         // Adicionar duvida ao banco de dados local
-        if (!materiaJaSalva(materiaParam.getId())) {
+        if (!materiaJaSalva(materiaParam.getId_materia())) {
             Materia materia = realm.createObject(Materia.class);
-            materia.setId(materiaParam.getId());
+            materia.setId_materia(materiaParam.getId_materia());
             materia.setNome(materiaParam.getNome());
         }
     }
 
 
     /* METODOS PRA PEGAR DUVIDAS SALVAS NO BANDO DE DADOS DO APARELHO */
-    public ArrayList<Materia> pegarMaterias(Context context){
+    public Vector<Materia> pegarMaterias(Context context){
         activateRealm(context);
         RealmResults<Materia> resultInRealm = realm.where(Materia.class).findAll();
         return castRealmQuery(resultInRealm);
@@ -81,8 +82,8 @@ public class MateriaBDManager {
         }
     }
 
-    public ArrayList<Materia> castRealmQuery(RealmResults<Materia> resultInRealm){
-        ArrayList<Materia> materiasLista = new ArrayList<Materia>();
+    public Vector<Materia> castRealmQuery(RealmResults<Materia> resultInRealm){
+        Vector<Materia> materiasLista = new Vector<Materia>();
         for (Materia materia : resultInRealm) {
             materiasLista.add(materia);
         }

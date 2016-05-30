@@ -86,6 +86,8 @@ public class SubtopicoBDManager {
     public Vector<Subtopico> castRealmQuery(RealmResults<Subtopico> resultInRealm){
         Vector<Subtopico> subtopicosLista = new Vector<Subtopico>();
         for (Subtopico subtopico : resultInRealm) {
+            int id_materia = subtopico.getId_materia();
+            int id_subtopico = subtopico.getId_subtopico();
             subtopicosLista.add(subtopico);
         }
         return subtopicosLista;

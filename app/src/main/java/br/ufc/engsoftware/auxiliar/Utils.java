@@ -16,6 +16,8 @@ public class Utils {
     public static final String MyPREFERENCES = "MyPrefs" ;
     public Context context;
 
+    public Utils(){}
+
     public Utils(Context context){
         this.context = context;
     }

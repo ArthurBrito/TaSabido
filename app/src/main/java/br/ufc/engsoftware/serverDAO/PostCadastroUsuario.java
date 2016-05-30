@@ -1,4 +1,4 @@
-package br.ufc.engsoftware.auxiliar;
+package br.ufc.engsoftware.serverDAO;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -19,27 +19,30 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 
+import br.ufc.engsoftware.auxiliar.NoSSLv3SocketFactory;
+import br.ufc.engsoftware.auxiliar.Utils;
 
-public class PostServerDataAsync extends AsyncTask<String, String, Void>{
-    static String result;
+
+public class PostCadastroUsuario extends AsyncTask<String, String, Void>{
+    static String result, mensagem;
     public String param;
     private Context context;
 
     // you may separate this or combined to caller class.
     public interface AsyncResponse {
-        void processFinish(String output);
+        void processFinish(String output, String mensagem);
     }
 
 
     public AsyncResponse delegate = null;
 
-    public PostServerDataAsync(Context context, String param, AsyncResponse delegate){
+    public PostCadastroUsuario(Context context, String param, AsyncResponse delegate){
         this.delegate = delegate;
         this.param = param;
         this.context = context;
     }
 
-    public PostServerDataAsync(String param, AsyncResponse delegate){
+    public PostCadastroUsuario(String param, AsyncResponse delegate){
         this.delegate = delegate;
         this.param = param;
     }
@@ -93,16 +96,10 @@ public class PostServerDataAsync extends AsyncTask<String, String, Void>{
 
             JSONObject jsonResponse = new JSONObject(response.toString());
             String value = jsonResponse.getString("success");
-
-
-            //salva o id do usuario no shared preferences
-            if (value.equals("true")){
-                String id_usuario = jsonResponse.getString("id");
-                Utils u = new Utils(context);
-                u.saveInSharedPreferences("id_usuario", id_usuario);
-            }
-
             result = value;
+
+            String mensagemResponse = jsonResponse.getString("message");
+            mensagem = mensagemResponse;
 
             in.close();
         } catch (Exception e) {
@@ -115,7 +112,7 @@ public class PostServerDataAsync extends AsyncTask<String, String, Void>{
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        delegate.processFinish(result);
+        delegate.processFinish(result, mensagem);
 
     }
 }

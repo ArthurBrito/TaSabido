@@ -96,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
         String param = concatenateParam(perfil);
 
         try {
-            new PostServerDataAsync(param, new PostServerDataAsync.AsyncResponse(){
+            new PostServerDataAsync(this, param, new PostServerDataAsync.AsyncResponse(){
                 public void processFinish(String output){
                     if (output.equals("true")){
                         Utils.progressDialog.setMessage("Autenticado");
