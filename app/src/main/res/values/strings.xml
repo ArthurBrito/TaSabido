@@ -6,6 +6,7 @@
     <string name="btn_criar_duvida">Criar Dúvida</string>
     <string name="btn_ver_monitorias">Ver Monitorias</string>
     <string name="btn_atualizar_duvida">Atualizar Duvida</string>
+    <string name="btn_deletar_duvida">Deletar Duvida</string>
     <string name="btn_criar_monitoria">Criar Monitoria</string>
     <string name="title_activity_duvida">DuvidaActivity</string>
     <string name="title_activity_criar_monitoria">CriarMonitoriaActivity</string>

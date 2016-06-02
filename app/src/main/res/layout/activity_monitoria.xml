@@ -52,6 +52,24 @@
         </android.support.design.widget.TextInputLayout>
 
 
+        <!-- Botão Atualizar Duvida -->
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/btn_atualizar_duvida"
+            android:onClick="onClickAtualizarMonitoria"/>
+
+
+        <!-- Botão Deletar Duvida -->
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/btn_deletar_duvida"
+            android:onClick="onClickDeletarMonitoria"/>
+
+
 
     </LinearLayout>
 </ScrollView>

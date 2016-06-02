@@ -106,9 +106,6 @@ public class CriarMonitoriaActivity extends AppCompatActivity implements Adapter
 
     }
 
-
-
-
     public JSONObject createJsonParam(Monitoria monitoria) {
         JSONObject json = new JSONObject();
         JSONArray subtopicosJson = new JSONArray();

@@ -1,5 +1,6 @@
 package br.ufc.engsoftware.tasabido;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,7 @@ public class CriarDuvidaActivity extends AppCompatActivity {
     int id_subtopico;
     int id_materia;
     private Duvida duvida;
+    public Activity activity;
 //    @InjectView(R.id.time_picker) TextView time_picker;
 //    @InjectView(R.id.date_picker) TextView date_picker;
     @InjectView(R.id.titulo) EditText _titulo;
@@ -29,6 +31,7 @@ public class CriarDuvidaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_criar_duvidas);
         ButterKnife.inject(this);
+        activity = this;
 
         // Pega a intent que chamou essa activity
         Intent intent = getIntent();
@@ -64,13 +67,13 @@ public class CriarDuvidaActivity extends AppCompatActivity {
             new PostCriarDuvida(this, param, new PostCriarDuvida.AsyncResponse(){
                 public void processFinish(String output, int id_duvida, String mensagem){
                     if (output.equals("true")){
-                        Utils.progressDialog.setMessage(mensagem);
+                        Utils.callProgressDialog(activity, mensagem);
                         Utils.delayMessage();
                         duvida.setId_duvida(id_duvida);
                         salvarDuvidaBDLocal();
                         finish();
                     }else{
-                        Utils.progressDialog.setMessage(mensagem);
+                        Utils.callProgressDialog(activity, mensagem);
                         Utils.delayMessage();
 
                     }

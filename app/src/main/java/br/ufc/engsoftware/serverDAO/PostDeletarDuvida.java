@@ -21,7 +21,7 @@ import javax.net.ssl.SSLSocketFactory;
 import br.ufc.engsoftware.auxiliar.NoSSLv3SocketFactory;
 
 
-public class PostCriarDuvida extends AsyncTask<String, String, Void>{
+public class PostDeletarDuvida extends AsyncTask<String, String, Void>{
     static String result, mensagem;
     int id_duvida_criada;
     public String param;
@@ -29,19 +29,19 @@ public class PostCriarDuvida extends AsyncTask<String, String, Void>{
 
     // you may separate this or combined to caller class.
     public interface AsyncResponse {
-        void processFinish(String output, int id_duvida_criada, String mensagem);
+        void processFinish(String output, String mensagem);
     }
 
 
     public AsyncResponse delegate = null;
 
-    public PostCriarDuvida(Context context, String param, AsyncResponse delegate){
+    public PostDeletarDuvida(Context context, String param, AsyncResponse delegate){
         this.delegate = delegate;
         this.param = param;
         this.context = context;
     }
 
-    public PostCriarDuvida(String param, AsyncResponse delegate){
+    public PostDeletarDuvida(String param, AsyncResponse delegate){
         this.delegate = delegate;
         this.param = param;
     }
@@ -94,10 +94,6 @@ public class PostCriarDuvida extends AsyncTask<String, String, Void>{
 
             JSONObject jsonResponse = new JSONObject(response.toString());
             String value = jsonResponse.getString("success");
-            if (value.equals("true")){
-                int id_duvida = jsonResponse.getInt("id_duvida");
-                id_duvida_criada = id_duvida;
-            }
             String mensagemResponse = jsonResponse.getString("message");
 
 
@@ -115,7 +111,7 @@ public class PostCriarDuvida extends AsyncTask<String, String, Void>{
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        delegate.processFinish(result, id_duvida_criada, mensagem);
+        delegate.processFinish(result, mensagem);
 
     }
 }

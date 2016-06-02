@@ -30,7 +30,7 @@ public class Utils {
                     public void run() {
                         progressDialog.dismiss();
                     }
-                }, 10000);
+                }, 3000);
     }
 
     public static void callProgressDialog(Activity ac, String message){
@@ -53,18 +53,6 @@ public class Utils {
         if (!i.isAvailable())
             return false;
         return true;
-//        try {
-//            InetAddress ipAddr = InetAddress.getByName("google.com"); //You can replace it with your name
-//
-//            if (ipAddr.equals("")) {
-//                return false;
-//            } else {
-//                return true;
-//            }
-//
-//        } catch (Exception e) {
-//            return false;
-//        }
     }
 
     public SharedPreferences sharedPreferences(){

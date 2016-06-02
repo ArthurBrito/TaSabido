@@ -38,6 +38,13 @@
                 android:hint="Descricao" />
         </android.support.design.widget.TextInputLayout>
 
+        <Spinner
+            android:id="@+id/spinner_lista_subtopicos"
+            android:layout_width="fill_parent"
+            android:layout_height="150dp"
+            android:gravity="center"/>
+
+
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -49,6 +56,30 @@
                 android:inputType="text"
                 android:hint="Data yyyy-mm-dd" />
         </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <EditText android:id="@+id/horario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:hint="Horário hh/mm" />
+        </android.support.design.widget.TextInputLayout>
+
+
+        <Button
+            android:id="@+id/btn_confirmar_monitoria"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:padding="12dp"
+            android:text="Confirmar Monitoria"
+            android:onClick="onClickConfirmarMonitoria"/>
 
     </LinearLayout>
 </ScrollView>

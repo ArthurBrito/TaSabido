@@ -42,9 +42,9 @@ public class ListaDuvidasActivity extends AppCompatActivity {
         id_materia = intent.getIntExtra("ID_MATERIA", 0);
 
         // Seta as configurações da ActionBar
-//        ActionBar ab = getSupportActionBar();
-//        ab.setTitle(nome_subtopico);
-//        ab.setDisplayHomeAsUpEnabled(true);
+        ActionBar ab = getSupportActionBar();
+        ab.setTitle(nome_subtopico);
+        ab.setDisplayHomeAsUpEnabled(true);
 
         // Captura a referencia pro ListView a partir do id
         listviewDuvidas = (ListView) findViewById(R.id.listview_duvidas);

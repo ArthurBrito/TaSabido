@@ -14,7 +14,7 @@
         <activity android:name=".PaginaPrincipalActivity" />
         <activity
             android:name=".ListaSubtopicosActivity"
-            android:theme="@style/AppTheme.Dark">
+            android:theme="@style/AppTheme.Dark.ActionBar">
             <intent-filter>
                 <action android:name="br.ufc.engsoftware.tasabido.SUBTOPICOS" />
 
@@ -61,7 +61,7 @@
         </activity>
         <activity
             android:name=".ListaDuvidasActivity"
-            android:theme="@style/AppTheme.Dark">
+            android:theme="@style/AppTheme.Dark.ActionBar">
             <intent-filter>
                 <action android:name="br.ufc.engsoftware.tasabido.DUVIDAS" />
 
@@ -90,7 +90,7 @@
         <activity
             android:name=".ListaMonitoriasActivity"
             android:label="@string/title_activity_lista_monitorias"
-            android:theme="@style/AppTheme.Dark">
+            android:theme="@style/AppTheme.Dark.ActionBar">
             <intent-filter>
                 <action android:name="br.ufc.engsoftware.tasabido.LISTA_MONITORIA" />
 

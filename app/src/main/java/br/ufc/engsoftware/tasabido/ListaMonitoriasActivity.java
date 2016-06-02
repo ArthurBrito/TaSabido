@@ -44,9 +44,11 @@ public class ListaMonitoriasActivity extends AppCompatActivity {
         id_subtopico = intent.getIntExtra("ID_SUBTOPICO", 0);
 
         // Seta as configurações da ActionBar
-//        ActionBar ab = getSupportActionBar();
-//        ab.setTitle(nome_subtopico);
-//        ab.setDisplayHomeAsUpEnabled(true);
+        ActionBar ab = getSupportActionBar();
+        String titleOfActionBar = "Monitorias em - ";
+        titleOfActionBar += nome_subtopico;
+        ab.setTitle(titleOfActionBar);
+        ab.setDisplayHomeAsUpEnabled(true);
 
         // Captura a referencia pro ListView a partir do id
         listViewMonitorias = (ListView) findViewById(R.id.listview_monitorias);

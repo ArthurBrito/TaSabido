@@ -37,9 +37,9 @@ public class ListaSubtopicosActivity extends AppCompatActivity {
         id_materia = intent.getIntExtra("ID", 0);
 
         // Seta as configurações da ActionBar
-//        ActionBar ab = getSupportActionBar();
-//        ab.setTitle(materia);
-//        ab.setDisplayHomeAsUpEnabled(true);
+        ActionBar ab = getSupportActionBar();
+        ab.setTitle(materia);
+        ab.setDisplayHomeAsUpEnabled(true);
 
         // Captura a referencia pro ListView a partir do id
         listviewSubtopicos = (ListView) findViewById(R.id.listview_subtopicos);
@@ -57,11 +57,6 @@ public class ListaSubtopicosActivity extends AppCompatActivity {
     }
 
     public void onClickCriarMonitoria(View view) {
-        chamarMonitoriaActivity();
-    }
-
-    // Chama a activity de monitoria
-    private void chamarMonitoriaActivity(){
         Intent intent = new Intent(this, CriarMonitoriaActivity.class);
         intent.setAction("br.ufc.engsoftware.tasabido.CRIAR_MONITORIA");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

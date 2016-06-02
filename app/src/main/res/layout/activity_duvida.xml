@@ -44,13 +44,22 @@
         </android.support.design.widget.TextInputLayout>
 
 
-        <!-- Botão Ver Monitoria -->
+        <!-- Botão Atualizar Duvida -->
         <Button
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="@string/btn_atualizar_duvida"
             android:onClick="onClickAtualizarDuvida"/>
+
+
+        <!-- Botão Deletar Duvida -->
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/btn_deletar_duvida"
+            android:onClick="onClickDeletarDuvida"/>
 
 
     </LinearLayout>
