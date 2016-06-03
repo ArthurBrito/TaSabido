@@ -66,6 +66,8 @@ public class MonitoriaListView {
         intent.putExtra("TITULO", item.getTitulo());
         intent.putExtra("DESCRICAO", item.getDescricao());
         intent.putExtra("DATA", item.getData());
+        intent.putExtra("ENDERECO", item.getEndereco());
+        intent.putExtra("ID_SUBTOPICO", item.getId_subtopico());
         intent.putExtra("ID_MONITORIA", item.getId_monitoria());
         intent.putExtra("ID_MATERIA", item.getId_materia());
         view.startActivity(intent);

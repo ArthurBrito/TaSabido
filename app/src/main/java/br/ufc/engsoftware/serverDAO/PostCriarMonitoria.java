@@ -30,19 +30,21 @@ public class PostCriarMonitoria extends AsyncTask<Void, Void, Void> {
 
     // URL para pegar os Subtopicos via JSON
     // private static String url = "http://avalan.herokuapp.com/tasabido/listar_materias/?format=json";
-    private static String url = Statics.CADASTRAR_MONITORIA;
+    private static String url;
 
     // Contexto da activity que chamou esta classe
     Context context;
+    String response;
 
     JSONObject json;
 
     // Dialog com barra de progresso mostrado na tela
     ProgressDialog proDialog;
 
-    public PostCriarMonitoria(Context context, JSONObject json) {
+    public PostCriarMonitoria(Context context, JSONObject json, String url) {
         this.context = context;
         this.json = json;
+        this.url = url;
     }
 
     // Mostra a barra de progresso na tela
@@ -63,7 +65,7 @@ public class PostCriarMonitoria extends AsyncTask<Void, Void, Void> {
 
         // Fazendo requisição para o web service pelo metodo estatico httpGet
         try {
-            String response = WebRequest.httpPostJson(url, json.toString());
+            response = WebRequest.httpPostJson(url, json.toString());
         } catch (IOException e) {
             /** TODO analizar o tratamento de erro */
             e.printStackTrace();
@@ -79,6 +81,7 @@ public class PostCriarMonitoria extends AsyncTask<Void, Void, Void> {
         super.onPostExecute(requestresult);
         // Tira o dialog de progresso da tela
         if (proDialog.isShowing())
+            proDialog.setMessage(response);
             proDialog.dismiss();
     }
 }

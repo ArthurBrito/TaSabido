@@ -22,7 +22,7 @@ public class ListaMonitoriasActivity extends AppCompatActivity {
 
     // Informaçoes da duvida selecionada
     String titulo, nome_subtopico;
-    int id_subtopico;
+    int id_subtopico, id_materia;
 
     // Referencia para o ListView da interface
     ListView listViewMonitorias;
@@ -42,6 +42,7 @@ public class ListaMonitoriasActivity extends AppCompatActivity {
         nome_subtopico = intent.getStringExtra("NOME_SUBTOPICO");
         titulo = intent.getStringExtra("TITULO");
         id_subtopico = intent.getIntExtra("ID_SUBTOPICO", 0);
+        id_materia = intent.getIntExtra("ID_MATERIA", 0);
 
         // Seta as configurações da ActionBar
         ActionBar ab = getSupportActionBar();

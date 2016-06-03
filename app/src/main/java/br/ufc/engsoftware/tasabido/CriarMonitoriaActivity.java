@@ -18,6 +18,7 @@ import org.json.JSONObject;
 import java.util.Vector;
 
 import br.ufc.engsoftware.BDLocalManager.SubtopicoBDManager;
+import br.ufc.engsoftware.auxiliar.Statics;
 import br.ufc.engsoftware.auxiliar.Utils;
 import br.ufc.engsoftware.fragments.DatePickerFragment;
 import br.ufc.engsoftware.fragments.TimePickerFragment;
@@ -40,6 +41,7 @@ public class CriarMonitoriaActivity extends AppCompatActivity implements Adapter
     @InjectView(R.id.horario) EditText _horario;
     @InjectView(R.id.input_titulo) EditText _titulo;
     @InjectView(R.id.input_descricao) EditText _descricao;
+    @InjectView(R.id.input_endereco) EditText _endereco;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,16 +94,17 @@ public class CriarMonitoriaActivity extends AppCompatActivity implements Adapter
         int id_usuario = Integer.parseInt(id_usuario_string);
         String titulo = _titulo.getText().toString();
         String descricao = _descricao.getText().toString();
+        String endereco = _endereco.getText().toString();
         String data = _data.getText().toString();
         data += " ";
         data += _horario.getText().toString();
         data += ":00";
 
-        Monitoria monitoria = new Monitoria(id_usuario, id_materia, id_subtopico, titulo, descricao, data);
+        Monitoria monitoria = new Monitoria(id_usuario, id_materia, id_subtopico, titulo, descricao, data, endereco);
         JSONObject jsonParam = createJsonParam(monitoria);
 
 
-        PostCriarMonitoria cm = (PostCriarMonitoria) new PostCriarMonitoria(this, jsonParam).execute();
+        PostCriarMonitoria cm = (PostCriarMonitoria) new PostCriarMonitoria(this, jsonParam, Statics.CADASTRAR_MONITORIA).execute();
 
 
     }
@@ -112,6 +115,7 @@ public class CriarMonitoriaActivity extends AppCompatActivity implements Adapter
         try {
             json.put("titulo", monitoria.getTitulo());
             json.put("descricao", monitoria.getDescricao());
+            json.put("endereco", monitoria.getEndereco());
             json.put("id_usuario", monitoria.getId_usuario());
             json.put("id_materia", monitoria.getId_materia());
             json.put("data_monitoria", monitoria.getData());
@@ -136,10 +140,11 @@ public class CriarMonitoriaActivity extends AppCompatActivity implements Adapter
         Subtopico subtopico = subtopicos.get(position);
         id_subtopico = subtopico.getId_subtopico();
 
-        if (spinnerSelectedCount == 0)
-            spinnerSelectedCount++;
-        else
-            subtopicos_selecionados.add(id_subtopico);
+
+//        if (spinnerSelectedCount == 0)
+//            spinnerSelectedCount++;
+//        else
+            subtopicos_selecionados.add(0, id_subtopico);
     }
 
     @Override

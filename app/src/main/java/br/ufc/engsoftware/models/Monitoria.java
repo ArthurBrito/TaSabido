@@ -15,17 +15,26 @@ import io.realm.annotations.RealmClass;
 public class Monitoria extends RealmObject {
 
     private int id_subtopico , id_monitoria, id_usuario, id_materia;
-    private String titulo, descricao, data;
+    private String titulo, descricao, data, endereco;
 
     public Monitoria(){}
 
-    public Monitoria(int id_usuario, int id_materia, int id_subtopico_selecionado, String titulo, String descricao, String data) {
+    public Monitoria(int id_usuario, int id_materia, int id_subtopico_selecionado, String titulo, String descricao, String data, String endereco) {
         this.id_usuario = id_usuario;
         this.id_materia = id_materia;
         this.titulo = titulo;
         this.descricao = descricao;
         this.data = data;
         this.id_subtopico = id_subtopico_selecionado;
+        this.endereco = endereco;
+    }
+
+    public Monitoria(int id_usuario, String titulo, String descricao, String data, String endereco) {
+        this.id_usuario = id_usuario;
+        this.titulo = titulo;
+        this.descricao = descricao;
+        this.data = data;
+        this.endereco = endereco;
     }
 
 
@@ -37,7 +46,7 @@ public class Monitoria extends RealmObject {
         this.id_usuario = id_usuario;
     }
 
-    public Monitoria(int id_monitoria, int id_usuario, int id_materia, int ids_subtopico_selecionado, String titulo, String descricao, String data) {
+    public Monitoria(int id_monitoria, int id_usuario, int id_materia, int ids_subtopico_selecionado, String titulo, String descricao, String data, String endereco) {
         this.id_usuario = id_usuario;
         this.id_monitoria = id_monitoria;
         this.id_materia = id_materia;
@@ -45,6 +54,7 @@ public class Monitoria extends RealmObject {
         this.descricao = descricao;
         this.data = data;
         this.id_subtopico = ids_subtopico_selecionado;
+        this.endereco = endereco;
     }
 
 
@@ -99,5 +109,13 @@ public class Monitoria extends RealmObject {
 
     public void setId_subtopico(int id_subtopico) {
         this.id_subtopico = id_subtopico;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
     }
 }

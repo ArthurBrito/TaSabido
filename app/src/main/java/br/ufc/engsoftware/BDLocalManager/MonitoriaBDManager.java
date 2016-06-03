@@ -55,6 +55,7 @@ public class MonitoriaBDManager {
             Monitoria monitoria = realm.createObject(Monitoria.class);
             monitoria.setTitulo(monitoriaParam.getTitulo());
             monitoria.setData(monitoriaParam.getData());
+            monitoria.setEndereco(monitoriaParam.getEndereco());
             monitoria.setDescricao(monitoriaParam.getDescricao());
             monitoria.setId_usuario(monitoriaParam.getId_usuario());
             monitoria.setId_subtopico(monitoriaParam.getId_subtopico());

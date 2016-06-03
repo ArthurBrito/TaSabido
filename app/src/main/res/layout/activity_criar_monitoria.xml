@@ -38,6 +38,20 @@
                 android:hint="Descricao" />
         </android.support.design.widget.TextInputLayout>
 
+
+        <!--  Endereco Label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <EditText android:id="@+id/input_endereco"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:hint="Endereco" />
+        </android.support.design.widget.TextInputLayout>
+
         <Spinner
             android:id="@+id/spinner_lista_subtopicos"
             android:layout_width="fill_parent"

@@ -116,22 +116,24 @@ public class GetMonitoriasServer extends AsyncTask<Void, Void, Void> {
                     // Extrai o i-esimo objeto
                     JSONObject sJson = monitoriasJson.getJSONObject(i);
 
-
+                    int id_subtopico = 0;
                     JSONArray subtopicosJson = sJson.getJSONArray("subtopico");
                     Vector subtopicos = new Vector();
-                    subtopicos.add(subtopicosJson.get(0));
-
-                    // Extrai as informações do objeto
-                    int id_subtopico = (int) subtopicos.get(0);
+                    if (subtopicosJson.length() > 0) {
+                        subtopicos.add(subtopicosJson.get(0));
+                        // Extrai as informações do objeto
+                        id_subtopico = (int) subtopicos.get(0);
+                    }
                     int id_monitoria = parseInt(sJson.getString("id"));
                     int id_usuario = parseInt(sJson.getString("usuario"));
                     int id_materia = parseInt(sJson.getString("materia"));
                     String titulo = sJson.getString("titulo");
+                    String endereco = sJson.getString("endereco");
                     String descricao = sJson.getString("descricao");
                     String data = sJson.getString("data_monitoria");
 
                     // Adiciona o Subtopico obtido da lista de subtopicos
-                    listarMonitorias.add(new Monitoria(id_monitoria, id_usuario, id_materia, id_subtopico, titulo, descricao, data));
+                    listarMonitorias.add(new Monitoria(id_monitoria, id_usuario, id_materia, id_subtopico, titulo, descricao, data, endereco));
                 }
 
                 return listarMonitorias;
