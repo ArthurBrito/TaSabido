@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="br.ufc.engsoftware.calendar.CalendarioActivity"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="30dp"
+        android:textSize="18sp"
+        android:text="Selecione os horários disponíveis para receber ajuda com sua dúvida:"/>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center">
+
+        <!-- Titulos -->
+        <TableRow android:gravity="center">
+            <TextView
+                android:gravity="center"
+                android:text=""
+                android:textSize="@dimen/text_size_table_cal"
+                android:padding="@dimen/pad_table_cal"/>
+            <TextView
+                android:gravity="center"
+                android:text="Segunda"
+                android:textSize="@dimen/text_size_table_cal"
+                android:padding="@dimen/pad_table_cal"/>
+            <TextView
+                android:gravity="center"
+                android:text="Terça"
+                android:textSize="@dimen/text_size_table_cal"
+                android:padding="@dimen/pad_table_cal"/>
+            <TextView
+                android:gravity="center"
+                android:text="Quarta"
+                android:textSize="@dimen/text_size_table_cal"
+                android:padding="@dimen/pad_table_cal"/>
+            <TextView
+                android:gravity="center"
+                android:text="Quinta"
+                android:textSize="@dimen/text_size_table_cal"
+                android:padding="@dimen/pad_table_cal"/>
+            <TextView
+                android:gravity="center"
+                android:text="Sexta"
+                android:textSize="@dimen/text_size_table_cal"
+                android:padding="@dimen/pad_table_cal"/>
+        </TableRow>
+
+        <!-- 08:00 as 10:00 h -->
+        <TableRow android:gravity="center">
+            <TextView
+                android:gravity="center"
+                android:text="08h as 10h"
+                android:textSize="@dimen/text_size_table_cal"
+                android:padding="@dimen/pad_table_cal"/>
+            <CheckBox
+                android:id="@+id/segunda1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="@dimen/pad_table_cal"
+                android:onClick="onCheckboxSegunda"/>
+            <CheckBox
+                android:id="@+id/terca1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:padding="@dimen/pad_table_cal"
+                android:onClick="onCheckboxTerca"/>
+            <CheckBox
+                android:id="@+id/quarta1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:padding="@dimen/pad_table_cal"
+                android:onClick="onCheckboxQuarta"/>
+            <CheckBox
+                android:id="@+id/quinta1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:padding="@dimen/pad_table_cal"
+                android:onClick="onCheckboxQuinta"/>
+            <CheckBox
+                android:id="@+id/sexta1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:padding="@dimen/pad_table_cal"
+                android:onClick="onCheckboxSexta"/>
+
+        </TableRow>
+
+        <!-- 10:00 as 12:00 h -->
+        <TableRow android:gravity="center">
+            <TextView
+                android:gravity="center"
+                android:text="10h as 12h"
+                android:textSize="@dimen/text_size_table_cal"
+                android:padding="@dimen/pad_table_cal"/>
+            <CheckBox
+                android:id="@+id/segunda2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="@dimen/pad_table_cal"
+                android:onClick="onCheckboxSegunda"/>
+            <CheckBox
+                android:id="@+id/terca2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:padding="@dimen/pad_table_cal"
+                android:onClick="onCheckboxTerca"/>
+            <CheckBox
+                android:id="@+id/quarta2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:padding="@dimen/pad_table_cal"
+                android:onClick="onCheckboxQuarta"/>
+            <CheckBox
+                android:id="@+id/quinta2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:padding="@dimen/pad_table_cal"
+                android:onClick="onCheckboxQuinta"/>
+            <CheckBox
+                android:id="@+id/sexta2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:padding="@dimen/pad_table_cal"
+                android:onClick="onCheckboxSexta"/>
+
+        </TableRow>
+
+        <!-- 12:00 as 14:00 h -->
+        <TableRow android:gravity="center">
+            <TextView
+                android:gravity="center"
+                android:text="12h as 14h"
+                android:textSize="@dimen/text_size_table_cal"
+                android:padding="@dimen/pad_table_cal"/>
+            <CheckBox
+                android:id="@+id/segunda3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="@dimen/pad_table_cal"
+                android:onClick="onCheckboxSegunda"/>
+            <CheckBox
+                android:id="@+id/terca3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:padding="@dimen/pad_table_cal"
+                android:onClick="onCheckboxTerca"/>
+            <CheckBox
+                android:id="@+id/quarta3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:padding="@dimen/pad_table_cal"
+                android:onClick="onCheckboxQuarta"/>
+
+            <CheckBox
+                android:id="@+id/quinta3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:padding="@dimen/pad_table_cal"
+                android:onClick="onCheckboxQuinta"/>
+            <CheckBox
+                android:id="@+id/sexta3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:padding="@dimen/pad_table_cal"
+                android:onClick="onCheckboxSexta"/>
+
+        </TableRow>
+
+        <!-- 14:00 as 16:00 h -->
+        <TableRow android:gravity="center">
+            <TextView
+                android:gravity="center"
+                android:text="14h as 16h"
+                android:textSize="@dimen/text_size_table_cal"
+                android:padding="@dimen/pad_table_cal"/>
+            <CheckBox
+                android:id="@+id/segunda4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="@dimen/pad_table_cal"
+                android:onClick="onCheckboxSegunda"/>
+            <CheckBox
+                android:id="@+id/terca4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:padding="@dimen/pad_table_cal"
+                android:onClick="onCheckboxTerca"/>
+            <CheckBox
+                android:id="@+id/quarta4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:padding="@dimen/pad_table_cal"
+                android:onClick="onCheckboxQuarta"/>
+            <CheckBox
+                android:id="@+id/quinta4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:padding="@dimen/pad_table_cal"
+                android:onClick="onCheckboxQuinta"/>
+            <CheckBox
+                android:id="@+id/sexta4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:padding="@dimen/pad_table_cal"
+                android:onClick="onCheckboxSexta"/>
+
+        </TableRow>
+
+        <!-- 16:00 as 18:00 h -->
+        <TableRow android:gravity="center">
+            <TextView
+                android:gravity="center"
+                android:text="16h as 18h"
+                android:textSize="@dimen/text_size_table_cal"
+                android:padding="@dimen/pad_table_cal"/>
+            <CheckBox
+                android:id="@+id/segunda5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="@dimen/pad_table_cal"
+                android:onClick="onCheckboxSegunda"/>
+            <CheckBox
+                android:id="@+id/terca5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:padding="@dimen/pad_table_cal"
+                android:onClick="onCheckboxTerca"/>
+            <CheckBox
+                android:id="@+id/quarta5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:padding="@dimen/pad_table_cal"
+                android:onClick="onCheckboxQuarta"/>
+            <CheckBox
+                android:id="@+id/quinta5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:padding="@dimen/pad_table_cal"
+                android:onClick="onCheckboxQuinta"/>
+            <CheckBox
+                android:id="@+id/sexta5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:padding="@dimen/pad_table_cal"
+                android:onClick="onCheckboxSexta"/>
+
+        </TableRow>
+
+    </TableLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:gravity="center">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:text="Cancelar"
+            android:onClick="onClickCancelar"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="Salvar"
+            android:onClick="onClickSalvar"/>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

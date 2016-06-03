@@ -97,6 +97,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".CalendarioActivity"
+            android:theme="@style/AppTheme.Dark">
+            <intent-filter>
+                <action android:name="br.ufc.engsoftware.tasabido.CALENDARIO" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

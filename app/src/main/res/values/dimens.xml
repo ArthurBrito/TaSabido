@@ -5,4 +5,8 @@
     <dimen name="main_horizontal_margin">0dp</dimen>
     <dimen name="main_vertical_margin">0dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="pad_table_cal">3dp</dimen>
+    <dimen name="pad_table_radio">5dp</dimen>
+    <dimen name="text_size_table_cal">12sp</dimen>
+    <dimen name="table_margin_left">12dp</dimen>
 </resources>

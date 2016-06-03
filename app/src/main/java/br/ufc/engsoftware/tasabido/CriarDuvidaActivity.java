@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -17,6 +18,8 @@ import butterknife.InjectView;
 
 public class CriarDuvidaActivity extends AppCompatActivity {
 
+    static final int REQ_INFO = 1;
+    String horariosJSON = null;
     int id_subtopico;
     int id_materia;
     private Duvida duvida;
@@ -106,5 +109,24 @@ public class CriarDuvidaActivity extends AppCompatActivity {
         param += duvida.getId_subtopico();
 
         return param;
+    }
+
+    public void onClickReqHorarios(View view){
+        Intent reqHorariosIntent = new Intent(this , CalendarioActivity.class );
+        //reqInfoIntent.setType();
+        startActivityForResult(reqHorariosIntent, REQ_INFO);
+    }
+
+    // Metodo que trata o retorno da CalendarioActivity
+    public void onActivityResult(int requestCode, int resultCode, Intent	data)	{
+        if (requestCode	==	REQ_INFO)	{
+            //	Possible values:	RESULT_OK,	RESULT_CANCELED	or	RESULT_FIRST_USER
+            if ((data != null) && (resultCode == RESULT_OK))	{
+                String horariosJson = data.getStringExtra("HORARIOS");
+                this.horariosJSON = horariosJson;
+
+                Log.d("Response horariosJson", horariosJson);
+            }
+        }
     }
 }

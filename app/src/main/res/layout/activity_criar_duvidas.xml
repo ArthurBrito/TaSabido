@@ -44,10 +44,18 @@
         </android.support.design.widget.TextInputLayout>
 
         <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:text="Selecionar Horários Disponíveis"
+            android:onClick="onClickReqHorarios"/>
+
+        <Button
         android:id="@+id/btn_criar_duvida"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="34dp"
         android:layout_marginBottom="24dp"
         android:padding="12dp"
         android:text="Confirmar"
