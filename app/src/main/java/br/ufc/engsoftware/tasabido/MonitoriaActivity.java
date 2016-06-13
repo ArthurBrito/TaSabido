@@ -91,7 +91,30 @@ public class MonitoriaActivity extends AppCompatActivity {
     }
 
     public void onClickDeletarMonitoria(View view){
+        Utils utils = new Utils(this);
+        String id_usuario_string = utils.getFromSharedPreferences("id_usuario", "");
+        int id_usuario = Integer.parseInt(id_usuario_string);
 
+        Monitoria monitoria = new Monitoria(id_monitoria, id_usuario);
+        JSONObject jsonParam = createJsonParamToDeleteMonitoria(monitoria);
+
+        try {
+            new PostCriarMonitoria(this, jsonParam, Statics.DELETAR_MONITORIA, new PostCriarMonitoria.AsyncResponse(){
+                public void processFinish(String output){
+                    if (output.equals("200")){
+                        Utils.progressDialog.setMessage("Monitoria deletada.");
+                        Utils.delayMessage();
+                        deletarMonitoriaBDLocal(id_monitoria);
+                        finish();
+                    }else{
+                        Utils.progressDialog.setMessage("Algum erro ocorreu, tente denovo mais tarde.");
+                        Utils.delayMessage();
+                    }
+                }
+            }).execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -110,6 +133,19 @@ public class MonitoriaActivity extends AppCompatActivity {
             json.put("long", "0.00");
             subtopicosJson.put(id_subtopico);
             json.put("ids_subtopicos", subtopicosJson);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return json;
+    }
+
+    public JSONObject createJsonParamToDeleteMonitoria(Monitoria monitoria) {
+        JSONObject json = new JSONObject();
+        JSONArray subtopicosJson = new JSONArray();
+        try {
+            json.put("id_usuario", monitoria.getId_usuario());
+            json.put("id_monitoria", monitoria.getId_monitoria());
 
         } catch (JSONException e) {
             e.printStackTrace();

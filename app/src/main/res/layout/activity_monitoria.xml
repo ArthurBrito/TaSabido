@@ -71,7 +71,7 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="@string/btn_atualizar_duvida"
+            android:text="@string/btn_atualizar_monitoria"
             android:onClick="onClickAtualizarMonitoria"/>
 
 
@@ -80,7 +80,7 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="@string/btn_deletar_duvida"
+            android:text="@string/btn_deletar_monitoria"
             android:onClick="onClickDeletarMonitoria"/>
 
 

@@ -19,6 +19,11 @@ public class Monitoria extends RealmObject {
 
     public Monitoria(){}
 
+    public Monitoria(int id_monitoria, int id_usuario){
+        this.id_monitoria = id_monitoria;
+        this.id_usuario = id_usuario;
+    }
+
     public Monitoria(int id_usuario, int id_materia, int id_subtopico_selecionado, String titulo, String descricao, String data, String endereco) {
         this.id_usuario = id_usuario;
         this.id_materia = id_materia;
