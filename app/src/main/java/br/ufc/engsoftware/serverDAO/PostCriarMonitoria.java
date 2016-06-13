@@ -32,19 +32,30 @@ public class PostCriarMonitoria extends AsyncTask<Void, Void, Void> {
     // private static String url = "http://avalan.herokuapp.com/tasabido/listar_materias/?format=json";
     private static String url;
 
+    public AsyncResponse delegate = null;
+
     // Contexto da activity que chamou esta classe
     Context context;
     String response;
 
     JSONObject json;
 
+    public interface AsyncResponse {
+        void processFinish(String output);
+    }
+
+    public PostCriarMonitoria(AsyncResponse delegate){
+        this.delegate = delegate;
+    }
+
     // Dialog com barra de progresso mostrado na tela
     ProgressDialog proDialog;
 
-    public PostCriarMonitoria(Context context, JSONObject json, String url) {
+    public PostCriarMonitoria(Context context, JSONObject json, String url, AsyncResponse delegate){
         this.context = context;
         this.json = json;
         this.url = url;
+        this.delegate = delegate;
     }
 
     // Mostra a barra de progresso na tela
@@ -83,5 +94,6 @@ public class PostCriarMonitoria extends AsyncTask<Void, Void, Void> {
         if (proDialog.isShowing())
             proDialog.setMessage(response);
             proDialog.dismiss();
+            delegate.processFinish(response);
     }
 }

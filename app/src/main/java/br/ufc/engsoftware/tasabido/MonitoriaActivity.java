@@ -12,6 +12,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import br.ufc.engsoftware.BDLocalManager.MonitoriaBDManager;
 import br.ufc.engsoftware.auxiliar.Statics;
 import br.ufc.engsoftware.auxiliar.Utils;
 import br.ufc.engsoftware.models.Monitoria;
@@ -61,16 +62,32 @@ public class MonitoriaActivity extends AppCompatActivity {
         String descricao = _descricao.getText().toString();
         String endereco = _endereco.getText().toString();
         String data = _data.getText().toString();
-//        data += " ";
-//        data += _horario.getText().toString();
-//        data += ":00";
 
         Monitoria monitoria = new Monitoria(id_monitoria, id_usuario, id_materia, id_subtopico, titulo, descricao, data, endereco);
         JSONObject jsonParam = createJsonParam(monitoria);
 
+        try {
+            new PostCriarMonitoria(this, jsonParam, Statics.ATUALIZAR_MONITORIA, new PostCriarMonitoria.AsyncResponse(){
+                public void processFinish(String output){
+                    if (output.equals("200")){
+                        Utils.progressDialog.setMessage("Monitoria atualizada.");
+                        Utils.delayMessage();
+                        deletarMonitoriaBDLocal(id_monitoria);
+                        finish();
+                    }else{
+                        Utils.progressDialog.setMessage("Algum erro ocorreu, tente denovo mais tarde.");
+                        Utils.delayMessage();
+                    }
+                }
+            }).execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-        PostCriarMonitoria cm = (PostCriarMonitoria) new PostCriarMonitoria(this, jsonParam, Statics.ATUALIZAR_MONITORIA).execute();
-
+    private void deletarMonitoriaBDLocal(int id_monitoria) {
+        MonitoriaBDManager db = new MonitoriaBDManager(this);
+        db.deletarMonitoriaPorId(id_monitoria, this);
     }
 
     public void onClickDeletarMonitoria(View view){
@@ -87,6 +104,7 @@ public class MonitoriaActivity extends AppCompatActivity {
             json.put("endereco", monitoria.getEndereco());
             json.put("id_usuario", monitoria.getId_usuario());
             json.put("id_materia", monitoria.getId_materia());
+            json.put("id_monitoria", monitoria.getId_monitoria());
             json.put("data_monitoria", monitoria.getData());
             json.put("lat", "0.00");
             json.put("long", "0.00");

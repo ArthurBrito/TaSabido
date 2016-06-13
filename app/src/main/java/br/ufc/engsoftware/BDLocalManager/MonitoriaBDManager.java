@@ -93,6 +93,17 @@ public class MonitoriaBDManager {
         });
     }
 
+    public void deletarMonitoriaPorId(final int id_monitoria, Activity activity){
+        activateRealm(activity);
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmResults<Monitoria> result = realm.where(Monitoria.class).equalTo("id_monitoria", id_monitoria).findAll();
+                result.deleteFirstFromRealm();
+            }
+        });
+    }
+
     // esse metodo verifica se a duvida ja existe no banco de dados
     public boolean monitoriaJaSalva(int id_monitoria){
         final RealmResults<Monitoria> results = realm.where(Monitoria.class).equalTo("id_monitoria", id_monitoria).findAll();

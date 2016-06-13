@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 import br.ufc.engsoftware.BDLocalManager.MateriaBDManager;
+import br.ufc.engsoftware.auxiliar.Statics;
 import br.ufc.engsoftware.auxiliar.WebRequest;
 import br.ufc.engsoftware.models.Materia;
 
@@ -26,7 +27,7 @@ import static java.lang.Integer.parseInt;
 public class GetMateriasServer extends AsyncTask<Void, Void, Void> {
 
     // URL para pegar as materias via JSON
-    private static String url = "http://avalan.herokuapp.com/tasabido/listar_materias/?format=json";
+    private static String url = Statics.LISTAR_MATERIAS + "?format=json";
 
     // Referencia ao contexto que está sendo mostrado
     Context context;

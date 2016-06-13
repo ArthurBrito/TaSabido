@@ -103,10 +103,22 @@ public class CriarMonitoriaActivity extends AppCompatActivity implements Adapter
         Monitoria monitoria = new Monitoria(id_usuario, id_materia, id_subtopico, titulo, descricao, data, endereco);
         JSONObject jsonParam = createJsonParam(monitoria);
 
-
-        PostCriarMonitoria cm = (PostCriarMonitoria) new PostCriarMonitoria(this, jsonParam, Statics.CADASTRAR_MONITORIA).execute();
-
-
+        try {
+            new PostCriarMonitoria(this, jsonParam, Statics.CADASTRAR_MONITORIA, new PostCriarMonitoria.AsyncResponse(){
+                public void processFinish(String output){
+                    if (output.equals("200")){
+                        Utils.progressDialog.setMessage("Monitoria criada com sucesso.");
+                        Utils.delayMessage();
+                        finish();
+                    }else{
+                        Utils.progressDialog.setMessage("Algum erro ocorreu, tente denovo mais tarde.");
+                        Utils.delayMessage();
+                    }
+                }
+            }).execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public JSONObject createJsonParam(Monitoria monitoria) {
