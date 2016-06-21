@@ -2,13 +2,21 @@ package br.ufc.engsoftware.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.squareup.picasso.Picasso;
 
 import br.ufc.engsoftware.tasabido.PaginaPrincipalActivity;
@@ -24,6 +32,8 @@ public class PerfilFragment extends Fragment {
     RoundedImageView rivFotoUsuario;
     TextView tvNomeUsuario;
     TextView tvEmailUsuario;
+    Button btCreateQr;
+    ImageView ivQrCode;
 
 
     public void setarBarraUsuario(){
@@ -59,7 +69,7 @@ public class PerfilFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
-        // Seta o layout que será o view do fragment
+                // Seta o layout que será o view do fragment
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_perfil, container, false);
 
@@ -67,19 +77,47 @@ public class PerfilFragment extends Fragment {
         rivFotoUsuario = (RoundedImageView) rootView.findViewById(R.id.riv_foto_usuario);
         tvNomeUsuario = (TextView) rootView.findViewById(R.id.tv_nome_usuario);
         tvEmailUsuario = (TextView) rootView.findViewById(R.id.tv_email_usuario);
-
+        ivQrCode = (ImageView) rootView.findViewById(R.id.ivQrCode);
+        ivQrCode.setVisibility(View.GONE);
+        btCreateQr = (Button) rootView.findViewById(R.id.btCreateQr);
+        btCreateQr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickMostrarQR(v);
+            }
+        });
 
         // Insere os dados da barra de usuario
         setarBarraUsuario();
+        createQr();
 
         return rootView;
     }
 
+    public void createQr(){
+        String text2Qr = "CarteiraDoFulano";
+        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+        try {
+            BitMatrix bitMatrix = multiFormatWriter.encode(text2Qr, BarcodeFormat.QR_CODE,300,300);
+            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+            Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
+            ivQrCode.setImageBitmap(bitmap);
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
+    }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onClickMostrarQR(View view){
+        if (ivQrCode.getVisibility() == View.GONE) {
+            ivQrCode.setVisibility(View.VISIBLE);
+            btCreateQr.setText("Esconder carteira");
+        } else {
+            ivQrCode.setVisibility(View.GONE);
+            btCreateQr.setText("Mostrar carteira");
+        }
 
-        super.onCreate(savedInstanceState);
 
     }
+
+
 }

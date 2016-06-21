@@ -38,7 +38,22 @@
             android:layout_alignParentBottom="true"
             android:id="@+id/tv_email_usuario" />
 
-
     </RelativeLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btCreateQr"
+        android:text="Mostrar Carteira"
+        android:textColor="#FFFFFF"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="210dp"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ivQrCode"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="260dp"/>
 
 </RelativeLayout>
