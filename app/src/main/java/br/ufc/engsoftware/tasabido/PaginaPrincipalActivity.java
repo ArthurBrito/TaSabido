@@ -1,5 +1,7 @@
 package br.ufc.engsoftware.tasabido;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -8,9 +10,14 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import org.json.JSONObject;
 
@@ -48,7 +55,7 @@ public class PaginaPrincipalActivity extends FragmentActivity {
      */
 
 
-
+    final Activity activity = this;
     JSONObject obj;
     ArrayList<Perfil> arrayPerfilList;
 
@@ -129,7 +136,6 @@ public class PaginaPrincipalActivity extends FragmentActivity {
             } else {
                 return null;
             }
-
         }
 
         // Metodo que diz o numero de páginas que o ViewPager terá
@@ -166,4 +172,19 @@ public class PaginaPrincipalActivity extends FragmentActivity {
         new GetMonitoriasServer(this).execute();
     }
 
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) { //recebe o resultado da câmera
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if(result != null) {
+            if(result.getContents() == null) { // usuário cancelou a câmera
+                Log.d("MainActivity", "Cancelado");
+                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+            } else {
+                Log.d("MainActivity", "Scanned"); // Leu qr
+                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+            }
+        } else {
+            // This is important, otherwise the result will not be passed to the fragment
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
 }
