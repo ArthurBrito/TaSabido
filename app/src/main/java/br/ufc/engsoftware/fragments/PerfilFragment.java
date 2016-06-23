@@ -1,14 +1,28 @@
 package br.ufc.engsoftware.fragments;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.squareup.picasso.Picasso;
 
 import br.ufc.engsoftware.auxiliar.Utils;
@@ -27,6 +41,9 @@ public class PerfilFragment extends Fragment {
     TextView tvNomeUsuario;
     TextView tvEmailUsuario;
     TextView qt_moedas;
+    Button btCreateQr;
+    Button btReadQr;
+    ImageView ivQrCode;
 
 
     public void setarBarraUsuario(){
@@ -65,7 +82,7 @@ public class PerfilFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
-        // Seta o layout que será o view do fragment
+                // Seta o layout que será o view do fragment
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_perfil, container, false);
 
@@ -74,19 +91,73 @@ public class PerfilFragment extends Fragment {
         tvNomeUsuario = (TextView) rootView.findViewById(R.id.tv_nome_usuario);
         tvEmailUsuario = (TextView) rootView.findViewById(R.id.tv_email_usuario);
         qt_moedas = (TextView) rootView.findViewById(R.id.qt_moedas);
+        ivQrCode = (ImageView) rootView.findViewById(R.id.ivQrCode);
+        ivQrCode.setVisibility(View.GONE); // a imageview é criada porém não fica visível na tela
+        btCreateQr = (Button) rootView.findViewById(R.id.btCreateQr);
+        btCreateQr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickMostrarQR(v);
+            }
+        });
+        btReadQr = (Button) rootView.findViewById(R.id.btReadQr);
 
+        btReadQr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               onClickReaderQR(v);
+            }
+        });
 
         // Insere os dados da barra de usuario
         setarBarraUsuario();
+        createQr();
+        Log.d("activity","lol");
 
         return rootView;
     }
 
+    public void createQr(){ // cria QR CODE, o QR sempre é criado porém só mostra na tela ao criar se clicar no botão
+        String text2Qr = "CarteiraDoFulano"; // texto que será transformado em QR CODE
+        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+        try {
+            BitMatrix bitMatrix = multiFormatWriter.encode(text2Qr, BarcodeFormat.QR_CODE,300,300); //escolhe o tamanho
+            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+            Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
+            ivQrCode.setImageBitmap(bitmap); //setando a imagem do QR na image view
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
+    }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onClickMostrarQR(View view){ // Mostra e esconde o QRCODE e muda o botão do texto
+        if (ivQrCode.getVisibility() == View.GONE) {
+            ivQrCode.setVisibility(View.VISIBLE);
+            btCreateQr.setText("Esconder carteira");
+        } else {
+            ivQrCode.setVisibility(View.GONE);
+            btCreateQr.setText("Mostrar carteira");
+        }
+    }
 
-        super.onCreate(savedInstanceState);
+    public  void onClickReaderQR(View view){ // chama a câmera para ler o QR code
+        IntentIntegrator integrator = new IntentIntegrator(getActivity());
+        integrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
+        integrator.setPrompt("Scan");
+        integrator.setCameraId(0);
+        integrator.setBeepEnabled(false);
+        integrator.setBarcodeImageEnabled(false);
+        integrator.initiateScan(); //chama a câmera e a activity espera o resultado na activity pai
+        Log.d("OnclickReader","Entrou");
+    }
 
+    public void recebeQr(IntentResult intentResult){ //intentResult.getContents() retorna a mensagem contida no QrCode
+        if(intentResult.getContents() == null) { // usuário cancelou a câmera
+            Log.d("MainActivity", "Cancelado");
+            Toast.makeText(getContext(), "Cancelled", Toast.LENGTH_LONG).show();
+        } else {
+            Log.d("MainActivity", "Scanned"); // Leu qr
+            Toast.makeText(getContext(), "Scanned: " + intentResult.getContents(), Toast.LENGTH_LONG).show(); // Esse toast deverá ser excluido
+        }                                                                                                     // quando tiver transferindo moeda corretamente
     }
 }

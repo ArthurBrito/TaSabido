@@ -1,5 +1,7 @@
 package br.ufc.engsoftware.tasabido;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -8,9 +10,14 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import org.json.JSONObject;
 
@@ -49,7 +56,7 @@ public class PaginaPrincipalActivity extends FragmentActivity {
      */
 
 
-
+    final Activity activity = this;
     JSONObject obj;
     ArrayList<Perfil> arrayPerfilList;
 
@@ -64,6 +71,8 @@ public class PaginaPrincipalActivity extends FragmentActivity {
 
     // PageAdapter do ViewPager
     private PagerAdapter mPagerAdapter;
+
+    PerfilFragment perfilFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,16 +130,16 @@ public class PaginaPrincipalActivity extends FragmentActivity {
         // Metodo que retorna os fragments que vão popular o ViewPager
         @Override
         public Fragment getItem(int position) {
+            perfilFragment = new PerfilFragment();
             if (position == 0) {
                 return new MateriaFragment();
             } else if (position == 1) {
                 return new GpsFragment();
             } else if (position == 2) {
-                return new PerfilFragment();
+                return perfilFragment;
             } else {
                 return null;
             }
-
         }
 
         // Metodo que diz o numero de páginas que o ViewPager terá
@@ -168,4 +177,8 @@ public class PaginaPrincipalActivity extends FragmentActivity {
         new GetMoedasServer(this).execute();
     }
 
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) { //recebe o resultado da câmera e manda de volta para ser tratado na classe PerfilFragment
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        perfilFragment.recebeQr(result);
+    }
 }

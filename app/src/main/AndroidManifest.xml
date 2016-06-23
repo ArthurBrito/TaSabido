@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="br.ufc.engsoftware.tasabido">
+    package="br.ufc.engsoftware.tasabido" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -10,11 +10,11 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.Dark">
+        android:theme="@style/AppTheme.Dark" >
         <activity android:name=".PaginaPrincipalActivity" />
         <activity
             android:name=".ListaSubtopicosActivity"
-            android:theme="@style/AppTheme.Dark.ActionBar">
+            android:theme="@style/AppTheme.Dark.ActionBar" >
             <intent-filter>
                 <action android:name="br.ufc.engsoftware.tasabido.SUBTOPICOS" />
 
@@ -23,7 +23,7 @@
         </activity>
         <activity
             android:name=".MonitoriaActivity"
-            android:theme="@style/AppTheme.Dark">
+            android:theme="@style/AppTheme.Dark" >
             <intent-filter>
                 <action android:name="br.ufc.engsoftware.tasabido.MONITORIA" />
 
@@ -33,7 +33,7 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/AppTheme.Dark">
+            android:theme="@style/AppTheme.Dark" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -43,7 +43,7 @@
         <activity
             android:name=".CadastroActivity"
             android:label="@string/title_activity_cadastro"
-            android:theme="@style/AppTheme.Dark">
+            android:theme="@style/AppTheme.Dark" >
             <intent-filter>
                 <action android:name="br.ufc.engsoftware.tasabido.CADASTRO" />
 
@@ -52,7 +52,7 @@
         </activity>
         <activity
             android:name=".CriarDuvidaActivity"
-            android:theme="@style/AppTheme.Dark">
+            android:theme="@style/AppTheme.Dark" >
             <intent-filter>
                 <action android:name="br.ufc.engsoftware.tasabido.CRIAR_DUVIDA" />
 
@@ -61,7 +61,7 @@
         </activity>
         <activity
             android:name=".ListaDuvidasActivity"
-            android:theme="@style/AppTheme.Dark.ActionBar">
+            android:theme="@style/AppTheme.Dark.ActionBar" >
             <intent-filter>
                 <action android:name="br.ufc.engsoftware.tasabido.DUVIDAS" />
 
@@ -70,7 +70,7 @@
         </activity>
         <activity
             android:name=".DuvidaActivity"
-            android:theme="@style/AppTheme.Dark">
+            android:theme="@style/AppTheme.Dark" >
             <intent-filter>
                 <action android:name="br.ufc.engsoftware.tasabido.DUVIDAS" />
 
@@ -80,7 +80,7 @@
         <activity
             android:name=".CriarMonitoriaActivity"
             android:label="@string/title_activity_criar_monitoria"
-            android:theme="@style/AppTheme.Dark">
+            android:theme="@style/AppTheme.Dark" >
             <intent-filter>
                 <action android:name="br.ufc.engsoftware.tasabido.CRIAR_MONITORIA" />
 
@@ -90,7 +90,7 @@
         <activity
             android:name=".ListaMonitoriasActivity"
             android:label="@string/title_activity_lista_monitorias"
-            android:theme="@style/AppTheme.Dark.ActionBar">
+            android:theme="@style/AppTheme.Dark.ActionBar" >
             <intent-filter>
                 <action android:name="br.ufc.engsoftware.tasabido.LISTA_MONITORIA" />
 
@@ -99,7 +99,7 @@
         </activity>
         <activity
             android:name=".CalendarioActivity"
-            android:theme="@style/AppTheme.Dark">
+            android:theme="@style/AppTheme.Dark" >
             <intent-filter>
                 <action android:name="br.ufc.engsoftware.tasabido.CALENDARIO" />
 

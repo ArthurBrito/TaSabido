@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <!-- Pode deletar, feito só para o layout não ficar vazio -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/relativeLayout">
 
         <br.ufc.engsoftware.views.RoundedImageView
             android:id="@+id/riv_foto_usuario"
@@ -31,4 +36,31 @@
             android:textSize="23sp"
             android:id="@+id/qt_moedas" />
 
-</LinearLayout>
+</RelativeLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btCreateQr"
+        android:text="Mostrar Carteira"
+        android:textColor="#FFFFFF"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="260dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btReadQr"
+        android:text="Efetuar pagamento"
+        android:textColor="#FFFFFF"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="210dp"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ivQrCode"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="310dp"/>
+
+</RelativeLayout>

@@ -1,5 +1,6 @@
 package br.ufc.engsoftware.tasabido;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -35,6 +36,7 @@ public class CriarMonitoriaActivity extends AppCompatActivity implements Adapter
     private Vector<Subtopico> subtopicos;
     private Vector<Integer> subtopicos_selecionados;
     private int spinnerSelectedCount=0;
+    Activity activity;
 
 
     @InjectView(R.id.data) EditText _data;
@@ -51,6 +53,7 @@ public class CriarMonitoriaActivity extends AppCompatActivity implements Adapter
         spinner = (Spinner) findViewById(R.id.spinner_lista_subtopicos);
         spinner.setOnItemSelectedListener(this);
         subtopicos_selecionados = new Vector<>();
+        activity = this;
 
         // Pega a intent que chamou essa activity
         Intent intent = getIntent();
@@ -107,7 +110,8 @@ public class CriarMonitoriaActivity extends AppCompatActivity implements Adapter
             new PostCriarMonitoria(this, jsonParam, Statics.CADASTRAR_MONITORIA, new PostCriarMonitoria.AsyncResponse(){
                 public void processFinish(String output){
                     if (output.equals("200")){
-                        Utils.progressDialog.setMessage("Monitoria criada com sucesso.");
+//                        Utils.progressDialog.setMessage("Monitoria criada com sucesso.");
+                        Utils.callProgressDialog(activity, "Monitoria criada com sucesso.");
                         Utils.delayMessage();
                         finish();
                     }else{

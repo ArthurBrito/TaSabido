@@ -30,7 +30,7 @@ public class Utils {
                     public void run() {
                         progressDialog.dismiss();
                     }
-                }, 15000);
+                }, 3000);
     }
 
     public static void callProgressDialog(Activity ac, String message){
