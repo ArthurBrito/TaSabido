@@ -100,11 +100,11 @@ public class MateriaFragment extends Fragment {
     // Seta as informações da barra de usuario, verificando se o usuario esta logado ou nao
     public void setarBarraUsuario(){
         final Context context = getActivity();
-        SharedPreferences sharedPreferences = context.getSharedPreferences(PaginaPrincipalActivity.PREFERENCES_FILE_NAME, context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", context.MODE_PRIVATE);
 
         // Extrai os valores das preferencias
-        final String nomeUsuario = sharedPreferences.getString("USER_NAME", "Visitante");
-        final String emailUsuario = sharedPreferences.getString("USER_EMAIL", "email@example.com");
+        final String nomeUsuario = sharedPreferences.getString("first_name", "Visitante");
+        final String emailUsuario = sharedPreferences.getString("email", "email@example.com");
         final String fotoUsuario = sharedPreferences.getString("USER_PHOTO_PATH", "http://khojmaster.com/ui/user/realestate/assets/img/no-user.jpg");
 
         // Alterando as informações da barra de usuario numa thread secundaria

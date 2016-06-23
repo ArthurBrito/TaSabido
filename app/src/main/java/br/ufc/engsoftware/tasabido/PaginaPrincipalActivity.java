@@ -23,6 +23,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import br.ufc.engsoftware.auxiliar.Utils;
 import br.ufc.engsoftware.fragments.GpsFragment;
 import br.ufc.engsoftware.fragments.MateriaFragment;
 import br.ufc.engsoftware.fragments.PerfilFragment;
@@ -96,6 +97,8 @@ public class PaginaPrincipalActivity extends FragmentActivity {
             TabLayout.Tab tab = tabLayout.getTabAt(i);
             tab.setCustomView(((ScreenSlidePagerAdapter) mPagerAdapter).getTabView(i));
         }
+
+        testandoSharedPref();
     }
 
     // Metodo que seta a funcionalidade do botão de voltar
@@ -180,5 +183,16 @@ public class PaginaPrincipalActivity extends FragmentActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) { //recebe o resultado da câmera e manda de volta para ser tratado na classe PerfilFragment
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         perfilFragment.recebeQr(result);
+    }
+
+    private void testandoSharedPref(){
+        Utils u = new Utils(this);
+        String id = u.getFromSharedPreferences("id_usuario", "Nada");
+        String email = u.getFromSharedPreferences("email", "Nada");
+        String first_name = u.getFromSharedPreferences("first_name", "Nada");
+
+        Log.d("Shared" , "Id: " + id);
+        Log.d("Shared" , "Email: " + email);
+        Log.d("Shared", "First Name: " + first_name);
     }
 }

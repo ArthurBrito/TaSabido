@@ -104,6 +104,9 @@ public class PostServerDataAsync extends AsyncTask<String, String, Void>{
                 u.saveStringInSharedPreferences("id_usuario", id_usuario);
                 u.saveStringInSharedPreferences("email", email);
                 u.saveStringInSharedPreferences("first_name", first_name);
+
+                //TODO foto temporaria
+                u.saveStringInSharedPreferences("USER_PHOTO_PATH", "https://interferenciaurbana.files.wordpress.com/2015/08/imagem.jpg");
             }
 
             result = value;

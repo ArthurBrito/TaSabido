@@ -48,13 +48,12 @@ public class PerfilFragment extends Fragment {
 
     public void setarBarraUsuario(){
         final Context context = getActivity();
-        SharedPreferences sharedPreferences = context.getSharedPreferences(PaginaPrincipalActivity.PREFERENCES_FILE_NAME, context.MODE_PRIVATE);
         Utils util = new Utils(getActivity());
 
         // Extrai os valores das preferencias
         final String nomeUsuario = util.getFromSharedPreferences("first_name", "");
         final String emailUsuario = util.getFromSharedPreferences("email", "");
-        final String fotoUsuario = sharedPreferences.getString("USER_PHOTO_PATH", "http://khojmaster.com/ui/user/realestate/assets/img/no-user.jpg");
+        final String fotoUsuario = util.getFromSharedPreferences("USER_PHOTO_PATH", "http://khojmaster.com/ui/user/realestate/assets/img/no-user.jpg");
         final String quantidade_moedas = String.valueOf(util.getIntFromSharedPreferences("moedas", 0));
 
         // Alterando as informações da barra de usuario numa thread secundaria
