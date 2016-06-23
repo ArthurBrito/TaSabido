@@ -98,7 +98,6 @@ public class PaginaPrincipalActivity extends FragmentActivity {
             tab.setCustomView(((ScreenSlidePagerAdapter) mPagerAdapter).getTabView(i));
         }
 
-        testandoSharedPref();
     }
 
     // Metodo que seta a funcionalidade do botão de voltar
@@ -185,14 +184,4 @@ public class PaginaPrincipalActivity extends FragmentActivity {
         perfilFragment.recebeQr(result);
     }
 
-    private void testandoSharedPref(){
-        Utils u = new Utils(this);
-        String id = u.getFromSharedPreferences("id_usuario", "Nada");
-        String email = u.getFromSharedPreferences("email", "Nada");
-        String first_name = u.getFromSharedPreferences("first_name", "Nada");
-
-        Log.d("Shared" , "Id: " + id);
-        Log.d("Shared" , "Email: " + email);
-        Log.d("Shared", "First Name: " + first_name);
-    }
 }

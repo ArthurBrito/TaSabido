@@ -118,6 +118,8 @@ public class PerfilFragment extends Fragment {
 
     public void createQr(){ // cria QR CODE, o QR sempre é criado porém só mostra na tela ao criar se clicar no botão
         String text2Qr = "CarteiraDoFulano"; // texto que será transformado em QR CODE
+        Utils utils = new Utils(getActivity());
+        text2Qr = utils.getFromSharedPreferences("username", "");
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         try {
             BitMatrix bitMatrix = multiFormatWriter.encode(text2Qr, BarcodeFormat.QR_CODE,300,300); //escolhe o tamanho
