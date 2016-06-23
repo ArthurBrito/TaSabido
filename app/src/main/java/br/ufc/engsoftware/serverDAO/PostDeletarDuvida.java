@@ -71,7 +71,7 @@ public class PostDeletarDuvida extends AsyncTask<String, String, Void>{
 
             //descomentar quando for fazer requisições pro servidor
 //            HttpsURLConnection.setDefaultSSLSocketFactory(NoSSLv3Factory);
-            HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type",

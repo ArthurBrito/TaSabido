@@ -109,7 +109,7 @@ public class DuvidaActivity extends AppCompatActivity {
     private void salvarDuvidaBDLocal() {
         DuvidaBDManager db = new DuvidaBDManager(this);
         //deleta duvida antiga
-        db.deleteDuvidaPorIdDuvida(this, id_duvida);
+        deleteDuvida();
         //salva nova duvida (duvida atualizada)
         db.salvarDuvida(duvida);
     }

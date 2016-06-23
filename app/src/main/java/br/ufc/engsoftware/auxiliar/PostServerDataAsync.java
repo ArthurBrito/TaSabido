@@ -98,8 +98,12 @@ public class PostServerDataAsync extends AsyncTask<String, String, Void>{
             //salva o id do usuario no shared preferences
             if (value.equals("true")){
                 String id_usuario = jsonResponse.getString("id");
+                String email = jsonResponse.getString("email");
+                String first_name = jsonResponse.getString("first_name");
                 Utils u = new Utils(context);
-                u.saveInSharedPreferences("id_usuario", id_usuario);
+                u.saveStringInSharedPreferences("id_usuario", id_usuario);
+                u.saveStringInSharedPreferences("email", email);
+                u.saveStringInSharedPreferences("first_name", first_name);
             }
 
             result = value;

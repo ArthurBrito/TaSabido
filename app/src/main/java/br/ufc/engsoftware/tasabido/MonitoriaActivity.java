@@ -72,7 +72,7 @@ public class MonitoriaActivity extends AppCompatActivity {
                     if (output.equals("200")){
                         Utils.progressDialog.setMessage("Monitoria atualizada.");
                         Utils.delayMessage();
-                        deletarMonitoriaBDLocal(id_monitoria);
+                        deletarMonitoriaBDLocal();
                         finish();
                     }else{
                         Utils.progressDialog.setMessage("Algum erro ocorreu, tente denovo mais tarde.");
@@ -85,7 +85,15 @@ public class MonitoriaActivity extends AppCompatActivity {
         }
     }
 
-    private void deletarMonitoriaBDLocal(int id_monitoria) {
+    private void salvarDuvidaBDLocal() {
+        MonitoriaBDManager db = new MonitoriaBDManager(this);
+        //deleta duvida antiga
+        deletarMonitoriaBDLocal();
+        //salva nova duvida (duvida atualizada)
+//        db.salvarMonitoria(duvida);
+    }
+
+    private void deletarMonitoriaBDLocal() {
         MonitoriaBDManager db = new MonitoriaBDManager(this);
         db.deletarMonitoriaPorId(id_monitoria, this);
     }
@@ -104,7 +112,7 @@ public class MonitoriaActivity extends AppCompatActivity {
                     if (output.equals("200")){
                         Utils.progressDialog.setMessage("Monitoria deletada.");
                         Utils.delayMessage();
-                        deletarMonitoriaBDLocal(id_monitoria);
+                        deletarMonitoriaBDLocal();
                         finish();
                     }else{
                         Utils.progressDialog.setMessage("Algum erro ocorreu, tente denovo mais tarde.");

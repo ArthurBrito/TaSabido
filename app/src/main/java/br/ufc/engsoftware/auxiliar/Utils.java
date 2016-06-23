@@ -71,9 +71,22 @@ public class Utils {
             return "";
     }
 
-    public void saveInSharedPreferences(String key, String value){
+    public int getIntFromSharedPreferences(String key, int value){
+        if (sharedPreferencesContains(key))
+            return sharedPreferences().getInt(key, value);
+        else
+            return 0;
+    }
+
+    public void saveStringInSharedPreferences(String key, String value){
         SharedPreferences.Editor editor = sharedPreferences().edit();
         editor.putString(key, value);
+        editor.commit();
+    }
+
+    public void saveIntInSharedPreferences(String key, int value){
+        SharedPreferences.Editor editor = sharedPreferences().edit();
+        editor.putInt(key, value);
         editor.commit();
     }
 

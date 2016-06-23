@@ -11,9 +11,11 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import br.ufc.engsoftware.auxiliar.Utils;
 import br.ufc.engsoftware.tasabido.PaginaPrincipalActivity;
 import br.ufc.engsoftware.tasabido.R;
 import br.ufc.engsoftware.views.RoundedImageView;
+import io.realm.internal.Util;
 
 /**
  * Created by Thiago on 09/05/2016.
@@ -24,16 +26,19 @@ public class PerfilFragment extends Fragment {
     RoundedImageView rivFotoUsuario;
     TextView tvNomeUsuario;
     TextView tvEmailUsuario;
+    TextView qt_moedas;
 
 
     public void setarBarraUsuario(){
         final Context context = getActivity();
         SharedPreferences sharedPreferences = context.getSharedPreferences(PaginaPrincipalActivity.PREFERENCES_FILE_NAME, context.MODE_PRIVATE);
+        Utils util = new Utils(getActivity());
 
         // Extrai os valores das preferencias
-        final String nomeUsuario = sharedPreferences.getString("USER_NAME", "Visitante");
-        final String emailUsuario = sharedPreferences.getString("USER_EMAIL", "email@example.com");
+        final String nomeUsuario = util.getFromSharedPreferences("first_name", "");
+        final String emailUsuario = util.getFromSharedPreferences("email", "");
         final String fotoUsuario = sharedPreferences.getString("USER_PHOTO_PATH", "http://khojmaster.com/ui/user/realestate/assets/img/no-user.jpg");
+        final String quantidade_moedas = String.valueOf(util.getIntFromSharedPreferences("moedas", 0));
 
         // Alterando as informações da barra de usuario numa thread secundaria
         tvNomeUsuario.post(new Runnable() {
@@ -41,6 +46,7 @@ public class PerfilFragment extends Fragment {
             public void run() {
                 tvNomeUsuario.setText(nomeUsuario);
                 tvEmailUsuario.setText(emailUsuario);
+                qt_moedas.setText(quantidade_moedas);
             }
         });
 
@@ -67,6 +73,7 @@ public class PerfilFragment extends Fragment {
         rivFotoUsuario = (RoundedImageView) rootView.findViewById(R.id.riv_foto_usuario);
         tvNomeUsuario = (TextView) rootView.findViewById(R.id.tv_nome_usuario);
         tvEmailUsuario = (TextView) rootView.findViewById(R.id.tv_email_usuario);
+        qt_moedas = (TextView) rootView.findViewById(R.id.qt_moedas);
 
 
         // Insere os dados da barra de usuario

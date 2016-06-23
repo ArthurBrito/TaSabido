@@ -22,6 +22,7 @@ import br.ufc.engsoftware.fragments.PerfilFragment;
 import br.ufc.engsoftware.models.Perfil;
 import br.ufc.engsoftware.serverDAO.GetDuvidasServer;
 import br.ufc.engsoftware.serverDAO.GetMateriasServer;
+import br.ufc.engsoftware.serverDAO.GetMoedasServer;
 import br.ufc.engsoftware.serverDAO.GetMonitoriasServer;
 import br.ufc.engsoftware.serverDAO.GetSubtopicosServer;
 
@@ -164,6 +165,7 @@ public class PaginaPrincipalActivity extends FragmentActivity {
         new GetSubtopicosServer(this).execute();
         new GetDuvidasServer(this).execute();
         new GetMonitoriasServer(this).execute();
+        new GetMoedasServer(this).execute();
     }
 
 }

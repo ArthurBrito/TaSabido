@@ -195,7 +195,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void salvarLoginSenha(String login, String senha){
         Utils utils = new Utils(this);
-        utils.saveInSharedPreferences("login", login);
-        utils.saveInSharedPreferences("senha", senha);
+        utils.saveStringInSharedPreferences("login", login);
+        utils.saveStringInSharedPreferences("senha", senha);
     }
 }

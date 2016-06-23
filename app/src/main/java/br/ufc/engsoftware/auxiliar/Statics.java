@@ -4,8 +4,8 @@ package br.ufc.engsoftware.auxiliar;
  * Created by limaneto on 18/05/16.
  */
 public class Statics {
-//    public static String ROOT_URL = "https://avalan.herokuapp.com/tasabido/";
-    public static String ROOT_URL = "http://10.0.2.2:8000/tasabido/";
+    public static String ROOT_URL = "https://avalan.herokuapp.com/tasabido/";
+//    public static String ROOT_URL = "http://10.0.2.2:8000/tasabido/";
 
     //CADASTRAR
     public static String CADASTRAR_USUARIO = ROOT_URL + "cadastrar_usuario/";
@@ -31,4 +31,11 @@ public class Statics {
     //DELETAR
     public static String DELETAR_DUVIDA = ROOT_URL + "deletar_duvida/";
     public static String DELETAR_MONITORIA = ROOT_URL + "deletar_monitoria/";
+
+    //DELETE
+    public static String DELETE_DUVIDA = ROOT_URL + "delete_duvida/";
+    public static String DELETE_MONITORIA = ROOT_URL + "delete_monitoria/";
+
+    //RETRIEVE
+    public static String BUSCAR_MOEDA = ROOT_URL + "moedas_usuario/";
 }
