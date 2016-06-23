@@ -71,6 +71,8 @@ public class PaginaPrincipalActivity extends FragmentActivity {
     // PageAdapter do ViewPager
     private PagerAdapter mPagerAdapter;
 
+    PerfilFragment perfilFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,12 +129,13 @@ public class PaginaPrincipalActivity extends FragmentActivity {
         // Metodo que retorna os fragments que vão popular o ViewPager
         @Override
         public Fragment getItem(int position) {
+            perfilFragment = new PerfilFragment();
             if (position == 0) {
                 return new MateriaFragment();
             } else if (position == 1) {
                 return new GpsFragment();
             } else if (position == 2) {
-                return new PerfilFragment();
+                return perfilFragment;
             } else {
                 return null;
             }
@@ -172,19 +175,8 @@ public class PaginaPrincipalActivity extends FragmentActivity {
         new GetMonitoriasServer(this).execute();
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) { //recebe o resultado da câmera
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) { //recebe o resultado da câmera e manda de volta para ser tratado na classe PerfilFragment
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if(result != null) {
-            if(result.getContents() == null) { // usuário cancelou a câmera
-                Log.d("MainActivity", "Cancelado");
-                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
-            } else {
-                Log.d("MainActivity", "Scanned"); // Leu qr
-                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
-            }
-        } else {
-            // This is important, otherwise the result will not be passed to the fragment
-            super.onActivityResult(requestCode, resultCode, data);
-        }
+        perfilFragment.recebeQr(result);
     }
 }

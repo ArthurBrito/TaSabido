@@ -146,4 +146,13 @@ public class PerfilFragment extends Fragment {
         Log.d("OnclickReader","Entrou");
     }
 
+    public void recebeQr(IntentResult intentResult){ //intentResult.getContents() retorna a mensagem contida no QrCode
+        if(intentResult.getContents() == null) { // usuário cancelou a câmera
+            Log.d("MainActivity", "Cancelado");
+            Toast.makeText(getContext(), "Cancelled", Toast.LENGTH_LONG).show();
+        } else {
+            Log.d("MainActivity", "Scanned"); // Leu qr
+            Toast.makeText(getContext(), "Scanned: " + intentResult.getContents(), Toast.LENGTH_LONG).show(); // Esse toast deverá ser excluido
+        }                                                                                                     // quando tiver transferindo moeda corretamente
+    }
 }
