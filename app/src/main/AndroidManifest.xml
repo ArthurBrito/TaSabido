@@ -98,6 +98,16 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".ListaMonitoriasConfirmadasActivity"
+            android:label="@string/title_activity_lista_monitorias_confirmadas"
+            android:theme="@style/AppTheme.Dark.ActionBar" >
+            <intent-filter>
+                <action android:name="br.ufc.engsoftware.tasabido.LISTA_MONITORIAS_CONFIRMADAS" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".CalendarioActivity"
             android:theme="@style/AppTheme.Dark" >
             <intent-filter>

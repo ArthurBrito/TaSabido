@@ -14,6 +14,8 @@ public class Statics {
     public static String CADASTRAR_MATERIA = ROOT_URL + "cadastrar_materia/";
     public static String CADASTRAR_SUBTOPICO = ROOT_URL + "cadastrar_subtopico/";
 
+    public static String ENVIAR_EMAIL = ROOT_URL + "enviar_email/";
+
     //AUTENTICAR
     public static String AUTENTICAR_USUARIO = ROOT_URL + "autenticar_usuario/";
 

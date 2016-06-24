@@ -66,7 +66,7 @@
         </android.support.design.widget.TextInputLayout>
 
 
-        <!-- Botão Atualizar Duvida -->
+        <!-- Botão Atualizar Monitoria -->
         <Button
             android:layout_width="150dp"
             android:layout_height="wrap_content"
@@ -75,13 +75,22 @@
             android:onClick="onClickAtualizarMonitoria"/>
 
 
-        <!-- Botão Deletar Duvida -->
+        <!-- Botão Deletar Monitoria -->
         <Button
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="@string/btn_deletar_monitoria"
             android:onClick="onClickDeletarMonitoria"/>
+
+
+        <!-- Botão Participar Monitoria -->
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/btn_participar_monitoria"
+            android:onClick="onClickParticiparMonitoria"/>
 
 
 

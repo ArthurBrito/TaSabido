@@ -9,6 +9,7 @@
     <string name="btn_deletar_duvida">Deletar Duvida</string>
     <string name="btn_atualizar_monitoria">Atualizar Monitoria</string>
     <string name="btn_deletar_monitoria">Deletar Monitoria</string>
+    <string name="btn_participar_monitoria">Participar Monitoria</string>
     <string name="btn_criar_monitoria">Criar Monitoria</string>
     <string name="title_activity_duvida">DuvidaActivity</string>
     <string name="title_activity_criar_monitoria">CriarMonitoriaActivity</string>
@@ -16,6 +17,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_lista_monitorias">ListaMonitoriasActivity</string>
+    <string name="title_activity_lista_monitorias_confirmadas">ListaMonitoriasConfirmadasActivity</string>
+
 </resources>
 
 

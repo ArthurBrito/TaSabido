@@ -83,6 +83,12 @@ public class MonitoriaBDManager {
         return castRealmQuery(results);
     }
 
+    public Monitoria pegarMonitoriasPorIdMonitoria(Activity activity, int id_monitoria){
+        activateRealm(activity);
+        final RealmResults<Monitoria> results = realm.where(Monitoria.class).equalTo("id_monitoria", id_monitoria).findAll();
+        return results.first();
+    }
+
     public void deleteTodasMonitorias(Activity activity){
         activateRealm(activity);
         realm.executeTransaction(new Realm.Transaction() {

@@ -70,6 +70,7 @@ public class MonitoriaListView {
         intent.putExtra("ID_SUBTOPICO", item.getId_subtopico());
         intent.putExtra("ID_MONITORIA", item.getId_monitoria());
         intent.putExtra("ID_MATERIA", item.getId_materia());
+        intent.putExtra("ID_USUARIO", item.getId_usuario());
         view.startActivity(intent);
     }
 

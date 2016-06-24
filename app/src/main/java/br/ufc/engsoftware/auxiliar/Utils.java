@@ -6,6 +6,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+
+import java.util.HashSet;
+import java.util.Set;
+
 import br.ufc.engsoftware.tasabido.R;
 
 /**
@@ -78,6 +82,14 @@ public class Utils {
             return 0;
     }
 
+    public Set<String> getMonitoriasConfirmadasFromSharedPreferences(String key, Set<String> value){
+        if (sharedPreferencesContains(key))
+            return sharedPreferences().getStringSet(key, value);
+        else{
+            return value;
+        }
+    }
+
     public void saveStringInSharedPreferences(String key, String value){
         SharedPreferences.Editor editor = sharedPreferences().edit();
         editor.putString(key, value);
@@ -87,6 +99,12 @@ public class Utils {
     public void saveIntInSharedPreferences(String key, int value){
         SharedPreferences.Editor editor = sharedPreferences().edit();
         editor.putInt(key, value);
+        editor.commit();
+    }
+
+    public void saveMonitoriasConfirmadasSharedPreferences(Set<String> ids){
+        SharedPreferences.Editor editor = sharedPreferences().edit();
+        editor.putStringSet("monitorias", ids);
         editor.commit();
     }
 

@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,9 +27,12 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.squareup.picasso.Picasso;
 
 import br.ufc.engsoftware.auxiliar.Utils;
+import br.ufc.engsoftware.tasabido.ListaMonitoriasActivity;
+import br.ufc.engsoftware.tasabido.ListaMonitoriasConfirmadasActivity;
 import br.ufc.engsoftware.tasabido.PaginaPrincipalActivity;
 import br.ufc.engsoftware.tasabido.R;
 import br.ufc.engsoftware.views.RoundedImageView;
+import butterknife.InjectView;
 import io.realm.internal.Util;
 
 /**
@@ -43,6 +47,7 @@ public class PerfilFragment extends Fragment {
     TextView qt_moedas;
     Button btCreateQr;
     Button btReadQr;
+    Button monitoriasConf;
     ImageView ivQrCode;
 
 
@@ -90,6 +95,7 @@ public class PerfilFragment extends Fragment {
         rivFotoUsuario = (RoundedImageView) rootView.findViewById(R.id.riv_foto_usuario);
         tvNomeUsuario = (TextView) rootView.findViewById(R.id.tv_nome_usuario);
         tvEmailUsuario = (TextView) rootView.findViewById(R.id.tv_email_usuario);
+        monitoriasConf = (Button) rootView.findViewById(R.id.monitorias_confirmadas);
         qt_moedas = (TextView) rootView.findViewById(R.id.qt_moedas);
         ivQrCode = (ImageView) rootView.findViewById(R.id.ivQrCode);
         ivQrCode.setVisibility(View.GONE); // a imageview é criada porém não fica visível na tela
@@ -109,10 +115,17 @@ public class PerfilFragment extends Fragment {
             }
         });
 
+        monitoriasConf.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                onClickMostrarMonitoriasConfirmadas(v);
+            }
+        });
+
         // Insere os dados da barra de usuario
         setarBarraUsuario();
         createQr();
-        Log.d("activity","lol");
+        Log.d("activity", "lol");
 
         return rootView;
     }
@@ -140,7 +153,7 @@ public class PerfilFragment extends Fragment {
         }
     }
 
-    public  void onClickReaderQR(View view){ // chama a câmera para ler o QR code
+    public void onClickReaderQR(View view){ // chama a câmera para ler o QR code
         IntentIntegrator integrator = new IntentIntegrator(getActivity());
         integrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
         integrator.setPrompt("Scan");
@@ -149,6 +162,13 @@ public class PerfilFragment extends Fragment {
         integrator.setBarcodeImageEnabled(false);
         integrator.initiateScan(); //chama a câmera e a activity espera o resultado na activity pai
         Log.d("OnclickReader","Entrou");
+    }
+
+    public void onClickMostrarMonitoriasConfirmadas(View view){
+        Intent intent = new Intent(getActivity(), ListaMonitoriasConfirmadasActivity.class);
+        intent.setAction("br.ufc.engsoftware.tasabido.LISTA_MONITORIAS_CONFIRMADAS");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     public void recebeQr(IntentResult intentResult){ //intentResult.getContents() retorna a mensagem contida no QrCode
@@ -160,4 +180,6 @@ public class PerfilFragment extends Fragment {
             Toast.makeText(getContext(), "Scanned: " + intentResult.getContents(), Toast.LENGTH_LONG).show(); // Esse toast deverá ser excluido
         }                                                                                                     // quando tiver transferindo moeda corretamente
     }
+
+
 }

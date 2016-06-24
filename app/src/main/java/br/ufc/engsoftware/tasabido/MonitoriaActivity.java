@@ -1,5 +1,6 @@
 package br.ufc.engsoftware.tasabido;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,18 +13,23 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import br.ufc.engsoftware.BDLocalManager.MonitoriaBDManager;
 import br.ufc.engsoftware.auxiliar.Statics;
 import br.ufc.engsoftware.auxiliar.Utils;
 import br.ufc.engsoftware.models.Monitoria;
 import br.ufc.engsoftware.serverDAO.PostCriarMonitoria;
+import br.ufc.engsoftware.serverDAO.PostEnviarEmail;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 public class MonitoriaActivity extends AppCompatActivity {
 
     String titulo, descricao, data, endereco;
-    int id_monitoria, id_subtopico, id_materia;
+    int id_monitoria, id_subtopico, id_materia, id_usuario;
+    Activity activity;
 
     @InjectView(R.id.data) EditText _data;
     @InjectView(R.id.input_descricao) EditText _descricao;
@@ -35,7 +41,7 @@ public class MonitoriaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_monitoria);
         ButterKnife.inject(this);
-
+        activity = this;
 
         // Pega a intent que chamou essa activity
         Intent intent = getIntent();
@@ -46,6 +52,7 @@ public class MonitoriaActivity extends AppCompatActivity {
         id_monitoria = intent.getIntExtra("ID_MONITORIA", 0);
         id_subtopico = intent.getIntExtra("ID_SUBTOPICO", 0);
         id_materia = intent.getIntExtra("ID_MATERIA", 0);
+        id_usuario = intent.getIntExtra("ID_USUARIO", 0);
 
 
         _data.setText(data);
@@ -125,6 +132,20 @@ public class MonitoriaActivity extends AppCompatActivity {
         }
     }
 
+    public void onClickParticiparMonitoria(View view){
+        Utils utils = new Utils(this);
+        Set<String> array_ids = new HashSet<String>();
+        array_ids = utils.getMonitoriasConfirmadasFromSharedPreferences("monitorias", array_ids);
+        array_ids.add(String.valueOf(id_monitoria));
+        utils.saveMonitoriasConfirmadasSharedPreferences(array_ids);
+        String mensagem = "Presença confirmada nessa monitoria";
+        Utils.progressDialog.setMessage(mensagem);
+        Utils.delayMessage();
+        finish();
+        String param = concatenateParam(String.valueOf(id_usuario), "Monitoria", mensagem);
+        sendEmail(param);
+    }
+
 
     public JSONObject createJsonParam(Monitoria monitoria) {
         JSONObject json = new JSONObject();
@@ -148,6 +169,19 @@ public class MonitoriaActivity extends AppCompatActivity {
         return json;
     }
 
+    public String concatenateParam(String id_usuario, String assunto, String mensagem){
+        String param = "id_to=";
+        param += id_usuario;
+        param += "&";
+        param += "assunto=";
+        param += assunto;
+        param += "&";
+        param += "message=";
+        param += mensagem;
+
+        return param;
+    }
+
     public JSONObject createJsonParamToDeleteMonitoria(Monitoria monitoria) {
         JSONObject json = new JSONObject();
         JSONArray subtopicosJson = new JSONArray();
@@ -159,6 +193,28 @@ public class MonitoriaActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return json;
+    }
+
+    public void sendEmail(String param) {
+
+        try{
+            new PostEnviarEmail(this, param, new PostEnviarEmail.AsyncResponse(){
+
+                @Override
+                public void processFinish(String output) {
+                    if (output.equals("200")){
+                        Utils.callProgressDialog(activity, "Email enviado");
+
+                    }else{
+                        Utils.callProgressDialog(activity, "Email não enviado");
+                    }
+                    Utils.delayMessage();
+                    finish();
+                }
+            }).execute(Statics.ENVIAR_EMAIL);
+        }catch (Exception e){
+         e.printStackTrace();
+        }
     }
 
 }
