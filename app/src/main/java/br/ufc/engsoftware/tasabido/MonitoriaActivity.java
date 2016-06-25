@@ -138,10 +138,9 @@ public class MonitoriaActivity extends AppCompatActivity {
         array_ids = utils.getMonitoriasConfirmadasFromSharedPreferences("monitorias", array_ids);
         array_ids.add(String.valueOf(id_monitoria));
         utils.saveMonitoriasConfirmadasSharedPreferences(array_ids);
-        String mensagem = "Presença confirmada nessa monitoria";
-        Utils.progressDialog.setMessage(mensagem);
-        Utils.delayMessage();
-        finish();
+
+        String login = utils.getFromSharedPreferences("login", "");
+        String mensagem = login + " confirmou presença na sua monitoria.";
         String param = concatenateParam(String.valueOf(id_usuario), "Monitoria", mensagem);
         sendEmail(param);
     }
