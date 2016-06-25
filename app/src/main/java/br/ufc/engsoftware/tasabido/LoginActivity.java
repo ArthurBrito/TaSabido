@@ -33,44 +33,63 @@ public class LoginActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        ButterKnife.inject(this);
-        activity = this;
 
+        // Verifica se o usuário ja esta logado para nao ter que logar toda vez que entrar no sistema
+        Utils u = new Utils(this);
+        if(u.getFromSharedPreferences("id_usuario", "") == "")
+        {
 
-        // pega login e senha que ja foi usado pra logar
-        lembrarLoginSenha();
+            ButterKnife.inject(this);
+            activity = this;
 
-        btn_conexao.setOnClickListener(new View.OnClickListener() {
+            // pega login e senha que ja foi usado pra logar
+            lembrarLoginSenha();
 
-            @Override
-            public void onClick(View v) {
-                boolean ok = Utils.checkConnection(activity);
-                if(ok){
-                    Toast.makeText(getBaseContext(), "SIM", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(getBaseContext(), "NAO", Toast.LENGTH_SHORT).show();
+            btn_conexao.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    boolean ok = Utils.checkConnection(activity);
+                    if (ok) {
+                        Toast.makeText(getBaseContext(), "SIM", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getBaseContext(), "NAO", Toast.LENGTH_SHORT).show();
+                    }
+
                 }
+            });
 
-            }
-        });
+            _loginButton.setOnClickListener(new View.OnClickListener() {
 
-        _loginButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    login();
+                }
+            });
 
-            @Override
-            public void onClick(View v) {
-                login();
-            }
-        });
+            _signupLink.setOnClickListener(new View.OnClickListener() {
 
-        _signupLink.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Start the Signup activity
+                    Intent intent = new Intent(getApplicationContext(), CadastroActivity.class);
+                    startActivityForResult(intent, REQUEST_SIGNUP);
+                }
+            });
 
-            @Override
-            public void onClick(View v) {
-                // Start the Signup activity
-                Intent intent = new Intent(getApplicationContext(), CadastroActivity.class);
-                startActivityForResult(intent, REQUEST_SIGNUP);
-            }
-        });
+        }
+        else
+        {
+            alreadyLoged();
+        }
+    }
+
+    public void alreadyLoged() {
+        Intent in = new Intent(this, PaginaPrincipalActivity.class);
+        in.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(in);
+
+        finish();
     }
 
     public void login() {
@@ -94,6 +113,8 @@ public class LoginActivity extends AppCompatActivity {
         // TODO: Implement your own authentication logic here.
         Perfil perfil = new Perfil(usuario, password);
         String param = concatenateParam(perfil);
+
+        final Activity ac = this;
 
         try {
             new PostServerDataAsync(this, param, new PostServerDataAsync.AsyncResponse(){
@@ -139,9 +160,12 @@ public class LoginActivity extends AppCompatActivity {
         // Start the Signup activity
         salvarLoginSenha(_loginText.getText().toString(), _passwordText.getText().toString());
 
-        Intent myIntent = new Intent(LoginActivity.this, PaginaPrincipalActivity.class);
-        LoginActivity.this.startActivity(myIntent);
+        //Intent myIntent = new Intent(LoginActivity.this, PaginaPrincipalActivity.class);
+        //LoginActivity.this.startActivity(myIntent);
 
+        Intent in = new Intent(this, PaginaPrincipalActivity.class);
+        in.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(in);
     }
 
     public void onLoginFailed() {

@@ -23,6 +23,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import br.ufc.engsoftware.auxiliar.Utils;
 import br.ufc.engsoftware.fragments.GpsFragment;
 import br.ufc.engsoftware.fragments.MateriaFragment;
 import br.ufc.engsoftware.fragments.PerfilFragment;
@@ -96,6 +97,7 @@ public class PaginaPrincipalActivity extends FragmentActivity {
             TabLayout.Tab tab = tabLayout.getTabAt(i);
             tab.setCustomView(((ScreenSlidePagerAdapter) mPagerAdapter).getTabView(i));
         }
+
     }
 
     // Metodo que seta a funcionalidade do botão de voltar
@@ -181,4 +183,5 @@ public class PaginaPrincipalActivity extends FragmentActivity {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         perfilFragment.recebeQr(result);
     }
+
 }

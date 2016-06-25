@@ -2,6 +2,7 @@ package br.ufc.engsoftware.auxiliar;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -100,10 +101,15 @@ public class PostServerDataAsync extends AsyncTask<String, String, Void>{
                 String id_usuario = jsonResponse.getString("id");
                 String email = jsonResponse.getString("email");
                 String first_name = jsonResponse.getString("first_name");
+                String username = jsonResponse.getString("username");
                 Utils u = new Utils(context);
                 u.saveStringInSharedPreferences("id_usuario", id_usuario);
                 u.saveStringInSharedPreferences("email", email);
                 u.saveStringInSharedPreferences("first_name", first_name);
+                u.saveStringInSharedPreferences("username", username);
+
+                //TODO foto temporaria
+                u.saveStringInSharedPreferences("USER_PHOTO_PATH", "https://interferenciaurbana.files.wordpress.com/2015/08/imagem.jpg");
             }
 
             result = value;

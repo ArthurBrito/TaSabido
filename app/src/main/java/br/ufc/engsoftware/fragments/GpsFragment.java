@@ -1,6 +1,7 @@
 package br.ufc.engsoftware.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import br.ufc.engsoftware.tasabido.LoginActivity;
 import br.ufc.engsoftware.tasabido.PaginaPrincipalActivity;
 import br.ufc.engsoftware.tasabido.R;
 
@@ -51,11 +53,7 @@ public class GpsFragment extends Fragment {
             @Override
             public void onClick(View v)
             {
-                final Context context = getActivity();
-                SharedPreferences sharedPreferences = context.getSharedPreferences(PaginaPrincipalActivity.PREFERENCES_FILE_NAME, context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.clear();
-                editor.commit();
+                logout();
             }
         });
 
@@ -63,6 +61,20 @@ public class GpsFragment extends Fragment {
         /*********************/
 
         return rootView;
+    }
+
+    private void logout(){
+        final Context context = getActivity();
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.commit();
+
+        Intent in = new Intent(context, LoginActivity.class);
+        in.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(in);
+
+        getActivity().finish();
     }
 
 }
