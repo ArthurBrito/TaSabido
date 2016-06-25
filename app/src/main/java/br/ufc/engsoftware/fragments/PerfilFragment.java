@@ -26,7 +26,14 @@ import com.google.zxing.integration.android.IntentResult;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import br.ufc.engsoftware.auxiliar.Statics;
 import br.ufc.engsoftware.auxiliar.Utils;
+import br.ufc.engsoftware.models.Monitoria;
+import br.ufc.engsoftware.serverDAO.PostPagamento;
 import br.ufc.engsoftware.tasabido.ListaMonitoriasActivity;
 import br.ufc.engsoftware.tasabido.ListaMonitoriasConfirmadasActivity;
 import br.ufc.engsoftware.tasabido.PaginaPrincipalActivity;
@@ -39,6 +46,8 @@ import io.realm.internal.Util;
  * Created by Thiago on 09/05/2016.
  */
 public class PerfilFragment extends Fragment {
+
+    static String quantidade_moedas;
 
     // Referencia para os elementos da barra de usuario
     RoundedImageView rivFotoUsuario;
@@ -59,7 +68,7 @@ public class PerfilFragment extends Fragment {
         final String nomeUsuario = util.getFromSharedPreferences("first_name", "");
         final String emailUsuario = util.getFromSharedPreferences("email", "");
         final String fotoUsuario = util.getFromSharedPreferences("USER_PHOTO_PATH", "http://khojmaster.com/ui/user/realestate/assets/img/no-user.jpg");
-        final String quantidade_moedas = String.valueOf(util.getIntFromSharedPreferences("moedas", 0));
+        quantidade_moedas = String.valueOf(util.getIntFromSharedPreferences("moedas", 0));
 
         // Alterando as informações da barra de usuario numa thread secundaria
         tvNomeUsuario.post(new Runnable() {
@@ -130,12 +139,12 @@ public class PerfilFragment extends Fragment {
     }
 
     public void createQr(){ // cria QR CODE, o QR sempre é criado porém só mostra na tela ao criar se clicar no botão
-        String text2Qr = "CarteiraDoFulano"; // texto que será transformado em QR CODE
+//        String text2Qr = "CarteiraDoFulano"; // texto que será transformado em QR CODE
         Utils utils = new Utils(getActivity());
-        text2Qr = utils.getFromSharedPreferences("username", "");
+        String username = utils.getFromSharedPreferences("username", "");
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         try {
-            BitMatrix bitMatrix = multiFormatWriter.encode(text2Qr, BarcodeFormat.QR_CODE,300,300); //escolhe o tamanho
+            BitMatrix bitMatrix = multiFormatWriter.encode(username, BarcodeFormat.QR_CODE,300,300); //escolhe o tamanho
             BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
             Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
             ivQrCode.setImageBitmap(bitmap); //setando a imagem do QR na image view
@@ -162,7 +171,7 @@ public class PerfilFragment extends Fragment {
         integrator.setBeepEnabled(false);
         integrator.setBarcodeImageEnabled(false);
         integrator.initiateScan(); //chama a câmera e a activity espera o resultado na activity pai
-        Log.d("OnclickReader","Entrou");
+        Log.d("OnclickReader", "Entrou");
     }
 
     public void onClickMostrarMonitoriasConfirmadas(View view){
@@ -175,11 +184,53 @@ public class PerfilFragment extends Fragment {
     public void recebeQr(IntentResult intentResult){ //intentResult.getContents() retorna a mensagem contida no QrCode
         if(intentResult.getContents() == null) { // usuário cancelou a câmera
             Log.d("MainActivity", "Cancelado");
-            Toast.makeText(getContext(), "Cancelled", Toast.LENGTH_LONG).show();
         } else {
             Log.d("MainActivity", "Scanned"); // Leu qr
-            Toast.makeText(getContext(), "Scanned: " + intentResult.getContents(), Toast.LENGTH_LONG).show(); // Esse toast deverá ser excluido
-        }                                                                                                     // quando tiver transferindo moeda corretamente
+            Utils utils = new Utils(getActivity());
+            String id_usuario = utils.getFromSharedPreferences("id_usuario", "");
+            realizarPagamento(id_usuario, intentResult.getContents());
+        }
+    }
+
+    public void realizarPagamento(String id_usuario, String username){
+
+        if(Integer.parseInt(quantidade_moedas) == 0 ){
+            Utils.callProgressDialog(getActivity(), "Você não tem moedas suficientes.");
+            Utils.delayMessage();
+        }else {
+
+            JSONObject jsonParam = createJsonParam(id_usuario, username);
+
+            try {
+                new PostPagamento(getContext(), jsonParam, Statics.PAGAR, new PostPagamento.AsyncResponse() {
+
+                    @Override
+                    public void processFinish(String output) {
+                        if (output.equals("200")) {
+                            Utils.callProgressDialog(getActivity(), "Pagamento realizado.");
+                        } else {
+                            Utils.callProgressDialog(getActivity(), "Algum erro ocorreu, tente denovo mais tarde.");
+                        }
+                        Utils.delayMessage();
+                    }
+                }).execute();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public JSONObject createJsonParam(String id_usuario, String username) {
+        JSONObject json = new JSONObject();
+        JSONArray subtopicosJson = new JSONArray();
+        try {
+            json.put("id_usuario_pagante", id_usuario);
+            json.put("username", username);
+            json.put("quantia", "2");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return json;
     }
 
 

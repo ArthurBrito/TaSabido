@@ -1,16 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp" >
 
     <!-- Pode deletar, feito só para o layout não ficar vazio -->
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:id="@+id/relativeLayout">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 
         <br.ufc.engsoftware.views.RoundedImageView
             android:id="@+id/riv_foto_usuario"
@@ -36,40 +35,32 @@
             android:textSize="23sp"
             android:id="@+id/qt_moedas" />
 
-</RelativeLayout>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/monitorias_confirmadas"
+            android:text="Monitorias Confirmadas"
+            android:textColor="#FFFFFF"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btCreateQr"
-        android:text="Mostrar Carteira"
-        android:textColor="#FFFFFF"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="260dp"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btReadQr"
+            android:text="Efetuar pagamento"
+            android:textColor="#FFFFFF"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btReadQr"
-        android:text="Efetuar pagamento"
-        android:textColor="#FFFFFF"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="210dp"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btCreateQr"
+            android:text="Mostrar Carteira"
+            android:textColor="#FFFFFF"/>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/ivQrCode"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="310dp"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/monitorias_confirmadas"
-        android:text="Monitorias Confirmadas"
-        android:textColor="#FFFFFF"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="210dp"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ivQrCode"
+            android:layout_marginLeft="10dp"/>
+    </LinearLayout>
 
 </RelativeLayout>

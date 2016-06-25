@@ -43,28 +43,4 @@ public class WebRequest {
         Response response = client.newCall(request).execute();
         return String.valueOf(response.code());
     }
-
-
-    public static String httpPostCadastrarPerfil(String url, Perfil perfil) throws IOException {
-
-        MediaType JSON
-                = MediaType.parse("application/x-www-form-urlencoded; charset=utf-8");
-
-        OkHttpClient client = new OkHttpClient();
-
-
-        RequestBody formBody = new FormEncondingBuilder()
-                .add("first_name", perfil.getNome())
-                .add("username", perfil.getUsuario())
-                .add("password", perfil.getSenha())
-                .add("email", perfil.getEmail())
-                .build();
-
-        Request request = new Request.Builder()
-                .url(url)
-                .post(formBody)
-                .build();
-        Response response = client.newCall(request).execute();
-        return response.body().string();
-    }
 }

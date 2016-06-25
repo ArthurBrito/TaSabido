@@ -14,8 +14,6 @@ public class Statics {
     public static String CADASTRAR_MATERIA = ROOT_URL + "cadastrar_materia/";
     public static String CADASTRAR_SUBTOPICO = ROOT_URL + "cadastrar_subtopico/";
 
-    public static String ENVIAR_EMAIL = ROOT_URL + "enviar_email/";
-
     //AUTENTICAR
     public static String AUTENTICAR_USUARIO = ROOT_URL + "autenticar_usuario/";
 
@@ -34,10 +32,12 @@ public class Statics {
     public static String DELETAR_DUVIDA = ROOT_URL + "deletar_duvida/";
     public static String DELETAR_MONITORIA = ROOT_URL + "deletar_monitoria/";
 
-    //DELETE
-    public static String DELETE_DUVIDA = ROOT_URL + "delete_duvida/";
-    public static String DELETE_MONITORIA = ROOT_URL + "delete_monitoria/";
-
     //RETRIEVE
     public static String BUSCAR_MOEDA = ROOT_URL + "moedas_usuario/";
+    public static String BUSCAR_USUARIO = ROOT_URL + "usuario/";
+
+
+    //AUX
+    public static String ENVIAR_EMAIL = ROOT_URL + "enviar_email/";
+    public static String PAGAR = ROOT_URL + "pagamento/";
 }
