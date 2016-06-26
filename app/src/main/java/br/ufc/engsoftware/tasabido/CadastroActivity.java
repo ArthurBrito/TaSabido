@@ -45,7 +45,10 @@ public class CadastroActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Finish the registration screen and return to the Login activity
-                finish();
+
+                Intent in = new Intent(getApplicationContext(), LoginActivity.class);
+                in.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(in);
             }
         });
     }
