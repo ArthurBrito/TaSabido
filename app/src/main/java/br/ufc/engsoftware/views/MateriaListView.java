@@ -39,6 +39,7 @@ public class MateriaListView {
                 R.layout.materias_listview_rowlayout, R.id.label, vector);
         listview.setAdapter(adapter);
 
+        listview.setTextFilterEnabled(true);
         this.filter = adapter.getFilter();
 
         // Seta a ação quando clicar em um item do ListView

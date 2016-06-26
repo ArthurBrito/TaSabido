@@ -13,7 +13,10 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
+import java.util.Vector;
+
 import br.ufc.engsoftware.BDLocalManager.MateriaBDManager;
+import br.ufc.engsoftware.models.Materia;
 import br.ufc.engsoftware.views.MateriaListView;
 import br.ufc.engsoftware.views.MateriaSearchView;
 import br.ufc.engsoftware.tasabido.PaginaPrincipalActivity;
@@ -63,18 +66,13 @@ public class MateriaFragment extends Fragment {
 
         // Metodo responsável por montar o ListView das Materias
         montarListViewMaterias();
+        Filter filter = gerenciadorMateriasLV.getFilter();
 
         // Captura referencia pro SearchView
         searchviewMaterias = (SearchView) rootView.findViewById(R.id.searchview_materias);
         searchviewMaterias.clearFocus();
 
-        listviewMaterias.setTextFilterEnabled(true);
-        Filter filter = gerenciadorMateriasLV.getFilter();
-
         MateriaSearchView configSearchView = new MateriaSearchView(listviewMaterias, searchviewMaterias, filter);
-
-        // Metodo responsável por montar o SearchView das Materias
-        //montarSearchViewMaterias();
 
         return rootView;
     }
@@ -93,8 +91,17 @@ public class MateriaFragment extends Fragment {
     private void montarListViewMaterias(){
 
         MateriaBDManager materiaDB = new MateriaBDManager();
-        gerenciadorMateriasLV = new MateriaListView(listviewMaterias, getContext(), materiaDB.pegarMaterias(getContext()));
+        Vector<Materia> vM = materiaDB.pegarMaterias(getActivity());
+        Vector<Materia> vMAux = new Vector<Materia>();
 
+        // Copiando o vector pois pegar ele do Realm da problema no searchview
+        for(int i = 0; i < vM.size(); i++)
+        {
+            Materia mAux = vM.get(i);
+            vMAux.add(new Materia(mAux.getId_materia(), mAux.getNome()));
+        }
+
+        gerenciadorMateriasLV = new MateriaListView(listviewMaterias, getContext(), vMAux);
     }
 
     // Seta as informações da barra de usuario, verificando se o usuario esta logado ou nao
