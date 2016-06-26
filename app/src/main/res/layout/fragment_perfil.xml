@@ -45,6 +45,13 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/duvidas_confirmadas"
+            android:text="Duvidas Confirmadas"
+            android:textColor="#FFFFFF"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/btReadQr"
             android:text="Efetuar pagamento"
             android:textColor="#FFFFFF"/>

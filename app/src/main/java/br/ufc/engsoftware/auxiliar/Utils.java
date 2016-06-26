@@ -10,6 +10,7 @@ import android.net.NetworkInfo;
 import java.util.HashSet;
 import java.util.Set;
 
+import br.ufc.engsoftware.serverDAO.PostEnviarEmail;
 import br.ufc.engsoftware.tasabido.R;
 
 /**
@@ -90,6 +91,14 @@ public class Utils {
         }
     }
 
+    public Set<String> getDuvidasConfirmadasFromSharedPreferences(String key, Set<String> value){
+        if (sharedPreferencesContains(key))
+            return sharedPreferences().getStringSet(key, value);
+        else{
+            return value;
+        }
+    }
+
     public void saveStringInSharedPreferences(String key, String value){
         SharedPreferences.Editor editor = sharedPreferences().edit();
         editor.putString(key, value);
@@ -108,4 +117,31 @@ public class Utils {
         editor.commit();
     }
 
+    public void saveDuvidasConfirmadasSharedPreferences(Set<String> ids){
+        SharedPreferences.Editor editor = sharedPreferences().edit();
+        editor.putStringSet("duvidas", ids);
+        editor.commit();
+    }
+
+    public void sendEmail(String param, final Activity activity) {
+
+        try{
+            new PostEnviarEmail(activity, param, new PostEnviarEmail.AsyncResponse(){
+
+                @Override
+                public void processFinish(String output) {
+                    if (output.equals("200")){
+                        Utils.callProgressDialog(activity, "Email enviado");
+
+                    }else{
+                        Utils.callProgressDialog(activity, "Email não enviado");
+                    }
+                    Utils.delayMessage();
+                    activity.finish();
+                }
+            }).execute(Statics.ENVIAR_EMAIL);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }

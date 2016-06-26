@@ -9,18 +9,22 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import br.ufc.engsoftware.BDLocalManager.DuvidaBDManager;
 import br.ufc.engsoftware.auxiliar.Statics;
 import br.ufc.engsoftware.auxiliar.Utils;
 import br.ufc.engsoftware.models.Duvida;
 import br.ufc.engsoftware.serverDAO.PostCriarDuvida;
 import br.ufc.engsoftware.serverDAO.PostDeletarDuvida;
+import br.ufc.engsoftware.serverDAO.PostEnviarEmail;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 public class DuvidaActivity extends AppCompatActivity {
 
-    public int id_duvida, id_materia, id_subtopico;
+    public int id_duvida, id_materia, id_subtopico, id_usuario;
     String titulo, descricao;
     Duvida duvida;
     public Activity activity;
@@ -38,6 +42,7 @@ public class DuvidaActivity extends AppCompatActivity {
 
         // Pega a intent que chamou essa activity
         Intent intent = getIntent();
+        id_usuario = intent.getIntExtra("ID_USUARIO", 0);
         id_subtopico = intent.getIntExtra("ID_SUBTOPICO", 0);
         id_materia = intent.getIntExtra("ID_MATERIA", 0);
         id_duvida = intent.getIntExtra("ID", 0);
@@ -106,6 +111,19 @@ public class DuvidaActivity extends AppCompatActivity {
         }
     }
 
+    public void onClickTirarDuvida(View view){
+        Utils utils = new Utils(this);
+        Set<String> array_ids = new HashSet<String>();
+        array_ids = utils.getDuvidasConfirmadasFromSharedPreferences("duvidas", array_ids);
+        array_ids.add(String.valueOf(String.valueOf(id_duvida)));
+        utils.saveDuvidasConfirmadasSharedPreferences(array_ids);
+
+        String login = utils.getFromSharedPreferences("login", "");
+        String mensagem = login + " se disponibiliza pra tirar sua dúvida.";
+        String param = concatenateParamDuvida(String.valueOf(id_usuario), "Monitoria", mensagem);
+        utils.sendEmail(param, this);
+    }
+
     private void salvarDuvidaBDLocal() {
         DuvidaBDManager db = new DuvidaBDManager(this);
         //deleta duvida antiga
@@ -152,4 +170,16 @@ public class DuvidaActivity extends AppCompatActivity {
         return param;
     }
 
+    public String concatenateParamDuvida(String id_usuario, String assunto, String mensagem){
+        String param = "id_to=";
+        param += id_usuario;
+        param += "&";
+        param += "assunto=";
+        param += assunto;
+        param += "&";
+        param += "message=";
+        param += mensagem;
+
+        return param;
+    }
 }

@@ -142,7 +142,7 @@ public class MonitoriaActivity extends AppCompatActivity {
         String login = utils.getFromSharedPreferences("login", "");
         String mensagem = login + " confirmou presença na sua monitoria.";
         String param = concatenateParam(String.valueOf(id_usuario), "Monitoria", mensagem);
-        sendEmail(param);
+        utils.sendEmail(param, this);
     }
 
 
@@ -193,27 +193,4 @@ public class MonitoriaActivity extends AppCompatActivity {
         }
         return json;
     }
-
-    public void sendEmail(String param) {
-
-        try{
-            new PostEnviarEmail(this, param, new PostEnviarEmail.AsyncResponse(){
-
-                @Override
-                public void processFinish(String output) {
-                    if (output.equals("200")){
-                        Utils.callProgressDialog(activity, "Email enviado");
-
-                    }else{
-                        Utils.callProgressDialog(activity, "Email não enviado");
-                    }
-                    Utils.delayMessage();
-                    finish();
-                }
-            }).execute(Statics.ENVIAR_EMAIL);
-        }catch (Exception e){
-         e.printStackTrace();
-        }
-    }
-
 }

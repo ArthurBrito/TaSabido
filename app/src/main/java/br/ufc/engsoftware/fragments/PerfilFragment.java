@@ -34,6 +34,7 @@ import br.ufc.engsoftware.auxiliar.Statics;
 import br.ufc.engsoftware.auxiliar.Utils;
 import br.ufc.engsoftware.models.Monitoria;
 import br.ufc.engsoftware.serverDAO.PostPagamento;
+import br.ufc.engsoftware.tasabido.ListaDuvidasConfirmadasActivity;
 import br.ufc.engsoftware.tasabido.ListaMonitoriasActivity;
 import br.ufc.engsoftware.tasabido.ListaMonitoriasConfirmadasActivity;
 import br.ufc.engsoftware.tasabido.PaginaPrincipalActivity;
@@ -54,9 +55,7 @@ public class PerfilFragment extends Fragment {
     TextView tvNomeUsuario;
     TextView tvEmailUsuario;
     TextView qt_moedas;
-    Button btCreateQr;
-    Button btReadQr;
-    Button monitoriasConf;
+    Button monitoriasConf,duvidasConf,btReadQr,btCreateQr;
     ImageView ivQrCode;
 
 
@@ -104,6 +103,7 @@ public class PerfilFragment extends Fragment {
         tvNomeUsuario = (TextView) rootView.findViewById(R.id.tv_nome_usuario);
         tvEmailUsuario = (TextView) rootView.findViewById(R.id.tv_email_usuario);
         monitoriasConf = (Button) rootView.findViewById(R.id.monitorias_confirmadas);
+        duvidasConf = (Button) rootView.findViewById(R.id.duvidas_confirmadas);
         qt_moedas = (TextView) rootView.findViewById(R.id.qt_moedas);
         ivQrCode = (ImageView) rootView.findViewById(R.id.ivQrCode);
         ivQrCode.setVisibility(View.GONE); // a imageview é criada porém não fica visível na tela
@@ -127,6 +127,13 @@ public class PerfilFragment extends Fragment {
             @Override
             public void onClick(View v){
                 onClickMostrarMonitoriasConfirmadas(v);
+            }
+        });
+
+        duvidasConf.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                onClickMostrarDuvidasConfirmadas(v);
             }
         });
 
@@ -177,6 +184,13 @@ public class PerfilFragment extends Fragment {
     public void onClickMostrarMonitoriasConfirmadas(View view){
         Intent intent = new Intent(getActivity(), ListaMonitoriasConfirmadasActivity.class);
         intent.setAction("br.ufc.engsoftware.tasabido.LISTA_MONITORIAS_CONFIRMADAS");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    public void onClickMostrarDuvidasConfirmadas(View view){
+        Intent intent = new Intent(getActivity(), ListaDuvidasConfirmadasActivity.class);
+        intent.setAction("br.ufc.engsoftware.tasabido.LISTA_DUVIDAS_CONFIRMADAS");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }

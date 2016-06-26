@@ -68,6 +68,7 @@ public class DuvidaListView {
         intent.putExtra("ID_MATERIA", item.getId_materia());
         intent.putExtra("ID_SUBTOPICO", item.getId_subtopico());
         intent.putExtra("ID", item.getId_duvida());
+        intent.putExtra("ID_USUARIO", item.getId_usuario());
 
         view.startActivity(intent);
     }

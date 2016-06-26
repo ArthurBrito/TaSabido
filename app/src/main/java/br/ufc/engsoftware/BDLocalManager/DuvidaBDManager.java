@@ -66,6 +66,12 @@ public class DuvidaBDManager {
             return castRealmQuery(resultInRealm);
         }
 
+    public Duvida pegarDuvidasPorIdDuvida(Activity activity, int id_duvida){
+        activateRealm(activity);
+        final RealmResults<Duvida> results = realm.where(Duvida.class).equalTo("id_duvida", id_duvida).findAll();
+        return results.first();
+    }
+
         public Vector<Duvida> pegarDuvidasPorIdUsuario(Activity activity, int id_usuario){
             activateRealm(activity);
             final RealmResults<Duvida> results = realm.where(Duvida.class).equalTo("id_usuario", id_usuario).findAll();
