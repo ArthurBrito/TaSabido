@@ -33,7 +33,7 @@ public class Utils {
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-                        progressDialog.dismiss();
+//                        progressDialog.dismiss();
                     }
                 }, 3000);
     }

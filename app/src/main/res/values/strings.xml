@@ -15,6 +15,18 @@
     <string name="title_activity_duvida">DuvidaActivity</string>
     <string name="title_activity_criar_monitoria">CriarMonitoriaActivity</string>
 
+    <string-array name="options_search_monitorias">
+        <item>Todas</item>
+        <item>Criadas por mim</item>
+        <item>Participarei</item>
+    </string-array>
+
+    <string-array name="options_search_duvidas">
+        <item>Todas</item>
+        <item>Criadas por mim</item>
+        <item>Confirmei ajuda</item>
+    </string-array>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_lista_monitorias">ListaMonitoriasActivity</string>

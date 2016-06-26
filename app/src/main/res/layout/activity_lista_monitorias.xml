@@ -10,6 +10,14 @@
     tools:context=".ListaMonitoriasActivity"
     android:orientation="vertical">
 
+    <android.support.v7.widget.AppCompatSpinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:layout_marginBottom="20dp"
+        android:id="@+id/spinner_lista_subtopicos">
+    </android.support.v7.widget.AppCompatSpinner>
+
     <ListView
         android:id="@+id/listview_monitorias"
         android:layout_width="match_parent"

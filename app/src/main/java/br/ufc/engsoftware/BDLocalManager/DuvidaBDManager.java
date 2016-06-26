@@ -68,19 +68,19 @@ public class DuvidaBDManager {
 
     public Duvida pegarDuvidasPorIdDuvida(Activity activity, int id_duvida){
         activateRealm(activity);
-        final RealmResults<Duvida> results = realm.where(Duvida.class).equalTo("id_duvida", id_duvida).findAll();
+        final RealmResults<Duvida> results = realm.where(Duvida.class).equalTo("id", id_duvida).findAll();
         return results.first();
     }
 
         public Vector<Duvida> pegarDuvidasPorIdUsuario(Activity activity, int id_usuario){
             activateRealm(activity);
-            final RealmResults<Duvida> results = realm.where(Duvida.class).equalTo("id_usuario", id_usuario).findAll();
+            final RealmResults<Duvida> results = realm.where(Duvida.class).equalTo("usuario", id_usuario).findAll();
             return castRealmQuery(results);
         }
 
          public Vector<Duvida> pegarDuvidasPorIdSubtopico(Activity activity, int id_subtopico){
             activateRealm(activity);
-            final RealmResults<Duvida> results = realm.where(Duvida.class).equalTo("id_subtopico", id_subtopico).findAll();
+            final RealmResults<Duvida> results = realm.where(Duvida.class).equalTo("subtopico", id_subtopico).findAll();
             return castRealmQuery(results);
         }
 
@@ -99,7 +99,7 @@ public class DuvidaBDManager {
             realm.executeTransaction(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
-                    final RealmResults<Duvida> results = realm.where(Duvida.class).equalTo("id_duvida", id_duvida).findAll();
+                    final RealmResults<Duvida> results = realm.where(Duvida.class).equalTo("id", id_duvida).findAll();
                     results.deleteAllFromRealm();
                 }
             });
@@ -107,7 +107,7 @@ public class DuvidaBDManager {
 
         // esse metodo verifica se a duvida ja existe no banco de dados
         public boolean duvidaJaSalva(int id_duvida){
-            final RealmResults<Duvida> results = realm.where(Duvida.class).equalTo("id_duvida", id_duvida).findAll();
+            final RealmResults<Duvida> results = realm.where(Duvida.class).equalTo("id", id_duvida).findAll();
             if (results.size() > 0){
                 return true;
             }else{
