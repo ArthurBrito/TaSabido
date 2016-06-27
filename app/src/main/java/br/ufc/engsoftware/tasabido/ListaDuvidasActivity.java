@@ -90,7 +90,7 @@ public class ListaDuvidasActivity extends AppCompatActivity {
         DuvidaBDManager duvidaDB = new DuvidaBDManager();
         Utils u = new Utils(this);
         int id_usuario = Integer.parseInt(u.getFromSharedPreferences("id_usuario", ""));
-        gerenciadorDuvidasLV = new DuvidaListView(listViewDuvidas, this, duvidaDB.pegarDuvidasPorIdUsuario(this, id_usuario));
+        gerenciadorDuvidasLV = new DuvidaListView(listViewDuvidas, this, duvidaDB.pegarDuvidasPorIdUsuarioSubtopico(this, id_usuario, id_subtopico));
     }
 
     public void onClickChamarCriarDuvida(View view){

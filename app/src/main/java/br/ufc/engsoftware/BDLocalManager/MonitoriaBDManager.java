@@ -77,6 +77,13 @@ public class MonitoriaBDManager {
         return castRealmQuery(results);
     }
 
+    //POR ID_USUARIO && ID_SUBTOPICO
+    public Vector<Monitoria> pegarMonitoriasPorIdUsuarioSubtopico(Activity activity, int id_usuario, int id_subtopico){
+        activateRealm(activity);
+        final RealmResults<Monitoria> results = realm.where(Monitoria.class).equalTo("id_usuario", id_usuario).equalTo("id_subtopico", id_subtopico).findAll();
+        return castRealmQuery(results);
+    }
+
     public Vector<Monitoria> pegarMonitoriasPorIdSubtopico(Activity activity, int id_subtopico){
         activateRealm(activity);
         final RealmResults<Monitoria> results = realm.where(Monitoria.class).equalTo("id_subtopico", id_subtopico).findAll();

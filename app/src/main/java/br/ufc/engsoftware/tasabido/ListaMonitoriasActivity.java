@@ -103,7 +103,7 @@ public class ListaMonitoriasActivity extends AppCompatActivity {
         MonitoriaBDManager monitoriaDB = new MonitoriaBDManager();
         Utils u = new Utils(this);
         int id_usuario = Integer.parseInt(u.getFromSharedPreferences("id_usuario", ""));
-        gerenciadorMonitoriasLV = new MonitoriaListView(listViewMonitorias, this, monitoriaDB.pegarMonitoriasPorIdUsuario(this, id_usuario));
+        gerenciadorMonitoriasLV = new MonitoriaListView(listViewMonitorias, this, monitoriaDB.pegarMonitoriasPorIdUsuarioSubtopico(this, id_usuario, id_subtopico));
     }
 
     // Seta ação do botão de voltar na ActionBar

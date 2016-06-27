@@ -10,8 +10,11 @@ import android.net.NetworkInfo;
 import java.util.HashSet;
 import java.util.Set;
 
+import br.ufc.engsoftware.retrofit.TaSabidoApi;
 import br.ufc.engsoftware.serverDAO.PostEnviarEmail;
 import br.ufc.engsoftware.tasabido.R;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by limaneto on 20/05/16.
@@ -143,5 +146,13 @@ public class Utils {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public static TaSabidoApi retornarApi(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Statics.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        return retrofit.create(TaSabidoApi.class);
     }
 }

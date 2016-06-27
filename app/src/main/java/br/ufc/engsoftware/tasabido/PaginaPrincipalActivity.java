@@ -10,11 +10,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -24,21 +22,18 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import br.ufc.engsoftware.auxiliar.Statics;
-import br.ufc.engsoftware.auxiliar.Utils;
 import br.ufc.engsoftware.fragments.GpsFragment;
 import br.ufc.engsoftware.fragments.MateriaFragment;
 import br.ufc.engsoftware.fragments.PerfilFragment;
 import br.ufc.engsoftware.models.Perfil;
 import br.ufc.engsoftware.retrofit.TaSabidoApi;
-import br.ufc.engsoftware.retrofit.TaSabidoListas;
+import br.ufc.engsoftware.retrofit.TaSabidoListaDuvida;
 import br.ufc.engsoftware.serverDAO.GetDuvidasServer;
 import br.ufc.engsoftware.serverDAO.GetMateriasServer;
 import br.ufc.engsoftware.serverDAO.GetMoedasServer;
 import br.ufc.engsoftware.serverDAO.GetMonitoriasServer;
 import br.ufc.engsoftware.serverDAO.GetSubtopicosServer;
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -180,32 +175,6 @@ public class PaginaPrincipalActivity extends FragmentActivity {
 
     // Baixando dados do servidor e salvando no BD local
     public void sincronizarInfo(){
-
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl(Statics.BASE_URL)
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//
-//        TaSabidoApi api = retrofit.create(TaSabidoApi.class);
-//        Call<TaSabidoListas> requestDuvidas = api.listDuvidas();
-//
-//        requestDuvidas.enqueue(new Callback<TaSabidoListas>() {
-//            @Override
-//            public void onResponse(Call<TaSabidoListas> call, Response<TaSabidoListas> response) {
-//                if(response.isSuccessful()){
-//                    TaSabidoListas listaDuvidas = response.body();
-//                    Log.e("deu certo", "error");
-//                }else{
-//                    Log.e("deu problema", "error");
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<TaSabidoListas> call, Throwable t) {
-//                Log.e("deu problema", "error");
-//            }
-//        });
-
         new GetMateriasServer(this).execute();
         new GetSubtopicosServer(this).execute();
         new GetDuvidasServer(this).execute();

@@ -1,9 +1,5 @@
 package br.ufc.engsoftware.retrofit;
 
-import java.util.List;
-
-import br.ufc.engsoftware.auxiliar.Statics;
-import br.ufc.engsoftware.models.Duvida;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -14,17 +10,17 @@ import retrofit2.http.Path;
 public interface TaSabidoApi {
 
     @GET("listar_duvidas/")
-    Call<TaSabidoListas> listDuvidas();
+    Call<TaSabidoListaDuvida> listDuvidas();
 
     @GET("listar_monitorias/")
-    Call<TaSabidoListas> listMonitorias();
+    Call<TaSabidoListaDuvida> listMonitorias();
 
     @GET("listar_materias/")
-    Call<TaSabidoListas> listMaterias();
+    Call<TaSabidoListaDuvida> listMaterias();
 
     @GET("listar_subtopicos/")
-    Call<TaSabidoListas> listSubtopicos();
+    Call<TaSabidoListaDuvida> listSubtopicos();
 
     @GET("moedas_usuario/{id}")
-    Call<TaSabidoListas> moedasUsuario(@Path("id") int id_usuario);
+    Call<TaSabidoListaDuvida> moedasUsuario(@Path("id") int id_usuario);
 }
