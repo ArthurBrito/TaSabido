@@ -7,6 +7,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import br.ufc.engsoftware.models.Perfil;
+
 import static org.junit.Assert.*;
 
 /**
@@ -73,7 +75,7 @@ public class LoginActivityTest extends ActivityInstrumentationTestCase2<LoginAct
     }
 
     @Test
-    public void testOnLoginFailed() throws Exception {
+    public void testOnLoginFailed(String userName, String password) throws Exception {
         solo.unlockScreen();
         solo.enterText(0, userName);
         solo.typeText(1, password);
@@ -84,12 +86,22 @@ public class LoginActivityTest extends ActivityInstrumentationTestCase2<LoginAct
 
     @Test
     public void testValidate() throws Exception {
-
+        final String userName = "";
+        final String password = "";
+        if(userName.isEmpty() && password.isEmpty()){
+            testOnLoginFailed(userName, password);
+        }
     }
 
     @Test
     public void testConcatenateParam() throws Exception {
-
+        Perfil perfil = new Perfil(userName1, password1);
+        String param = "username=";
+        param += perfil.getUsuario();
+        param += "&";
+        param += "password=";
+        param += perfil.getSenha();
+        assertEquals("username = " + userName1 + " & password = " + password1, param);
     }
 
     @Test
