@@ -78,12 +78,10 @@ public class MonitoriaActivity extends AppCompatActivity {
                 public void processFinish(String output){
                     if (output.equals("200")){
                         Utils.progressDialog.setMessage("Monitoria atualizada.");
-                        Utils.delayMessage();
                         deletarMonitoriaBDLocal();
                         finish();
                     }else{
                         Utils.progressDialog.setMessage("Algum erro ocorreu, tente denovo mais tarde.");
-                        Utils.delayMessage();
                     }
                 }
             }).execute();
@@ -118,12 +116,10 @@ public class MonitoriaActivity extends AppCompatActivity {
                 public void processFinish(String output){
                     if (output.equals("200")){
                         Utils.progressDialog.setMessage("Monitoria deletada.");
-                        Utils.delayMessage();
                         deletarMonitoriaBDLocal();
                         finish();
                     }else{
                         Utils.progressDialog.setMessage("Algum erro ocorreu, tente denovo mais tarde.");
-                        Utils.delayMessage();
                     }
                 }
             }).execute();

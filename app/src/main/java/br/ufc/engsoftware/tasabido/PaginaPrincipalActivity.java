@@ -21,21 +21,14 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import br.ufc.engsoftware.auxiliar.Statics;
 import br.ufc.engsoftware.fragments.GpsFragment;
 import br.ufc.engsoftware.fragments.MateriaFragment;
 import br.ufc.engsoftware.fragments.PerfilFragment;
 import br.ufc.engsoftware.models.Perfil;
-import br.ufc.engsoftware.retrofit.TaSabidoApi;
-import br.ufc.engsoftware.retrofit.TaSabidoListaDuvida;
+import br.ufc.engsoftware.serverDAO.GetMonitoriasServer;
 import br.ufc.engsoftware.serverDAO.GetDuvidasServer;
 import br.ufc.engsoftware.serverDAO.GetMateriasServer;
-import br.ufc.engsoftware.serverDAO.GetMoedasServer;
-import br.ufc.engsoftware.serverDAO.GetMonitoriasServer;
 import br.ufc.engsoftware.serverDAO.GetSubtopicosServer;
-import retrofit2.Call;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class PaginaPrincipalActivity extends FragmentActivity {
@@ -175,16 +168,27 @@ public class PaginaPrincipalActivity extends FragmentActivity {
 
     // Baixando dados do servidor e salvando no BD local
     public void sincronizarInfo(){
+
+//        GetMateriasServer retrofitM = new GetMateriasServer(this);
+//        GetDuvidasServer retrofitDuvidas = new GetDuvidasServer(this);
+//        GetSubtopicosServer retrofitSub = new GetSubtopicosServer(this);
+//        GetMonitoriasServer retrofitMon = new GetMonitoriasServer(this);
+//
+//        retrofitM.pegarMateriasDoServidor();
+//        retrofitDuvidas.pegarDuvidasDoServidor();
+//        retrofitSub.pegarSubtopicosDoServidor();
+//        retrofitMon.pegarMonitoriasDoServidor();
+
+
         new GetMateriasServer(this).execute();
         new GetSubtopicosServer(this).execute();
         new GetDuvidasServer(this).execute();
         new GetMonitoriasServer(this).execute();
-        new GetMoedasServer(this).execute();
+//        new GetMoedasServer(this).execute();
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) { //recebe o resultado da câmera e manda de volta para ser tratado na classe PerfilFragment
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         perfilFragment.recebeQr(result);
     }
-
 }

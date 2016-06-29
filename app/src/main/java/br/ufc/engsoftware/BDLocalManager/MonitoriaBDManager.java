@@ -73,26 +73,26 @@ public class MonitoriaBDManager {
 
     public Vector<Monitoria> pegarMonitoriasPorIdUsuario(Activity activity, int id_usuario){
         activateRealm(activity);
-        final RealmResults<Monitoria> results = realm.where(Monitoria.class).equalTo("id_usuario", id_usuario).findAll();
+        final RealmResults<Monitoria> results = realm.where(Monitoria.class).equalTo("usuario", id_usuario).findAll();
         return castRealmQuery(results);
     }
 
     //POR ID_USUARIO && ID_SUBTOPICO
     public Vector<Monitoria> pegarMonitoriasPorIdUsuarioSubtopico(Activity activity, int id_usuario, int id_subtopico){
         activateRealm(activity);
-        final RealmResults<Monitoria> results = realm.where(Monitoria.class).equalTo("id_usuario", id_usuario).equalTo("id_subtopico", id_subtopico).findAll();
+        final RealmResults<Monitoria> results = realm.where(Monitoria.class).equalTo("usuario", id_usuario).equalTo("subtopico", id_subtopico).findAll();
         return castRealmQuery(results);
     }
 
     public Vector<Monitoria> pegarMonitoriasPorIdSubtopico(Activity activity, int id_subtopico){
         activateRealm(activity);
-        final RealmResults<Monitoria> results = realm.where(Monitoria.class).equalTo("id_subtopico", id_subtopico).findAll();
+        final RealmResults<Monitoria> results = realm.where(Monitoria.class).equalTo("subtopico", id_subtopico).findAll();
         return castRealmQuery(results);
     }
 
     public Monitoria pegarMonitoriasPorIdMonitoria(Activity activity, int id_monitoria){
         activateRealm(activity);
-        final RealmResults<Monitoria> results = realm.where(Monitoria.class).equalTo("id_monitoria", id_monitoria).findAll();
+        final RealmResults<Monitoria> results = realm.where(Monitoria.class).equalTo("id", id_monitoria).findAll();
         return results.first();
     }
 
@@ -111,7 +111,7 @@ public class MonitoriaBDManager {
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                RealmResults<Monitoria> result = realm.where(Monitoria.class).equalTo("id_monitoria", id_monitoria).findAll();
+                RealmResults<Monitoria> result = realm.where(Monitoria.class).equalTo("id", id_monitoria).findAll();
                 result.deleteFirstFromRealm();
             }
         });
@@ -119,7 +119,7 @@ public class MonitoriaBDManager {
 
     // esse metodo verifica se a duvida ja existe no banco de dados
     public boolean monitoriaJaSalva(int id_monitoria){
-        final RealmResults<Monitoria> results = realm.where(Monitoria.class).equalTo("id_monitoria", id_monitoria).findAll();
+        final RealmResults<Monitoria> results = realm.where(Monitoria.class).equalTo("id", id_monitoria).findAll();
         if (results.size() > 0){
             return true;
         }else{

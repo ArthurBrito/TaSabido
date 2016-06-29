@@ -57,6 +57,7 @@ public class PerfilFragment extends Fragment {
     TextView qt_moedas;
     Button monitoriasConf,duvidasConf,btReadQr,btCreateQr;
     ImageView ivQrCode;
+    Utils utils;
 
 
     public void setarBarraUsuario(){
@@ -97,6 +98,8 @@ public class PerfilFragment extends Fragment {
                 // Seta o layout que será o view do fragment
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_perfil, container, false);
+
+        utils = new Utils(getActivity());
 
         // Captura a referencia para os elementos da barra de usuario
         rivFotoUsuario = (RoundedImageView) rootView.findViewById(R.id.riv_foto_usuario);
@@ -209,28 +212,30 @@ public class PerfilFragment extends Fragment {
     public void realizarPagamento(String id_usuario, String username){
 
         if(Integer.parseInt(quantidade_moedas) == 0 ){
-            Utils.callProgressDialog(getActivity(), "Você não tem moedas suficientes.");
-            Utils.delayMessage();
+            utils.createProgressDialog("Você não tem moedas suficientes.");
         }else {
 
             JSONObject jsonParam = createJsonParam(id_usuario, username);
 
             try {
+                utils.createProgressDialog("Pagamento sendo efetuado");
                 new PostPagamento(getContext(), jsonParam, Statics.PAGAR, new PostPagamento.AsyncResponse() {
 
                     @Override
                     public void processFinish(String output) {
                         if (output.equals("200")) {
-                            Utils.callProgressDialog(getActivity(), "Pagamento realizado.");
+                            utils.progressDialog.setMessage("Pagamento realizado.");
                         } else {
-                            Utils.callProgressDialog(getActivity(), "Algum erro ocorreu, tente denovo mais tarde.");
+                            utils.progressDialog.setMessage("Algum erro ocorreu, tente denovo mais tarde.");
                         }
-                        Utils.delayMessage();
                     }
                 }).execute();
+                utils.dismissProgressDialog();
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
+            utils.dismissProgressDialog();
         }
     }
 

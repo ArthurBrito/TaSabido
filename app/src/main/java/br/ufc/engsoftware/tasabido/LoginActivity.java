@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.content.Intent;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,17 +23,18 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
     private Activity activity;
+    Utils utils;
 
     @InjectView(R.id.input_login) EditText _loginText;
     @InjectView(R.id.input_password) EditText _passwordText;
     @InjectView(R.id.btn_login) Button _loginButton;
     @InjectView(R.id.link_signup) TextView _signupLink;
-    @InjectView(R.id.btn_conexao) Button btn_conexao;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        utils = new Utils(this);
 
         // Verifica se o usuário ja esta logado para nao ter que logar toda vez que entrar no sistema
         Utils u = new Utils(this);
@@ -44,20 +46,6 @@ public class LoginActivity extends AppCompatActivity {
 
             // pega login e senha que ja foi usado pra logar
             lembrarLoginSenha();
-
-            btn_conexao.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    boolean ok = Utils.checkConnection(activity);
-                    if (ok) {
-                        Toast.makeText(getBaseContext(), "SIM", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getBaseContext(), "NAO", Toast.LENGTH_SHORT).show();
-                    }
-
-                }
-            });
 
             _loginButton.setOnClickListener(new View.OnClickListener() {
 
@@ -105,8 +93,6 @@ public class LoginActivity extends AppCompatActivity {
 
         _loginButton.setEnabled(false);
 
-        Utils.callProgressDialog(this, "Autenticando ...");
-
         if (usuario.equals("") && password.equals(""))
             onLoginSuccess();
 
@@ -117,17 +103,21 @@ public class LoginActivity extends AppCompatActivity {
         final Activity ac = this;
 
         try {
+            utils.createProgressDialog("Autenticando");
             new PostServerDataAsync(this, param, new PostServerDataAsync.AsyncResponse(){
                 public void processFinish(String output){
+                    Toast toast;
                     if (output.equals("true")){
-                        Utils.progressDialog.setMessage("Autenticado");
-                        Utils.delayMessage();
+                        toast = Toast.makeText(ac, "Autenticado", Toast.LENGTH_SHORT);
+
                         onLoginSuccess();
                     }else{
-                        Utils.progressDialog.setMessage("Usuario ou Senha Incorretos");
-                        Utils.delayMessage();
+                        toast = Toast.makeText(ac, "Usuario ou Senha Incorretos", Toast.LENGTH_SHORT);
+
                         onLoginFailed();
                     }
+                    toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL, 0, 0);
+                    toast.show();
                 }
             }).execute(Statics.AUTENTICAR_USUARIO);
         } catch (Exception e) {

@@ -9,22 +9,22 @@
     @RealmClass
     public class Materia extends RealmObject{
 
-        private int id_materia;
+        private int id;
         private String nome;
 
         public Materia(){}
 
         public Materia(int id_materia, String nome) {
-            this.id_materia = id_materia;
+            this.id = id_materia;
             this.nome = nome;
         }
 
         public int getId_materia() {
-            return id_materia;
+            return id;
         }
 
         public void setId_materia(int id_materia) {
-            this.id_materia = id_materia;
+            this.id = id_materia;
         }
 
         public String getNome() {

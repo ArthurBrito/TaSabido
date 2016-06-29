@@ -41,9 +41,6 @@ public class GetMoedasServer extends AsyncTask<Void, Void, Void> {
     // Lista dos subtopicos obtidos do web service
     Vector<Duvida> listaDuvidas;
 
-    // Dialog com barra de progresso mostrado na tela
-    ProgressDialog proDialog;
-
     public GetMoedasServer(Context context) {
         this.context = context;
     }
@@ -52,11 +49,7 @@ public class GetMoedasServer extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        // Showing progress loading dialog
-        proDialog = new ProgressDialog(context);
-        proDialog.setMessage("Sincronizando Duvidas...");
-        proDialog.setCancelable(false);
-        proDialog.show();
+
     }
 
     // Pega o JSON do web service com a lista de subtopicos
@@ -87,9 +80,6 @@ public class GetMoedasServer extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void requestresult) {
         super.onPostExecute(requestresult);
-        // Tira o dialog de progresso da tela
-        if (proDialog.isShowing())
-            proDialog.dismiss();
 
         //atualiza o banco de dados local com os dados vindos do servidor
         DuvidaBDManager sinc = new DuvidaBDManager();

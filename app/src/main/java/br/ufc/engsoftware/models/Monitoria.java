@@ -14,29 +14,29 @@ import io.realm.annotations.RealmClass;
 @RealmClass
 public class Monitoria extends RealmObject {
 
-    private int id_subtopico , id_monitoria, id_usuario, id_materia;
+    private int subtopico , id, usuario, materia;
     private String titulo, descricao, data, endereco;
     private String dia, horario;
 
     public Monitoria(){}
 
-    public Monitoria(int id_monitoria, int id_usuario){
-        this.id_monitoria = id_monitoria;
-        this.id_usuario = id_usuario;
+    public Monitoria(int monitoria, int usuario){
+        this.id = monitoria;
+        this.usuario = usuario;
     }
 
-    public Monitoria(int id_usuario, int id_materia, int id_subtopico_selecionado, String titulo, String descricao, String data, String endereco) {
-        this.id_usuario = id_usuario;
-        this.id_materia = id_materia;
+    public Monitoria(int usuario, int materia, int subtopico_selecionado, String titulo, String descricao, String data, String endereco) {
+        this.usuario = usuario;
+        this.materia = materia;
         this.titulo = titulo;
         this.descricao = descricao;
         this.data = data;
-        this.id_subtopico = id_subtopico_selecionado;
+        this.subtopico = subtopico_selecionado;
         this.endereco = endereco;
     }
 
-    public Monitoria(int id_usuario, String titulo, String descricao, String data, String endereco) {
-        this.id_usuario = id_usuario;
+    public Monitoria(int usuario, String titulo, String descricao, String data, String endereco) {
+        this.usuario = usuario;
         this.titulo = titulo;
         this.descricao = descricao;
         this.data = data;
@@ -45,21 +45,21 @@ public class Monitoria extends RealmObject {
 
 
     public int getId_usuario() {
-        return id_usuario;
+        return usuario;
     }
 
-    public void setId_usuario(int id_usuario) {
-        this.id_usuario = id_usuario;
+    public void setId_usuario(int usuario) {
+        this.usuario = usuario;
     }
 
-    public Monitoria(int id_monitoria, int id_usuario, int id_materia, int ids_subtopico_selecionado, String titulo, String descricao, String data, String endereco) {
-        this.id_usuario = id_usuario;
-        this.id_monitoria = id_monitoria;
-        this.id_materia = id_materia;
+    public Monitoria(int monitoria, int usuario, int materia, int ids_subtopico_selecionado, String titulo, String descricao, String data, String endereco) {
+        this.usuario = usuario;
+        this.id = monitoria;
+        this.materia = materia;
         this.titulo = titulo;
         this.descricao = descricao;
         this.data = data;
-        this.id_subtopico = ids_subtopico_selecionado;
+        this.subtopico = ids_subtopico_selecionado;
         this.endereco = endereco;
     }
 
@@ -81,11 +81,11 @@ public class Monitoria extends RealmObject {
     }
 
     public int getId_materia() {
-        return id_materia;
+        return materia;
     }
 
-    public void setId_materia(int id_materia) {
-        this.id_materia = id_materia;
+    public void setId_materia(int materia) {
+        this.materia = materia;
     }
 
 
@@ -98,11 +98,11 @@ public class Monitoria extends RealmObject {
     }
 
     public int getId_monitoria() {
-        return this.id_monitoria;
+        return this.id;
     }
 
-    public void setId_monitoria(int id_monitoria) {
-        this.id_monitoria = id_monitoria;
+    public void setId_monitoria(int monitoria) {
+        this.id = monitoria;
     }
 
     public String toString(){
@@ -110,11 +110,11 @@ public class Monitoria extends RealmObject {
     }
 
     public int getId_subtopico() {
-        return id_subtopico;
+        return subtopico;
     }
 
-    public void setId_subtopico(int id_subtopico) {
-        this.id_subtopico = id_subtopico;
+    public void setId_subtopico(int subtopico) {
+        this.subtopico = subtopico;
     }
 
     public String getEndereco() {
