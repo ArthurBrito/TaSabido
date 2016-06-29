@@ -9,4 +9,5 @@
     <dimen name="pad_table_radio">5dp</dimen>
     <dimen name="text_size_table_cal">12sp</dimen>
     <dimen name="table_margin_left">12dp</dimen>
+    <dimen name="text_size_monitoria_label">16sp</dimen>
 </resources>

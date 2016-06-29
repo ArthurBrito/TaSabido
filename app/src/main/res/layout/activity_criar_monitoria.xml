@@ -8,7 +8,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="56dp"
+        android:paddingTop="10dp"
         android:paddingLeft="24dp"
         android:paddingRight="24dp">
 
@@ -22,6 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textCapWords"
+                android:textSize="@dimen/text_size_monitoria_label"
                 android:hint="Titulo" />
         </android.support.design.widget.TextInputLayout>
 
@@ -34,12 +35,156 @@
             <EditText android:id="@+id/input_descricao"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_monitoria_label"
                 android:inputType="textMultiLine"
                 android:hint="Descricao" />
         </android.support.design.widget.TextInputLayout>
 
+        <!--Selecionar Local-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal">
 
-        <!--  Endereco Label -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="4sp"
+                android:layout_marginRight="4dp"
+                android:textSize="16sp"
+                android:text="Local da Monitoria:"/>
+
+            <Spinner
+                android:id="@+id/spinner_sel_local"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></Spinner>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="@dimen/text_size_monitoria_label"
+            android:text="Horário da Monitoria:"/>
+
+        <!-- Selecionar Horarios -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center">
+
+            <!-- RadioGroup dos dias -->
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="40dp"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/radio_segunda"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10sp"
+                    android:text="Segunda"
+                    android:onClick="onRadioButtonClickedDia"/>
+
+                <RadioButton
+                    android:id="@+id/radio_terca"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10sp"
+                    android:text="Terça"
+                    android:onClick="onRadioButtonClickedDia"/>
+
+                <RadioButton
+                    android:id="@+id/radio_quarta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10sp"
+                    android:text="Quarta"
+                    android:onClick="onRadioButtonClickedDia"/>
+
+                <RadioButton
+                    android:id="@+id/radio_quinta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10sp"
+                    android:text="Quinta"
+                    android:onClick="onRadioButtonClickedDia"/>
+
+                <RadioButton
+                    android:id="@+id/radio_sexta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10sp"
+                    android:text="Sexta"
+                    android:onClick="onRadioButtonClickedDia"/>
+
+            </RadioGroup>
+
+            <!-- RadioGroup dos Horarios -->
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/radio_horario1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10sp"
+                    android:text="08:00 as 10:00 h"
+                    android:onClick="onRadioButtonClickedHorario"/>
+
+                <RadioButton
+                    android:id="@+id/radio_horario2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10sp"
+                    android:text="10:00 as 12:00 h"
+                    android:onClick="onRadioButtonClickedHorario"/>
+
+                <RadioButton
+                    android:id="@+id/radio_horario3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10sp"
+                    android:text="12:00 as 14:00 h"
+                    android:onClick="onRadioButtonClickedHorario"/>
+
+                <RadioButton
+                    android:id="@+id/radio_horario4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10sp"
+                    android:text="14:00 as 16:00 h"
+                    android:onClick="onRadioButtonClickedHorario"/>
+
+                <RadioButton
+                    android:id="@+id/radio_horario5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10sp"
+                    android:text="16:00 as 18:00 h"
+                    android:onClick="onRadioButtonClickedHorario"/>
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textSize="10sp"
+            android:text="*Os horarios selecionados são apenas da semana atual"/>
+
+        <!--  Endereco Label --><!--
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -51,6 +196,7 @@
                 android:inputType="textMultiLine"
                 android:hint="Endereco" />
         </android.support.design.widget.TextInputLayout>
+        -->
 
         <Spinner
             android:id="@+id/spinner_lista_subtopicos"
@@ -59,6 +205,7 @@
             android:gravity="center"/>
 
 
+        <!--
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -83,6 +230,7 @@
                 android:inputType="text"
                 android:hint="Horário hh:mm" />
         </android.support.design.widget.TextInputLayout>
+        -->
 
 
         <Button
