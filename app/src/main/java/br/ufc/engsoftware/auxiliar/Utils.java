@@ -6,6 +6,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Message;
+import android.view.Gravity;
+import android.widget.Toast;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -23,30 +26,12 @@ public class Utils {
     public static ProgressDialog progressDialog;
     public static final String MyPREFERENCES = "MyPrefs" ;
     public Context context;
+    Utils utils;
 
     public Utils(){}
 
     public Utils(Context context){
         this.context = context;
-    }
-
-
-
-    public static void delayMessage() {
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-//                        progressDialog.dismiss();
-                    }
-                }, 3000);
-    }
-
-    public static void callProgressDialog(Activity ac, String message){
-        progressDialog = new ProgressDialog(ac,
-                R.style.AppTheme_Dark_Dialog);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage(message);
-        progressDialog.show();
     }
 
     public static boolean checkConnection(Activity activity){
@@ -127,19 +112,18 @@ public class Utils {
     }
 
     public void sendEmail(String param, final Activity activity) {
-
+        utils = new Utils(activity);
+        utils.createProgressDialog("Enviando Email");
         try{
             new PostEnviarEmail(activity, param, new PostEnviarEmail.AsyncResponse(){
 
                 @Override
                 public void processFinish(String output) {
                     if (output.equals("200")){
-                        Utils.callProgressDialog(activity, "Email enviado");
-
+                        utils.progressDialog.setMessage("Email Enviado");
                     }else{
-                        Utils.callProgressDialog(activity, "Email não enviado");
+                        utils.progressDialog.setMessage("Email não enviado");
                     }
-                    Utils.delayMessage();
                     activity.finish();
                 }
             }).execute(Statics.ENVIAR_EMAIL);
@@ -154,5 +138,18 @@ public class Utils {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         return retrofit.create(TaSabidoApi.class);
+    }
+
+    public void createProgressDialog(String mensagem){
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage(mensagem);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+    }
+
+    public void dismissProgressDialog(){
+        // Tira o dialog de progresso da tela
+        if (progressDialog.isShowing())
+            progressDialog.dismiss();
     }
 }

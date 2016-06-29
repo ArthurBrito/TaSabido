@@ -27,6 +27,7 @@ public class DuvidaActivity extends AppCompatActivity {
     public int id_duvida, id_materia, id_subtopico, id_usuario;
     String titulo, descricao;
     Duvida duvida;
+    Utils utils;
     public Activity activity;
 
     @InjectView(R.id.titulo) EditText _titulo;
@@ -38,6 +39,7 @@ public class DuvidaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_duvida);
         ButterKnife.inject(this);
         activity = this;
+        utils = new Utils(this);
 
 
         // Pega a intent que chamou essa activity
@@ -55,7 +57,7 @@ public class DuvidaActivity extends AppCompatActivity {
     }
 
     public void onClickAtualizarDuvida(View view){
-        Utils utils = new Utils(this);
+
         String id_usuario_string = utils.getFromSharedPreferences("id_usuario","");
         int id_usuario = Integer.parseInt(id_usuario_string);
         String titulo = _titulo.getText().toString();
@@ -65,47 +67,47 @@ public class DuvidaActivity extends AppCompatActivity {
         String param = concatenateParam(duvida);
 
         try {
+            utils.createProgressDialog("Atualizando Dúvida");
             new PostCriarDuvida(this, param, new PostCriarDuvida.AsyncResponse(){
                 public void processFinish(String output, int id_duvida, String mensagem){
                     if (output.equals("true")){
-                        Utils.callProgressDialog(activity, mensagem);
-                        Utils.delayMessage();
+                        utils.progressDialog.setMessage(mensagem);
                         duvida.setId_duvida(id_duvida);
                         salvarDuvidaBDLocal();
                         finish();
                     }else{
-                        Utils.callProgressDialog(activity, mensagem);
-                        Utils.delayMessage();
+                        utils.progressDialog.setMessage(mensagem);
 
                     }
                 }
             }).execute(Statics.ATUALIZAR_DUVIDA);
+            utils.dismissProgressDialog();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void onClickDeletarDuvida(View view){
-        Utils utils = new Utils(this);
+
         String id_usuario_string = utils.getFromSharedPreferences("id_usuario", "");
         int id_usuario = Integer.parseInt(id_usuario_string);
         duvida = new Duvida(id_duvida, id_usuario);
         String param = concatenateToDelete(duvida);
 
         try {
+            utils.createProgressDialog("Deletando Dúvida");
             new PostDeletarDuvida(this, param, new PostDeletarDuvida.AsyncResponse(){
                 public void processFinish(String output, String mensagem){
                     if (output.equals("true")){
-                        Utils.callProgressDialog(activity, mensagem);
+                        utils.progressDialog.setMessage(mensagem);
                         deleteDuvida();
-                        Utils.delayMessage();
                         finish();
                     }else{
-                        Utils.callProgressDialog(activity, mensagem);
-                        Utils.delayMessage();
+                        utils.progressDialog.setMessage(mensagem);
                     }
                 }
             }).execute(Statics.DELETAR_DUVIDA);
+            utils.dismissProgressDialog();
         } catch (Exception e) {
             e.printStackTrace();
         }

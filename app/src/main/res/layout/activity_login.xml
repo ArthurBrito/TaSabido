@@ -13,23 +13,14 @@
         android:paddingRight="24dp">
 
 
-
-        <!--<ImageView android:src="@drawable/proguard-rules"-->
+        <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="72dp"
-            android:layout_marginBottom="24dp"
-            android:layout_gravity="center_horizontal" />
-
-        <!-- Email Label -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ta Sabido !"
+            android:layout_height="140dp"
+            android:layout_marginBottom="30dp"
             android:id="@+id/textView"
-            android:textSize="40dp"
-            android:textColor="@color/white"
-            android:layout_marginBottom="40dp"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="top|center_horizontal"
+            android:src="@drawable/noname"
+            />
 
 
         <android.support.design.widget.TextInputLayout
@@ -76,15 +67,6 @@
             android:text="Não é cadastrado ? Cadastre-se."
             android:gravity="center"
             android:textSize="16dip"/>
-
-        <android.support.v7.widget.AppCompatButton
-        android:id="@+id/btn_conexao"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="24dp"
-        android:padding="12dp"
-        android:text="Tem conexao ?"/>
 
     </LinearLayout>
 </ScrollView>

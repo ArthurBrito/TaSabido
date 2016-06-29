@@ -45,7 +45,7 @@
         <item name="android:textColorHint">@color/iron</item>
 
         <!--<item name="colorButtonNormal">@color/primary_darker</item>-->
-        <item name="colorButtonNormal">#0078ff</item>
+        <item name="colorButtonNormal">#77ba9b</item>
 
         <!--<item name="android:colorButtonNormal">@color/primary_darker</item>-->
         <!--<item name="android:colorButtonNormal">#b3d9ff</item>-->
@@ -69,7 +69,7 @@
         <item name="android:textColorHint">@color/iron</item>
 
         <!--<item name="colorButtonNormal">@color/primary_darker</item>-->
-        <item name="colorButtonNormal">#0078ff</item>
+        <item name="colorButtonNormal">#77ba9b</item>
 
         <!--<item name="android:colorButtonNormal">@color/primary_darker</item>-->
         <!--<item name="android:colorButtonNormal">#b3d9ff</item>-->

@@ -5,8 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import java.util.Vector;
 
 import br.ufc.engsoftware.BDLocalManager.DuvidaBDManager;
 import br.ufc.engsoftware.serverDAO.PostCriarDuvida;
@@ -24,6 +28,7 @@ public class CriarDuvidaActivity extends AppCompatActivity {
     int id_materia;
     private Duvida duvida;
     public Activity activity;
+    Utils utils;
 //    @InjectView(R.id.time_picker) TextView time_picker;
 //    @InjectView(R.id.date_picker) TextView date_picker;
     @InjectView(R.id.titulo) EditText _titulo;
@@ -35,50 +40,46 @@ public class CriarDuvidaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_criar_duvidas);
         ButterKnife.inject(this);
         activity = this;
+        utils = new Utils(this);
 
         // Pega a intent que chamou essa activity
         Intent intent = getIntent();
         id_subtopico = intent.getIntExtra("ID_SUBTOPICO", 0);
         id_materia = intent.getIntExtra("ID_MATERIA", 0);
-
-
     }
-
-//    public void escolherData(View view) {
-//        DialogFragment newFragment = new DatePickerFragment();
-//        newFragment.show(getSupportFragmentManager(), "datePicker");
-//    }
-//
-//    public void escolherHorario(View view) {
-//        DialogFragment newFragment = new TimePickerFragment();
-//        newFragment.show(getSupportFragmentManager(), "timePicker");
-//    }
 
 
     public void onClickConfirmarDuvida(View view){
 
-        Utils utils = new Utils(this);
+
+
         String id_usuario_string = utils.getFromSharedPreferences("id_usuario","");
         int id_usuario = Integer.parseInt(id_usuario_string);
         String titulo = _titulo.getText().toString();
         String descricao = _descricao.getText().toString();
 
+        while(titulo.isEmpty() || descricao.isEmpty()){
+            Toast toast = Toast.makeText(activity, "Preencha todos os campos", Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL, 0, 0);
+            toast.show();
+            return;
+        }
+
         duvida = new Duvida(id_usuario, id_materia, id_subtopico, titulo, descricao);
+
         String param = concatenateParam(duvida);
 
         try {
+            utils.createProgressDialog("Criando Duvida");
             new PostCriarDuvida(this, param, new PostCriarDuvida.AsyncResponse(){
                 public void processFinish(String output, int id_duvida, String mensagem){
                     if (output.equals("true")){
-                        Utils.callProgressDialog(activity, mensagem);
-                        Utils.delayMessage();
+                        utils.progressDialog.setMessage(mensagem);
                         duvida.setId_duvida(id_duvida);
                         salvarDuvidaBDLocal();
                         finish();
                     }else{
-                        Utils.callProgressDialog(activity, mensagem);
-                        Utils.delayMessage();
-
+                        utils.progressDialog.setMessage(mensagem);
                     }
                 }
             }).execute(Statics.CADASTRAR_DUVIDA);
@@ -89,7 +90,9 @@ public class CriarDuvidaActivity extends AppCompatActivity {
 
     private void salvarDuvidaBDLocal() {
         DuvidaBDManager db = new DuvidaBDManager(this);
-        db.salvarDuvida(duvida);
+        Vector<Duvida> duvidas = new Vector<>();
+        duvidas.add(duvida);
+        db.atualizarDuvidas(this, duvidas);
     }
 
     public String concatenateParam(Duvida duvida){
@@ -127,6 +130,15 @@ public class CriarDuvidaActivity extends AppCompatActivity {
 
                 Log.d("Response horariosJson", horariosJson);
             }
+        }
+    }
+
+    private void sleep(long millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
     }
 }

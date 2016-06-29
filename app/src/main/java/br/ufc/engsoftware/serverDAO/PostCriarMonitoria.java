@@ -58,17 +58,6 @@ public class PostCriarMonitoria extends AsyncTask<Void, Void, Void> {
         this.delegate = delegate;
     }
 
-    // Mostra a barra de progresso na tela
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-        // Showing progress loading dialog
-        proDialog = new ProgressDialog(context);
-        proDialog.setMessage("Sincronizando Duvidas...");
-        proDialog.setCancelable(false);
-        proDialog.show();
-    }
-
     // Pega o JSON do web service com a lista de subtopicos
     @Override
     protected Void doInBackground(Void... arg0) {
@@ -91,9 +80,6 @@ public class PostCriarMonitoria extends AsyncTask<Void, Void, Void> {
     protected void onPostExecute(Void requestresult) {
         super.onPostExecute(requestresult);
         // Tira o dialog de progresso da tela
-        if (proDialog.isShowing())
-            proDialog.setMessage(response);
-            proDialog.dismiss();
             delegate.processFinish(response);
     }
 }

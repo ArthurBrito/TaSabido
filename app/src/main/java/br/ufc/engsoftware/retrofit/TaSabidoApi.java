@@ -1,5 +1,12 @@
 package br.ufc.engsoftware.retrofit;
 
+import java.util.List;
+
+import br.ufc.engsoftware.models.Duvida;
+import br.ufc.engsoftware.models.Materia;
+import br.ufc.engsoftware.models.Moeda;
+import br.ufc.engsoftware.models.Monitoria;
+import br.ufc.engsoftware.models.Subtopico;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -10,17 +17,17 @@ import retrofit2.http.Path;
 public interface TaSabidoApi {
 
     @GET("listar_duvidas/")
-    Call<TaSabidoListaDuvida> listDuvidas();
+    Call<DuvidaRetrofit> listDuvidas();
 
     @GET("listar_monitorias/")
-    Call<TaSabidoListaDuvida> listMonitorias();
+    Call<List<Monitoria>> listMonitorias();
 
     @GET("listar_materias/")
-    Call<TaSabidoListaDuvida> listMaterias();
+    Call<MateriaRetrofit> listMaterias();
 
     @GET("listar_subtopicos/")
-    Call<TaSabidoListaDuvida> listSubtopicos();
+    Call<SubtopicoRetrofit> listSubtopicos();
 
     @GET("moedas_usuario/{id}")
-    Call<TaSabidoListaDuvida> moedasUsuario(@Path("id") int id_usuario);
+    Call<List<Moeda>> moedasUsuario(@Path("id") int id_usuario);
 }

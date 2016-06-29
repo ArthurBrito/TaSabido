@@ -20,6 +20,7 @@ import butterknife.InjectView;
 
 public class CadastroActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
+    Utils utils;
 
     @InjectView(R.id.input_nome) EditText _nomeText;
     @InjectView(R.id.input_usuario) EditText _usuarioText;
@@ -33,6 +34,7 @@ public class CadastroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
         ButterKnife.inject(this);
+        utils = new Utils(this);
 
         _signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,7 +65,8 @@ public class CadastroActivity extends AppCompatActivity {
 
         _signupButton.setEnabled(false);
 
-        Utils.callProgressDialog(this, "Cadastrando ...");
+
+        utils.createProgressDialog( "Cadastrando ...");
 
         String nome = _nomeText.getText().toString();
         String usuario = _usuarioText.getText().toString();
@@ -80,20 +83,17 @@ public class CadastroActivity extends AppCompatActivity {
             public void processFinish(String output, String mensagem){
 
                 if (output.equals("true")){
-                    Utils.progressDialog.setMessage(mensagem);
-                    Utils.delayMessage();
+                    utils.progressDialog.setMessage(mensagem);
                     finish();
-
                     Intent myIntent = new Intent(CadastroActivity.this, LoginActivity.class);
                     CadastroActivity.this.startActivity(myIntent);
                 }else{
-                    Utils.progressDialog.setMessage(mensagem);
-                    Utils.delayMessage();
+                    utils.progressDialog.setMessage(mensagem);
                     _signupButton.setEnabled(true);
                 }
             }
         }).execute(Statics.CADASTRAR_USUARIO);
-
+    utils.dismissProgressDialog();
     }
 
 

@@ -6,11 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,6 +39,7 @@ public class CriarMonitoriaActivity extends AppCompatActivity implements Adapter
     private Vector<Integer> subtopicos_selecionados;
     private int spinnerSelectedCount=0;
     Activity activity;
+    Utils utils;
 
 
     @InjectView(R.id.data) EditText _data;
@@ -54,6 +57,7 @@ public class CriarMonitoriaActivity extends AppCompatActivity implements Adapter
         spinner.setOnItemSelectedListener(this);
         subtopicos_selecionados = new Vector<>();
         activity = this;
+        utils = new Utils(this);
 
         // Pega a intent que chamou essa activity
         Intent intent = getIntent();
@@ -92,7 +96,6 @@ public class CriarMonitoriaActivity extends AppCompatActivity implements Adapter
     }
 
     public void onClickConfirmarMonitoria(View view) {
-        Utils utils = new Utils(this);
         String id_usuario_string = utils.getFromSharedPreferences("id_usuario", "");
         int id_usuario = Integer.parseInt(id_usuario_string);
         String titulo = _titulo.getText().toString();
@@ -103,20 +106,25 @@ public class CriarMonitoriaActivity extends AppCompatActivity implements Adapter
         data += _horario.getText().toString();
         data += ":00";
 
+        while(titulo.isEmpty() || descricao.isEmpty()){
+            Toast toast = Toast.makeText(activity, "Preencha todos os campos", Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL, 0, 0);
+            toast.show();
+            return;
+        }
+
         Monitoria monitoria = new Monitoria(id_usuario, id_materia, id_subtopico, titulo, descricao, data, endereco);
         JSONObject jsonParam = createJsonParam(monitoria);
 
         try {
+            utils.createProgressDialog("Monitoria sendo criada");
             new PostCriarMonitoria(this, jsonParam, Statics.CADASTRAR_MONITORIA, new PostCriarMonitoria.AsyncResponse(){
                 public void processFinish(String output){
                     if (output.equals("200")){
-//                        Utils.progressDialog.setMessage("Monitoria criada com sucesso.");
-                        Utils.callProgressDialog(activity, "Monitoria criada com sucesso.");
-                        Utils.delayMessage();
+                        utils.progressDialog.setMessage("Monitoria criada.");
                         finish();
                     }else{
-                        Utils.progressDialog.setMessage("Algum erro ocorreu, tente denovo mais tarde.");
-                        Utils.delayMessage();
+                        utils.progressDialog.setMessage("Monitoria não foi criada.");
                     }
                 }
             }).execute();
