@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 
 import android.view.Gravity;
@@ -125,7 +126,7 @@ public class CriarMonitoriaActivity extends AppCompatActivity implements Adapter
 
         String data = dia + " - " + horario;
 
-        while(titulo.isEmpty() || descricao.isEmpty()){ // || endereco == null || dia == null || horario == null){
+        while(titulo.isEmpty() || descricao.isEmpty() || endereco == null || dia == null || horario == null){
             Toast toast = Toast.makeText(activity, "Preencha todos os campos", Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL, 0, 0);
             toast.show();
@@ -137,6 +138,8 @@ public class CriarMonitoriaActivity extends AppCompatActivity implements Adapter
         monitoria.setHorario(horario);
 
         JSONObject jsonParam = createJsonParam(monitoria);
+
+        Log.d("Teste", "Json - " + jsonParam.toString());
 
         try {
             utils.createProgressDialog("Monitoria sendo criada");
@@ -153,6 +156,7 @@ public class CriarMonitoriaActivity extends AppCompatActivity implements Adapter
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     public JSONObject createJsonParam(Monitoria monitoria) {
@@ -187,7 +191,9 @@ public class CriarMonitoriaActivity extends AppCompatActivity implements Adapter
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-        switch (view.getId()){
+        Log.d("Teste" , "Entrou no onItemSelected");
+
+        switch (parent.getId()){
             case R.id.spinner_lista_subtopicos:
                 Subtopico subtopico = subtopicos.get(position);
                 id_subtopico = subtopico.getId_subtopico();

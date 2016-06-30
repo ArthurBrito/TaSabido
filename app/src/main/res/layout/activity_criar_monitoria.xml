@@ -181,7 +181,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:textSize="10sp"
+            android:textSize="12sp"
             android:text="*Os horarios selecionados são apenas da semana atual"/>
 
         <!--  Endereco Label --><!--
@@ -198,10 +198,17 @@
         </android.support.design.widget.TextInputLayout>
         -->
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:textSize="@dimen/text_size_monitoria_label"
+            android:text="Selecione o Subtópico:"/>
+
         <Spinner
             android:id="@+id/spinner_lista_subtopicos"
             android:layout_width="fill_parent"
-            android:layout_height="150dp"
+            android:layout_height="wrap_content"
             android:gravity="center"/>
 
 
