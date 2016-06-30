@@ -17,6 +17,7 @@ public class Monitoria extends RealmObject {
     private int subtopico , id, usuario, materia;
     private String titulo, descricao, data, endereco;
     private String dia, horario;
+    private String username;
 
     public Monitoria(){}
 
@@ -139,5 +140,13 @@ public class Monitoria extends RealmObject {
 
     public String getHorario() {
         return horario;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getUsername() {
+        return username;
     }
 }

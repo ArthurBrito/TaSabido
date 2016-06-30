@@ -47,9 +47,9 @@ public class CriarMonitoriaActivity extends AppCompatActivity implements Adapter
     private int spinnerSelectedCount=0;
     Activity activity;
 
-    private String endereco;
-    private String dia;
-    private String horario;
+    private String endereco = null;
+    private String dia = null;
+    private String horario = null;
 
     Utils utils;
 
@@ -125,7 +125,7 @@ public class CriarMonitoriaActivity extends AppCompatActivity implements Adapter
 
         String data = dia + " - " + horario;
 
-        while(titulo.isEmpty() || descricao.isEmpty()){
+        while(titulo.isEmpty() || descricao.isEmpty()){ // || endereco == null || dia == null || horario == null){
             Toast toast = Toast.makeText(activity, "Preencha todos os campos", Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL, 0, 0);
             toast.show();
@@ -164,9 +164,9 @@ public class CriarMonitoriaActivity extends AppCompatActivity implements Adapter
             json.put("endereco", monitoria.getEndereco());
             json.put("id_usuario", monitoria.getId_usuario());
             json.put("id_materia", monitoria.getId_materia());
-            json.put("data_monitoria", monitoria.getData());
+            json.put("data_monitoria", "2016-07-01 08:00:00");
             json.put("dia", monitoria.getDia());
-            json.put("horario", monitoria.getHorario());
+            json.put("hora", monitoria.getHorario());
 
 
             for (Integer id_sub : subtopicos_selecionados) {
