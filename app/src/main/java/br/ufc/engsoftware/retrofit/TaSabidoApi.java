@@ -1,5 +1,7 @@
 package br.ufc.engsoftware.retrofit;
 
+import com.google.gson.JsonElement;
+
 import java.util.List;
 
 import br.ufc.engsoftware.models.Duvida;
@@ -20,14 +22,14 @@ public interface TaSabidoApi {
     Call<DuvidaRetrofit> listDuvidas();
 
     @GET("listar_monitorias/")
-    Call<List<Monitoria>> listMonitorias();
+    Call<MonitoriaRetrofit> listMonitorias();
 
     @GET("listar_materias/")
-    Call<MateriaRetrofit> listMaterias();
+    Call<MateriaRetrofit> listaMaterias();
 
     @GET("listar_subtopicos/")
     Call<SubtopicoRetrofit> listSubtopicos();
 
     @GET("moedas_usuario/{id}")
-    Call<List<Moeda>> moedasUsuario(@Path("id") int id_usuario);
+    Call<MoedaRetrofit> moedasUsuario(@Path("id") int id_usuario);
 }

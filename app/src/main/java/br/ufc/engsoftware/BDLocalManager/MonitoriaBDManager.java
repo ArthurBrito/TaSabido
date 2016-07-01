@@ -57,6 +57,9 @@ public class MonitoriaBDManager {
             monitoria.setData(monitoriaParam.getData());
             monitoria.setEndereco(monitoriaParam.getEndereco());
             monitoria.setDescricao(monitoriaParam.getDescricao());
+            monitoria.setDia(monitoriaParam.getDia());
+            monitoria.setHorario(monitoriaParam.getHorario());
+            monitoria.setUsername(monitoriaParam.getUsername());
             monitoria.setId_usuario(monitoriaParam.getId_usuario());
             monitoria.setId_subtopico(monitoriaParam.getId_subtopico());
             monitoria.setId_materia(monitoriaParam.getId_materia());

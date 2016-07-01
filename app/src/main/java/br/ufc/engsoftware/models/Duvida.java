@@ -15,6 +15,24 @@ public class Duvida implements RealmModel {
     private int subtopico;
     private String titulo;
     private String descricao;
+    private String username;
+    private String data_duvida;
+
+    public String getData_duvida() {
+        return data_duvida;
+    }
+
+    public void setData_duvida(String data_duvida) {
+        this.data_duvida = data_duvida;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public Duvida(){}
 

@@ -58,7 +58,7 @@ public class SubtopicoBDManager {
 
     public Vector<Subtopico> pegarSubtopicosPorIdMateria(Activity activity, int id_materia){
         activateRealm(activity);
-        final RealmResults<Subtopico> results = realm.where(Subtopico.class).equalTo("id_materia", id_materia).findAll();
+        final RealmResults<Subtopico> results = realm.where(Subtopico.class).equalTo("materia", id_materia).findAll();
         return castRealmQuery(results);
     }
 
@@ -74,7 +74,7 @@ public class SubtopicoBDManager {
 
     // esse metodo verifica se a duvida ja existe no banco de dados
     public boolean subtopicoJaSalvo(int id_subtopico){
-        final RealmResults<Subtopico> results = realm.where(Subtopico.class).equalTo("id_subtopico", id_subtopico).findAll();
+        final RealmResults<Subtopico> results = realm.where(Subtopico.class).equalTo("id", id_subtopico).findAll();
 
         if (results.size() > 0){
             return true;

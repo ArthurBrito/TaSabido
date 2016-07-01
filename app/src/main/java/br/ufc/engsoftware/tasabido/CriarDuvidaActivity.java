@@ -74,12 +74,10 @@ public class CriarDuvidaActivity extends AppCompatActivity {
             new PostCriarDuvida(this, param, new PostCriarDuvida.AsyncResponse(){
                 public void processFinish(String output, int id_duvida, String mensagem){
                     if (output.equals("true")){
-                        utils.progressDialog.setMessage(mensagem);
                         duvida.setId_duvida(id_duvida);
                         salvarDuvidaBDLocal();
                         finish();
                     }else{
-                        utils.progressDialog.setMessage(mensagem);
                     }
                 }
             }).execute(Statics.CADASTRAR_DUVIDA);
@@ -110,6 +108,10 @@ public class CriarDuvidaActivity extends AppCompatActivity {
         param += "&";
         param += "id_subtopico=";
         param += duvida.getId_subtopico();
+        param += "&";
+        param += "data_duvida=";
+        param += horariosJSON;
+
 
         return param;
     }
@@ -130,15 +132,6 @@ public class CriarDuvidaActivity extends AppCompatActivity {
 
                 Log.d("Response horariosJson", horariosJson);
             }
-        }
-    }
-
-    private void sleep(long millis) {
-        try {
-            Thread.sleep(millis);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
     }
 }

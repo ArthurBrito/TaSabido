@@ -14,8 +14,8 @@ import io.realm.annotations.RealmClass;
 @RealmClass
 public class Monitoria extends RealmObject {
 
-    private int subtopico , id, usuario, materia;
-    private String titulo, descricao, data, endereco;
+    private int subtopico, id, usuario, materia;
+    private String titulo, descricao, data_monitoria, endereco;
     private String dia, horario;
     private String username;
 
@@ -31,7 +31,7 @@ public class Monitoria extends RealmObject {
         this.materia = materia;
         this.titulo = titulo;
         this.descricao = descricao;
-        this.data = data;
+        this.data_monitoria = data;
         this.subtopico = subtopico_selecionado;
         this.endereco = endereco;
     }
@@ -40,7 +40,7 @@ public class Monitoria extends RealmObject {
         this.usuario = usuario;
         this.titulo = titulo;
         this.descricao = descricao;
-        this.data = data;
+        this.data_monitoria = data;
         this.endereco = endereco;
     }
 
@@ -59,7 +59,7 @@ public class Monitoria extends RealmObject {
         this.materia = materia;
         this.titulo = titulo;
         this.descricao = descricao;
-        this.data = data;
+        this.data_monitoria = data;
         this.subtopico = ids_subtopico_selecionado;
         this.endereco = endereco;
     }
@@ -74,11 +74,11 @@ public class Monitoria extends RealmObject {
     }
 
     public String getData() {
-        return data;
+        return data_monitoria;
     }
 
     public void setData(String data) {
-        this.data = data;
+        this.data_monitoria = data;
     }
 
     public int getId_materia() {

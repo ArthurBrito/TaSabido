@@ -1,4 +1,4 @@
-package br.ufc.engsoftware.tasabido;
+package br.ufc.engsoftware.retrofit;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -27,8 +27,9 @@ import br.ufc.engsoftware.fragments.PerfilFragment;
 import br.ufc.engsoftware.models.Perfil;
 import br.ufc.engsoftware.retrofit.GetDuvidasServer;
 import br.ufc.engsoftware.retrofit.GetMateriasServer;
-import br.ufc.engsoftware.retrofit.GetMonitoriasServer;
 import br.ufc.engsoftware.retrofit.GetSubtopicosServer;
+import br.ufc.engsoftware.tasabido.R;
+//import br.ufc.engsoftware.serverDAO.GetMonitoriasServer;
 
 
 public class PaginaPrincipalActivity extends FragmentActivity {
@@ -172,12 +173,12 @@ public class PaginaPrincipalActivity extends FragmentActivity {
         GetMateriasServer retrofitM = new GetMateriasServer(this);
         GetDuvidasServer retrofitDuvidas = new GetDuvidasServer(this);
         GetSubtopicosServer retrofitSub = new GetSubtopicosServer(this);
-        GetMonitoriasServer retrofitMon = new GetMonitoriasServer(this);
+//        GetMonitoriasServer retrofitMon = new GetMonitoriasServer(this);
 
         retrofitM.pegarMateriasDoServidor();
         retrofitDuvidas.pegarDuvidasDoServidor();
         retrofitSub.pegarSubtopicosDoServidor();
-        retrofitMon.pegarMonitoriasDoServidor();
+//        retrofitMon.peg();
 
 
 //        new GetMateriasServer(this).execute();

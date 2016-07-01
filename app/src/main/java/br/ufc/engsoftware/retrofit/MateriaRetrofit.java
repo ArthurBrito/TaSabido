@@ -9,5 +9,5 @@ import br.ufc.engsoftware.models.Materia;
  * Created by limaneto on 28/06/16.
  */
 public class MateriaRetrofit {
-    public List<Materia> listaMaterias;
+    public List<Materia> results;
 }

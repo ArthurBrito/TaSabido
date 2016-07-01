@@ -53,6 +53,8 @@ public class DuvidaBDManager {
             duvida.setTitulo(duvidaParam.getTitulo());
             duvida.setDescricao(duvidaParam.getDescricao());
             duvida.setId_usuario(duvidaParam.getId_usuario());
+            duvida.setUsername(duvidaParam.getUsername());
+            duvida.setData_duvida(duvidaParam.getData_duvida());
             duvida.setId_subtopico(duvidaParam.getId_subtopico());
             duvida.setId_materia(duvidaParam.getId_materia());
             duvida.setId_duvida(duvidaParam.getId_duvida());

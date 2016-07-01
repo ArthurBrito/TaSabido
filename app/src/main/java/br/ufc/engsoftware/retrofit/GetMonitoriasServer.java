@@ -2,38 +2,30 @@ package br.ufc.engsoftware.retrofit;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.util.Log;
 
-import com.google.gson.JsonElement;
-
-import java.io.IOException;
-import java.util.List;
 import java.util.Vector;
 
 import br.ufc.engsoftware.BDLocalManager.MateriaBDManager;
-import br.ufc.engsoftware.BDLocalManager.SubtopicoBDManager;
+import br.ufc.engsoftware.BDLocalManager.MonitoriaBDManager;
 import br.ufc.engsoftware.auxiliar.Statics;
 import br.ufc.engsoftware.auxiliar.Utils;
 import br.ufc.engsoftware.models.Materia;
-import br.ufc.engsoftware.models.Subtopico;
-import br.ufc.engsoftware.retrofit.TaSabidoApi;
+import br.ufc.engsoftware.models.Monitoria;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static java.lang.Integer.parseInt;
-
 /**
  * Created by Thiago on 26/05/2016.
  */
-public class GetMateriasServer {
+public class GetMonitoriasServer {
 
 
         // Lista das Subtopicos obbtidas do web service
-        Vector<Materia> listaSubtopicos;
+        Vector<Monitoria> listaMonitorias;
 
         Context context;
 
@@ -42,16 +34,16 @@ public class GetMateriasServer {
         // Dialog com barra de progresso mostrado na tela
         ProgressDialog proDialog;
 
-        public GetMateriasServer(Context context){
+        public GetMonitoriasServer(Context context){
             this.context = context;
         }
 
 
-        public void pegarMateriasDoServidor(){
+        public void pegarMonitoriasDoServidor(){
 
             // Showing progress loading dialog
             proDialog = new ProgressDialog(context);
-            proDialog.setMessage("Carregando Matérias ...");
+            proDialog.setMessage("Carregando Monitorias ...");
             proDialog.setCancelable(false);
             proDialog.show();
 
@@ -62,14 +54,14 @@ public class GetMateriasServer {
 
             TaSabidoApi api = retrofit.create(TaSabidoApi.class);
 
-            Call<MateriaRetrofit> requestSubtopicos = api.listaMaterias();
+            Call<MonitoriaRetrofit> requestMonitorias = api.listMonitorias();
 
-            requestSubtopicos.enqueue(new Callback<MateriaRetrofit>() {
+            requestMonitorias.enqueue(new Callback<MonitoriaRetrofit>() {
                 @Override
-                public void onResponse(Call<MateriaRetrofit> call, Response<MateriaRetrofit> response) {
+                public void onResponse(Call<MonitoriaRetrofit> call, Response<MonitoriaRetrofit> response) {
                     if (response.isSuccessful()) {
-                        MateriaRetrofit listaSubtopicos = response.body();
-                        salvarMateriasNoBDLocal(listaSubtopicos);
+                        MonitoriaRetrofit listaMonitorias = response.body();
+                        salvarMonitoriasNoBDLocal(listaMonitorias);
                     } else {
                     }
                     // Tira o dialog de progresso da tela
@@ -78,7 +70,7 @@ public class GetMateriasServer {
                 }
 
                 @Override
-                public void onFailure(Call<MateriaRetrofit> call, Throwable t) {
+                public void onFailure(Call<MonitoriaRetrofit> call, Throwable t) {
                     Log.e("deu problema", t.getMessage());
                     // Tira o dialog de progresso da tela
                     if (proDialog.isShowing())
@@ -90,15 +82,15 @@ public class GetMateriasServer {
 
 
 
-        public void salvarMateriasNoBDLocal(MateriaRetrofit listaSubtopicoParam){
+        public void salvarMonitoriasNoBDLocal(MonitoriaRetrofit listaMonitoriasParam){
             //atualiza o banco de dados local com os dados vindos do servidor
-            MateriaBDManager sinc = new MateriaBDManager();
-            if (listaSubtopicos == null)
-                listaSubtopicos = new Vector<>();
+            MonitoriaBDManager sinc = new MonitoriaBDManager();
+            if (listaMonitorias == null)
+                listaMonitorias = new Vector<>();
 
-            for (Materia materia: listaSubtopicoParam.results) {
-                listaSubtopicos.add(materia);
+            for (Monitoria monitoria: listaMonitoriasParam.results) {
+                listaMonitorias.add(monitoria);
             }
-            sinc.atualizarMaterias(context, listaSubtopicos);
+            sinc.atualizarMonitorias(context, listaMonitorias);
         }
     }

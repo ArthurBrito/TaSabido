@@ -6,16 +6,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Message;
-import android.view.Gravity;
-import android.widget.Toast;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import br.ufc.engsoftware.retrofit.TaSabidoApi;
 import br.ufc.engsoftware.serverDAO.PostEnviarEmail;
-import br.ufc.engsoftware.tasabido.R;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
