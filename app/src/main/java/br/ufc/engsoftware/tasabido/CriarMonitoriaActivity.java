@@ -133,7 +133,7 @@ public class CriarMonitoriaActivity extends AppCompatActivity implements Adapter
             return;
         }
 
-        Monitoria monitoria = new Monitoria(id_usuario, id_materia, id_subtopico, titulo, descricao, data, endereco);
+        Monitoria monitoria = new Monitoria(id_usuario, id_materia, id_subtopico, titulo, descricao, data, dia, horario, endereco);
         monitoria.setDia(dia);
         monitoria.setHorario(horario);
 

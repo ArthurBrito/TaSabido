@@ -12,6 +12,7 @@ import br.ufc.engsoftware.auxiliar.Statics;
 import br.ufc.engsoftware.auxiliar.Utils;
 import br.ufc.engsoftware.models.Materia;
 import br.ufc.engsoftware.models.Monitoria;
+import br.ufc.engsoftware.models.MonitoriaNaoRealm;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -25,7 +26,7 @@ public class GetMonitoriasServer {
 
 
         // Lista das Subtopicos obbtidas do web service
-        Vector<Monitoria> listaMonitorias;
+        Vector<MonitoriaNaoRealm> listaMonitorias;
 
         Context context;
 
@@ -84,13 +85,13 @@ public class GetMonitoriasServer {
 
         public void salvarMonitoriasNoBDLocal(MonitoriaRetrofit listaMonitoriasParam){
             //atualiza o banco de dados local com os dados vindos do servidor
-            MonitoriaBDManager sinc = new MonitoriaBDManager();
+//            MonitoriaBDManager sinc = new MonitoriaBDManager();
             if (listaMonitorias == null)
                 listaMonitorias = new Vector<>();
 
-            for (Monitoria monitoria: listaMonitoriasParam.results) {
+            for (MonitoriaNaoRealm monitoria: listaMonitoriasParam.results) {
                 listaMonitorias.add(monitoria);
             }
-            sinc.atualizarMonitorias(context, listaMonitorias);
+//            sinc.atualizarMonitorias(context, listaMonitorias);
         }
     }

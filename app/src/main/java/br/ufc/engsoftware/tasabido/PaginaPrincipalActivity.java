@@ -27,8 +27,8 @@ import br.ufc.engsoftware.fragments.PerfilFragment;
 import br.ufc.engsoftware.models.Perfil;
 import br.ufc.engsoftware.retrofit.GetDuvidasServer;
 import br.ufc.engsoftware.retrofit.GetMateriasServer;
-import br.ufc.engsoftware.retrofit.GetMonitoriasServer;
 import br.ufc.engsoftware.retrofit.GetSubtopicosServer;
+import br.ufc.engsoftware.serverDAO.GetMonitoriasServer;
 
 
 public class PaginaPrincipalActivity extends FragmentActivity {
@@ -172,18 +172,16 @@ public class PaginaPrincipalActivity extends FragmentActivity {
         GetMateriasServer retrofitM = new GetMateriasServer(this);
         GetDuvidasServer retrofitDuvidas = new GetDuvidasServer(this);
         GetSubtopicosServer retrofitSub = new GetSubtopicosServer(this);
-        GetMonitoriasServer retrofitMon = new GetMonitoriasServer(this);
 
         retrofitM.pegarMateriasDoServidor();
         retrofitDuvidas.pegarDuvidasDoServidor();
         retrofitSub.pegarSubtopicosDoServidor();
-        retrofitMon.pegarMonitoriasDoServidor();
 
 
 //        new GetMateriasServer(this).execute();
 //        new GetSubtopicosServer(this).execute();
 //        new GetDuvidasServer(this).execute();
-//        new GetMonitoriasServer(this).execute();
+        new GetMonitoriasServer(this).execute();
 //        new GetMoedasServer(this).execute();
     }
 

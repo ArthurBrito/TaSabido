@@ -1,5 +1,6 @@
 package br.ufc.engsoftware.models;
 
+import java.util.List;
 import java.util.Vector;
 
 import br.ufc.engsoftware.auxiliar.RealmInt;
@@ -11,34 +12,30 @@ import io.realm.annotations.RealmClass;
 
  * Created by limaneto on 27/05/16.
  */
-@RealmClass
-public class Monitoria extends RealmObject {
+public class MonitoriaNaoRealm{
 
-    private int subtopico , id, usuario, materia;
-    private String titulo, descricao, data_monitoria, endereco;
-    private String dia, horario;
-    private String username;
+    private int id, id_subtopico, usuario, materia;
+    private List<Integer> subtopico;
+    private String titulo, descricao, data_monitoria, endereco, dia, horario, username;
 
-    public Monitoria(){}
+    public MonitoriaNaoRealm(){}
 
-    public Monitoria(int monitoria, int usuario){
+    public MonitoriaNaoRealm(int monitoria, int usuario){
         this.id = monitoria;
         this.usuario = usuario;
     }
 
-    public Monitoria(int usuario, int materia, int subtopico_selecionado, String titulo, String descricao, String data, String dia, String hora, String endereco) {
+    public MonitoriaNaoRealm(int usuario, int materia, int subtopico_selecionado, String titulo, String descricao, String data, String endereco) {
         this.usuario = usuario;
         this.materia = materia;
         this.titulo = titulo;
         this.descricao = descricao;
         this.data_monitoria = data;
-        this.dia = dia;
-        this.horario = hora;
-        this.subtopico = subtopico_selecionado;
+        this.id_subtopico = subtopico_selecionado;
         this.endereco = endereco;
     }
 
-    public Monitoria(int usuario, String titulo, String descricao, String data, String endereco) {
+    public MonitoriaNaoRealm(int usuario, String titulo, String descricao, String data, String endereco) {
         this.usuario = usuario;
         this.titulo = titulo;
         this.descricao = descricao;
@@ -55,17 +52,14 @@ public class Monitoria extends RealmObject {
         this.usuario = usuario;
     }
 
-    public Monitoria(int monitoria, int usuario, int materia, int ids_subtopico_selecionado, String titulo, String descricao, String username, String data, String dia, String hora, String endereco) {
+    public MonitoriaNaoRealm(int monitoria, int usuario, int materia, int ids_subtopico_selecionado, String titulo, String descricao, String data, String endereco) {
         this.usuario = usuario;
         this.id = monitoria;
         this.materia = materia;
         this.titulo = titulo;
         this.descricao = descricao;
         this.data_monitoria = data;
-        this.username = username;
-        this.dia = dia;
-        this.horario = hora;
-        this.subtopico = ids_subtopico_selecionado;
+        this.id_subtopico = ids_subtopico_selecionado;
         this.endereco = endereco;
     }
 
@@ -115,12 +109,16 @@ public class Monitoria extends RealmObject {
         return this.titulo;
     }
 
+    public List<Integer> getSubtopico(){ return this.subtopico; }
+
+    public void setSubtopico(List<Integer> subtopicos){ this.subtopico = subtopicos;}
+
     public int getId_subtopico() {
-        return subtopico;
+        return id_subtopico;
     }
 
     public void setId_subtopico(int subtopico) {
-        this.subtopico = subtopico;
+        this.id_subtopico = subtopico;
     }
 
     public String getEndereco() {

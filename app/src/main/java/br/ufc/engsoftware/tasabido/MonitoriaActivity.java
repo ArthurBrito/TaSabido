@@ -70,7 +70,7 @@ public class MonitoriaActivity extends AppCompatActivity {
         String endereco = _endereco.getText().toString();
         String data = _data.getText().toString();
 
-        Monitoria monitoria = new Monitoria(id_monitoria, id_usuario, id_materia, id_subtopico, titulo, descricao, data, endereco);
+        Monitoria monitoria = new Monitoria(id_monitoria, id_usuario, id_materia, id_subtopico, titulo, descricao, data, "lima neto", "Quarta", "08:00 as 10:00 h", endereco);
         JSONObject jsonParam = createJsonParam(monitoria);
 
         try {
@@ -151,12 +151,18 @@ public class MonitoriaActivity extends AppCompatActivity {
             json.put("endereco", monitoria.getEndereco());
             json.put("id_usuario", monitoria.getId_usuario());
             json.put("id_materia", monitoria.getId_materia());
-            json.put("id_monitoria", monitoria.getId_monitoria());
-            json.put("data_monitoria", monitoria.getData());
-            json.put("lat", "0.00");
-            json.put("long", "0.00");
-            subtopicosJson.put(id_subtopico);
-            json.put("ids_subtopicos", subtopicosJson);
+            json.put("data_monitoria", "2016-07-01 08:00:00");
+            json.put("dia", monitoria.getDia());
+            json.put("hora", monitoria.getHorario());
+
+
+//            for (Integer id_sub : subtopicos_selecionados) {
+//                subtopicosJson.put(id_sub);
+//            }
+
+            json.put("ids_subtopicos", 1);
+
+
 
         } catch (JSONException e) {
             e.printStackTrace();
