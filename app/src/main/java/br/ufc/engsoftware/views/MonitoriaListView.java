@@ -15,6 +15,7 @@ import java.util.Vector;
 import br.ufc.engsoftware.models.Monitoria;
 import br.ufc.engsoftware.tasabido.MonitoriaActivity;
 import br.ufc.engsoftware.tasabido.R;
+import br.ufc.engsoftware.tasabido.VerMonitoriaActivity;
 
 /**
  * Created by Thiago on 14/05/2016.
@@ -58,8 +59,8 @@ public class MonitoriaListView {
 
     // Intent para quando clicar no item da lista de matérias ir para a pagina de subtopicos
     private void chamarMostrarMonitoriaActivity(Context view, Monitoria item){
-        Intent intent = new Intent(view, MonitoriaActivity.class);
-        intent.setAction("br.ufc.engsoftware.tasabido.LISTA_MONITORIA");
+        Intent intent = new Intent(view, VerMonitoriaActivity.class);
+        intent.setAction("br.ufc.engsoftware.tasabido.VER_MONITORIA");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         // Passa o nome da matéria para ser exibido na activity, e o id para pesquisar no banco
@@ -71,6 +72,10 @@ public class MonitoriaListView {
         intent.putExtra("ID_MONITORIA", item.getId_monitoria());
         intent.putExtra("ID_MATERIA", item.getId_materia());
         intent.putExtra("ID_USUARIO", item.getId_usuario());
+        intent.putExtra("DIA", item.getDia());
+        intent.putExtra("HORARIO", item.getHorario());
+        intent.putExtra("USERNAME", item.getUsername());
+
         view.startActivity(intent);
     }
 
