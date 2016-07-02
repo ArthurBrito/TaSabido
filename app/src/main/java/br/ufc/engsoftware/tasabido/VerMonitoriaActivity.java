@@ -2,16 +2,23 @@ package br.ufc.engsoftware.tasabido;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import br.ufc.engsoftware.auxiliar.Utils;
 import br.ufc.engsoftware.models.Monitoria;
 
 public class VerMonitoriaActivity extends AppCompatActivity {
+
+    String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +27,7 @@ public class VerMonitoriaActivity extends AppCompatActivity {
 
         // Seta as configurações da ActionBar
         ActionBar ab = getSupportActionBar();
-        ab.setTitle("Dúvida");
+        ab.setTitle("Monitoria");
         ab.setDisplayHomeAsUpEnabled(true);
 
         TextView tvTituloMonitoria = (TextView) findViewById(R.id.tv_titulo_monitoria);
@@ -36,7 +43,7 @@ public class VerMonitoriaActivity extends AppCompatActivity {
         String dia = intent.getStringExtra("DIA");
         String horario = intent.getStringExtra("HORARIO");
         String local = intent.getStringExtra("ENDERECO");
-        String username = intent.getStringExtra("USERNAME");
+        username = intent.getStringExtra("USERNAME");
 
         tvTituloMonitoria.setText(titulo);
         tvDescricaoMonitoria.setText(descricao);
@@ -45,18 +52,37 @@ public class VerMonitoriaActivity extends AppCompatActivity {
         tvMonitorMonitoria.setText(username);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        final String user = sharedPreferences.getString("username", "Visitante");
+
+        // Só mostra o botão de editar se este for o usuario dono da monitoria
+        //if(user.equals(username))
+        //{
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.edit_monitoria_bar_menu, menu);
+        //}
+        return true;
+    }
+
     // Seta ação do botão de voltar na ActionBar
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
                 return true;
+
+            case R.id.action_edit:
+                chamarEditarMonitoriaActivity();
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    public void chamarEditarMonitoriaActivity(View view){
+    private void chamarEditarMonitoriaActivity(){
         Intent intent = new Intent(this, MonitoriaActivity.class);
         intent.setAction("br.ufc.engsoftware.tasabido.LISTA_MONITORIA");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

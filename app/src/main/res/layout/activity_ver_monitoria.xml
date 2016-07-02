@@ -105,14 +105,6 @@
             android:textSize="@dimen/ver_monitoria_value_textsize"
             android:text="thiago_nrodrigues"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:text="Editar Monitoria"
-            android:layout_gravity="center"
-            android:onClick="chamarEditarMonitoriaActivity"/>
-
     </LinearLayout>
 
 </ScrollView>
