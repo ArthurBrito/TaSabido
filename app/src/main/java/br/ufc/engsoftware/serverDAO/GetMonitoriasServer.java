@@ -112,8 +112,7 @@ public class GetMonitoriasServer extends AsyncTask<Void, Void, Void> {
                 JSONArray monitoriasJson = jsonObj.getJSONArray("results");
 
                 // Percorrendo todas os Subtopicos
-                for (int i = 0; i < monitoriasJson.length(); i++)
-                {
+                for (int i = 0; i < monitoriasJson.length(); i++) {
                     // Extrai o i-esimo objeto
                     JSONObject sJson = monitoriasJson.getJSONObject(i);
 
