@@ -15,6 +15,7 @@ import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -79,17 +80,15 @@ public class ListaMonitoriasActivity extends AppCompatActivity {
 
     private void montarListViewMonitorias() throws SQLException {
 
-
         Vector<Monitoria> monitorias = new Vector<>();
         List<Monitoria> monitoriasFromOrm = new ArrayList<>();
 
-        monitoriasFromOrm = getDao().queryForAll();
+        monitoriasFromOrm = getDao().queryBuilder().where().eq("subtopico", id_subtopico).query();
 
         for (Monitoria m: monitoriasFromOrm) {
-            if (m.getId_subtopicos() == id_subtopico){
-                monitorias.add(m);
-            }
+            monitorias.add(m);
         }
+
         gerenciadorMonitoriasLV = new MonitoriaListView(listViewMonitorias, this, monitorias);
     }
 
