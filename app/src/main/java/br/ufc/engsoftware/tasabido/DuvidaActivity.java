@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +26,7 @@ import butterknife.InjectView;
 
 public class DuvidaActivity extends AppCompatActivity {
 
+    Button bt_delete, btn_atualizar, btn_tirar_duvida;
     public int id_duvida, id_materia, id_subtopico, id_usuario;
     String titulo, descricao;
     Duvida duvida;
@@ -41,6 +44,13 @@ public class DuvidaActivity extends AppCompatActivity {
         activity = this;
         utils = new Utils(this);
 
+        bt_delete = (Button) findViewById(R.id.bt_delete);
+        btn_atualizar = (Button) findViewById(R.id.btn_atualizar);
+        btn_tirar_duvida = (Button) findViewById(R.id.btn_tirar_duvida);
+        bt_delete.setVisibility(View.GONE);
+        btn_atualizar.setVisibility(View.GONE);
+        btn_tirar_duvida.setVisibility(View.VISIBLE);
+
 
         // Pega a intent que chamou essa activity
         Intent intent = getIntent();
@@ -51,9 +61,41 @@ public class DuvidaActivity extends AppCompatActivity {
         descricao = intent.getStringExtra("DESCRICAO");
         titulo = intent.getStringExtra("TITULO");
 
+        mostrarBotoes();
+
+        _titulo.setKeyListener(null);
+        _descricao.setKeyListener(null);
 
         _titulo.setText(titulo);
         _descricao.setText(descricao);
+    }
+
+    private void mostrarBotoes() {
+        Utils util = new Utils(this);
+        int id = Integer.parseInt(util.getFromSharedPreferences("id_usuario", ""));
+
+        if (id_usuario == id){
+            bt_delete.setVisibility(View.VISIBLE);
+            btn_atualizar.setVisibility(View.VISIBLE);
+            btn_tirar_duvida.setVisibility(View.GONE);
+        }
+
+        if(tirareiDuvida()){
+            btn_tirar_duvida.setVisibility(View.GONE);
+        }
+    }
+
+    private boolean tirareiDuvida() {
+        Utils util = new Utils(this);
+        Set<String> array_ids = new HashSet<>();
+        array_ids = util.getMonitoriasConfirmadasFromSharedPreferences("duvidas", array_ids);
+
+        for (String m: array_ids) {
+            if (m.equals(String.valueOf(id_duvida))){
+                return true;
+            }
+        }
+        return false;
     }
 
     public void onClickAtualizarDuvida(View view){
@@ -97,14 +139,17 @@ public class DuvidaActivity extends AppCompatActivity {
         try {
             utils.createProgressDialog("Deletando Dúvida");
             new PostDeletarDuvida(this, param, new PostDeletarDuvida.AsyncResponse(){
+                Toast toast;
                 public void processFinish(String output, String mensagem){
                     if (output.equals("true")){
-                        utils.progressDialog.setMessage(mensagem);
+                        toast = Toast.makeText(activity, mensagem, Toast.LENGTH_SHORT);
                         deleteDuvida();
                         finish();
                     }else{
-                        utils.progressDialog.setMessage(mensagem);
+                        toast = Toast.makeText(activity, mensagem, Toast.LENGTH_SHORT);
                     }
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
                 }
             }).execute(Statics.DELETAR_DUVIDA);
             utils.dismissProgressDialog();
