@@ -56,11 +56,11 @@ public class VerMonitoriaActivity extends AppCompatActivity {
         final String user = sharedPreferences.getString("username", "Visitante");
 
         // Só mostra o botão de editar se este for o usuario dono da monitoria
-        //if(user.equals(username))
-        //{
+        if(user.equals(username))
+        {
             MenuInflater inflater = getMenuInflater();
             inflater.inflate(R.menu.edit_monitoria_bar_menu, menu);
-        //}
+        }
         return true;
     }
 
