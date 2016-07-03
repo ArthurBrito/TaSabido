@@ -18,6 +18,7 @@ public class MateriaSearchView implements SearchView.OnQueryTextListener {
     public MateriaSearchView(ListView listView, SearchView searchView, Filter filter) {
         this.listView = listView;
         this.searchView = searchView;
+        this.searchView.setFocusableInTouchMode(true);
         this.filter = filter;
 
         setupSearchView();

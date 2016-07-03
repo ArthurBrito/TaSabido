@@ -2,29 +2,28 @@ package br.ufc.engsoftware.tasabido;
 
 
 import android.content.Intent;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
-
+import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.j256.ormlite.dao.Dao;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.Vector;
 
-import br.ufc.engsoftware.BDLocalManager.DuvidaBDManager;
-import br.ufc.engsoftware.BDLocalManager.MonitoriaBDManager;
+import br.ufc.engsoftware.Ormlite.IdSubtopico;
+import br.ufc.engsoftware.Ormlite.Monitoria;
+import br.ufc.engsoftware.auxiliar.MonitoriaOpenDatabaseHelper;
 import br.ufc.engsoftware.auxiliar.Utils;
-import br.ufc.engsoftware.fragments.DatePickerFragment;
-import br.ufc.engsoftware.fragments.TimePickerFragment;
-import br.ufc.engsoftware.models.Monitoria;
-import br.ufc.engsoftware.views.DuvidaListView;
 import br.ufc.engsoftware.views.MonitoriaListView;
 
 
@@ -70,27 +69,40 @@ public class ListaMonitoriasActivity extends AppCompatActivity {
         listViewMonitorias = (ListView) findViewById(R.id.listview_monitorias);
 
         //Metodo responsável por montar o ListView das Dúvidas
-        montarListViewMonitorias();
+        try {
+            montarListViewMonitorias();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
-    private void montarListViewMonitorias(){
-        //pega os subtopicos salvos no banco de dados local pela requisição com o servidor
-        MonitoriaBDManager duvidaDB = new MonitoriaBDManager();
-        gerenciadorMonitoriasLV = new MonitoriaListView(listViewMonitorias, this, duvidaDB.pegarMonitoriasPorIdSubtopico(this, id_subtopico));
+    private void montarListViewMonitorias() throws SQLException {
 
+
+        Vector<Monitoria> monitorias = new Vector<>();
+        List<Monitoria> monitoriasFromOrm = new ArrayList<>();
+
+        monitoriasFromOrm = getDao().queryForAll();
+
+        for (Monitoria m: monitoriasFromOrm) {
+            if (m.getId_subtopicos() == id_subtopico){
+                monitorias.add(m);
+            }
+        }
+        gerenciadorMonitoriasLV = new MonitoriaListView(listViewMonitorias, this, monitorias);
     }
 
-    private void montarListViewMonitoriasParticiparei(){
-        //pega os subtopicos salvos no banco de dados local pela requisição com o servidor
-        MonitoriaBDManager duvidaDB = new MonitoriaBDManager();
+    private void montarListViewMonitoriasParticiparei() throws SQLException {
+
         Utils utils = new Utils(this);
         Set<String> array_ids = new HashSet<>();
         array_ids = utils.getMonitoriasConfirmadasFromSharedPreferences("monitorias", array_ids);
         Vector<Monitoria> vector_monitorias = new Vector<Monitoria>();
 
         for (String id_monitoria: array_ids) {
-            Monitoria monitoria = duvidaDB.pegarMonitoriasPorIdMonitoria(this, Integer.parseInt(id_monitoria));
+
+            Monitoria monitoria = (Monitoria) getDao().queryForId(id_monitoria);
             vector_monitorias.add(monitoria);
         }
 
@@ -98,12 +110,23 @@ public class ListaMonitoriasActivity extends AppCompatActivity {
 
     }
 
-    private void montarListViewMonitoriasCriei(){
-        //pega os subtopicos salvos no banco de dados local pela requisição com o servidor
-        MonitoriaBDManager monitoriaDB = new MonitoriaBDManager();
+    private void montarListViewMonitoriasCriei() throws SQLException {
         Utils u = new Utils(this);
         int id_usuario = Integer.parseInt(u.getFromSharedPreferences("id_usuario", ""));
-        gerenciadorMonitoriasLV = new MonitoriaListView(listViewMonitorias, this, monitoriaDB.pegarMonitoriasPorIdUsuarioSubtopico(this, id_usuario, id_subtopico));
+
+
+        Vector<Monitoria> monitorias = new Vector<>();
+        List<Monitoria> monitoriasFromOrm = new ArrayList<>();
+
+        monitoriasFromOrm = getDao().queryForAll();
+
+
+        for (Monitoria m: monitoriasFromOrm) {
+            if (m.getId_subtopicos() == id_subtopico && m.getId_usuario() == id_usuario){
+                monitorias.add(m);
+            }
+        }
+        gerenciadorMonitoriasLV = new MonitoriaListView(listViewMonitorias, this, monitorias);
     }
 
     // Seta ação do botão de voltar na ActionBar
@@ -125,23 +148,42 @@ public class ListaMonitoriasActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch (position){
-                    case 0:
-                        montarListViewMonitorias();
-                        break;
-                    case 1:
-                        montarListViewMonitoriasCriei();
-                        break;
-                    case 2:
-                        montarListViewMonitoriasParticiparei();
-                }
+                try {
+                    switch (position){
+                        case 0:
+                            montarListViewMonitorias();
+                            break;
+                        case 1:
+                            montarListViewMonitoriasCriei();
+                            break;
+                        case 2:
+                            montarListViewMonitoriasParticiparei();
+                    }
 
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
+
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
+    }
+
+    public Dao getDao(){
+        MonitoriaOpenDatabaseHelper monitoriaOpenDatabaseHelper = OpenHelperManager.getHelper(this,
+                MonitoriaOpenDatabaseHelper.class);
+
+        Dao<Monitoria, Long> monitoriaDao = null;
+        try {
+             monitoriaDao = monitoriaOpenDatabaseHelper.getDao();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return monitoriaDao;
     }
 }

@@ -172,17 +172,10 @@ public class PaginaPrincipalActivity extends FragmentActivity {
         GetMateriasServer retrofitM = new GetMateriasServer(this);
         GetDuvidasServer retrofitDuvidas = new GetDuvidasServer(this);
         GetSubtopicosServer retrofitSub = new GetSubtopicosServer(this);
-
         retrofitM.pegarMateriasDoServidor();
         retrofitDuvidas.pegarDuvidasDoServidor();
         retrofitSub.pegarSubtopicosDoServidor();
-
-
-//        new GetMateriasServer(this).execute();
-//        new GetSubtopicosServer(this).execute();
-//        new GetDuvidasServer(this).execute();
         new GetMonitoriasServer(this).execute();
-//        new GetMoedasServer(this).execute();
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) { //recebe o resultado da câmera e manda de volta para ser tratado na classe PerfilFragment
