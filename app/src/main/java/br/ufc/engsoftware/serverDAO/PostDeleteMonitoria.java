@@ -26,7 +26,7 @@ import static java.lang.Integer.parseInt;
 /**
  * Created by Thiago on 26/05/2016.
  */
-public class PostCriarMonitoria extends AsyncTask<Void, Void, Void> {
+public class PostDeleteMonitoria extends AsyncTask<Void, Void, Void> {
 
     // URL para pegar os Subtopicos via JSON
     // private static String url = "http://avalan.herokuapp.com/tasabido/listar_materias/?format=json";
@@ -43,17 +43,17 @@ public class PostCriarMonitoria extends AsyncTask<Void, Void, Void> {
     JSONObject json;
 
     public interface AsyncResponse {
-        void processFinish(String output, int id);
+        void processFinish(String output);
     }
 
-    public PostCriarMonitoria(AsyncResponse delegate){
+    public PostDeleteMonitoria(AsyncResponse delegate){
         this.delegate = delegate;
     }
 
     // Dialog com barra de progresso mostrado na tela
     ProgressDialog proDialog;
 
-    public PostCriarMonitoria(Context context, JSONObject json, String url, AsyncResponse delegate){
+    public PostDeleteMonitoria(Context context, JSONObject json, String url, AsyncResponse delegate){
         this.context = context;
         this.json = json;
         this.url = url;
@@ -67,20 +67,9 @@ public class PostCriarMonitoria extends AsyncTask<Void, Void, Void> {
 
         // Fazendo requisição para o web service pelo metodo estatico httpGet
         try {
-            response = WebRequest.httpPostJson(url, json.toString());
+            response = WebRequest.httpPostDeleteJson(url, json.toString());
         } catch (IOException e) {
             /** TODO analizar o tratamento de erro */
-            e.printStackTrace();
-        }
-
-        JSONObject jsonResponse = null;
-        try {
-            jsonResponse = new JSONObject(response);
-            response = jsonResponse.getString("sucesso");
-            if (response.equals("true")){
-                id = jsonResponse.getInt("id_monitoria");
-            }
-        } catch (JSONException e) {
             e.printStackTrace();
         }
 
@@ -92,6 +81,6 @@ public class PostCriarMonitoria extends AsyncTask<Void, Void, Void> {
     protected void onPostExecute(Void requestresult) {
         super.onPostExecute(requestresult);
         // Tira o dialog de progresso da tela
-            delegate.processFinish(response, id);
+        delegate.processFinish(response);
     }
 }

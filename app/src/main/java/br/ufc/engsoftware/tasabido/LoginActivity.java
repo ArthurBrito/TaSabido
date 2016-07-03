@@ -106,18 +106,15 @@ public class LoginActivity extends AppCompatActivity {
             utils.createProgressDialog("Autenticando");
             new PostServerDataAsync(this, param, new PostServerDataAsync.AsyncResponse(){
                 public void processFinish(String output){
-                    Toast toast;
                     if (output.equals("true")){
-                        toast = Toast.makeText(ac, "Autenticado", Toast.LENGTH_SHORT);
-
                         onLoginSuccess();
                     }else{
-                        toast = Toast.makeText(ac, "Usuario ou Senha Incorretos", Toast.LENGTH_SHORT);
-
+                        Toast toast = Toast.makeText(ac, "Usuario ou Senha Incorretos", Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL, 0, 0);
+                        toast.show();
                         onLoginFailed();
                     }
-                    toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL, 0, 0);
-                    toast.show();
+
                 }
             }).execute(Statics.AUTENTICAR_USUARIO);
         } catch (Exception e) {
@@ -160,7 +157,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onLoginFailed() {
 //        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
-
+        utils.dismissProgressDialog();
         _loginButton.setEnabled(true);
     }
 

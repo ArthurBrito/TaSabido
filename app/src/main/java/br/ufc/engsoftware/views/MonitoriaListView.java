@@ -12,7 +12,7 @@ import android.widget.ListView;
 
 import java.util.Vector;
 
-import br.ufc.engsoftware.models.Monitoria;
+import br.ufc.engsoftware.Ormlite.Monitoria;
 import br.ufc.engsoftware.tasabido.MonitoriaActivity;
 import br.ufc.engsoftware.tasabido.R;
 import br.ufc.engsoftware.tasabido.VerMonitoriaActivity;
@@ -68,7 +68,9 @@ public class MonitoriaListView {
         intent.putExtra("DESCRICAO", item.getDescricao());
         intent.putExtra("DATA", item.getData());
         intent.putExtra("ENDERECO", item.getEndereco());
-        intent.putExtra("ID_SUBTOPICO", item.getId_subtopico());
+        intent.putExtra("DIA", item.getDia());
+        intent.putExtra("HORARIO", item.getHorario());
+        intent.putExtra("ID_SUBTOPICO", item.getId_subtopicos());
         intent.putExtra("ID_MONITORIA", item.getId_monitoria());
         intent.putExtra("ID_MATERIA", item.getId_materia());
         intent.putExtra("ID_USUARIO", item.getId_usuario());

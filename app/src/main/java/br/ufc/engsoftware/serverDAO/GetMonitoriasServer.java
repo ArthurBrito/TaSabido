@@ -1,29 +1,26 @@
 package br.ufc.engsoftware.serverDAO;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.ListView;
-
+import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.j256.ormlite.dao.Dao;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
-import br.ufc.engsoftware.BDLocalManager.DuvidaBDManager;
-import br.ufc.engsoftware.BDLocalManager.MonitoriaBDManager;
+import br.ufc.engsoftware.Ormlite.IdSubtopico;
+import br.ufc.engsoftware.Ormlite.Monitoria;
+import br.ufc.engsoftware.auxiliar.MonitoriaOpenDatabaseHelper;
 import br.ufc.engsoftware.auxiliar.Statics;
 import br.ufc.engsoftware.auxiliar.WebRequest;
-import br.ufc.engsoftware.models.Duvida;
-import br.ufc.engsoftware.models.Monitoria;
-import br.ufc.engsoftware.views.DuvidaListView;
 import br.ufc.engsoftware.views.MonitoriaListView;
-
 import static java.lang.Integer.parseInt;
 
 /**
@@ -75,7 +72,11 @@ public class GetMonitoriasServer extends AsyncTask<Void, Void, Void> {
         Log.d("Response: ", "> " + jsonStr);
 
         // Monta a lista de subtopicos
-        listaMonitorias = parseJsonMonitorias(jsonStr);
+        try {
+            parseJsonMonitorias(jsonStr);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         return null;
     }
@@ -89,15 +90,15 @@ public class GetMonitoriasServer extends AsyncTask<Void, Void, Void> {
             proDialog.dismiss();
 
         //atualiza o banco de dados local com os dados vindos do servidor
-        MonitoriaBDManager sinc = new MonitoriaBDManager();
-        if (listaMonitorias == null)
-            listaMonitorias = new Vector<>();
-        sinc.atualizarMonitorias(context, listaMonitorias);
+//        MonitoriaBDManager sinc = new MonitoriaBDManager();
+//        if (listaMonitorias == null)
+//            listaMonitorias = new Vector<>();
+//        sinc.atualizarMonitorias(context, listaMonitorias);
 
     }
 
     // Metodo responsavel por quebrar o JSON em Subtopicos
-    private Vector<Monitoria> parseJsonMonitorias(String json){
+    private void parseJsonMonitorias(String json) throws SQLException {
         if (json != null)
         {
             try {
@@ -116,14 +117,14 @@ public class GetMonitoriasServer extends AsyncTask<Void, Void, Void> {
                     // Extrai o i-esimo objeto
                     JSONObject sJson = monitoriasJson.getJSONObject(i);
 
-                    int id_subtopico = 0;
                     JSONArray subtopicosJson = sJson.getJSONArray("subtopico");
-                    Vector subtopicos = new Vector();
-                    if (subtopicosJson.length() > 0) {
-                        subtopicos.add(subtopicosJson.get(0));
-                        // Extrai as informações do objeto
-                        id_subtopico = (int) subtopicos.get(0);
+
+                    int id_subtopico = 0;
+
+                    for (int index = 0; index < subtopicosJson.length(); index++) {
+                        id_subtopico = subtopicosJson.getInt(0);
                     }
+
                     int id_monitoria = parseInt(sJson.getString("id"));
                     int id_usuario = parseInt(sJson.getString("usuario"));
                     int id_materia = parseInt(sJson.getString("materia"));
@@ -135,21 +136,34 @@ public class GetMonitoriasServer extends AsyncTask<Void, Void, Void> {
                     String descricao = sJson.getString("descricao");
                     String data = sJson.getString("data_monitoria");
 
-                    // Adiciona o Subtopico obtido da lista de subtopicos
-                    listarMonitorias.add(new Monitoria(id_monitoria, id_usuario, id_materia, id_subtopico, titulo, username, descricao, data, dia, hora, endereco));
+                    Monitoria monitoria = new Monitoria(id_monitoria, id_usuario, id_materia, id_subtopico, titulo, username, descricao, data, dia, hora, endereco);
 
+                    salvarMonitoriaOrmlite(monitoria);
+
+                    try {
+                        salvarMonitoriaOrmlite(monitoria);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                 }
-
-                return listarMonitorias;
             } catch (JSONException e) {
                 e.printStackTrace();
-                return null;
             }
         } else {
             Log.e("ServiceHandler", "No data received from HTTP request");
-            return null;
         }
+    }
 
+    public void salvarMonitoriaOrmlite(Monitoria monitoriaParam) throws SQLException {
+        MonitoriaOpenDatabaseHelper monitoriaOpenDatabaseHelper = OpenHelperManager.getHelper(context,
+                MonitoriaOpenDatabaseHelper.class);
+
+        Dao<Monitoria, Long> monitoriaDao = monitoriaOpenDatabaseHelper.getDao();
+
+        monitoriaDao.create(monitoriaParam);
+
+        List<Monitoria> todos = monitoriaDao.queryForAll();
+        String a = "ServiceHandler";
     }
 
     public MonitoriaListView getGerenciadorMonitoriasLVLV() {

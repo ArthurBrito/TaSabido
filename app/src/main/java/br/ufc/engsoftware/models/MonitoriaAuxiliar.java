@@ -4,7 +4,6 @@
 //import java.util.Vector;
 //
 //import br.ufc.engsoftware.auxiliar.RealmInt;
-//import br.ufc.engsoftware.retrofit.IdSubtopico;
 //import io.realm.RealmList;
 //import io.realm.RealmObject;
 //import io.realm.annotations.PrimaryKey;
@@ -15,25 +14,25 @@
 // * Created by limaneto on 27/05/16.
 // */
 //@RealmClass
-//public class Monitoria extends RealmObject {
+//public class MonitoriaAuxiliar {
 //
 //    @PrimaryKey
 //    private int id;
 //
-//    private RealmList<IdSubtopico> subtopico;
+//    private List<Integer> subtopico;
 //    private int usuario, materia;
 //    private String titulo, descricao, data_monitoria, endereco;
 //    private String dia, horario;
 //    private String username;
 //
-//    public Monitoria(){}
+//    public MonitoriaAuxiliar(){}
 //
-//    public Monitoria(int monitoria, int usuario){
+//    public MonitoriaAuxiliar(int monitoria, int usuario){
 //        this.id = monitoria;
 //        this.usuario = usuario;
 //    }
 //
-//    public Monitoria(int usuario, int materia, RealmList<IdSubtopico> subtopicos, String titulo, String descricao, String data, String dia, String hora, String endereco) {
+//    public MonitoriaAuxiliar(int usuario, int materia, int subtopico_selecionado, String titulo, String descricao, String data, String dia, String hora, String endereco) {
 //        this.usuario = usuario;
 //        this.materia = materia;
 //        this.titulo = titulo;
@@ -41,11 +40,11 @@
 //        this.data_monitoria = data;
 //        this.dia = dia;
 //        this.horario = hora;
-//        this.subtopico = subtopicos;
+//        this.subtopico = subtopico_selecionado;
 //        this.endereco = endereco;
 //    }
 //
-//    public Monitoria(int usuario, String titulo, String descricao, String data, String endereco) {
+//    public MonitoriaAuxiliar(int usuario, String titulo, String descricao, String data, String endereco) {
 //        this.usuario = usuario;
 //        this.titulo = titulo;
 //        this.descricao = descricao;
@@ -53,7 +52,7 @@
 //        this.endereco = endereco;
 //    }
 //
-//    public Monitoria(int id_monitoria, int id_usuario, int id_materia, RealmList<IdSubtopico> subtopicos, String titulo, String descricao, String data, String dia, String horario, String endereco) {
+//    public MonitoriaAuxiliar(int id_monitoria, int id_usuario, int id_materia, int id_subtopico, String titulo, String descricao, String data, String dia, String horario, String endereco) {
 //        this.usuario = usuario;
 //        this.id = id_monitoria;
 //        this.materia = materia;
@@ -63,7 +62,7 @@
 //        this.username = username;
 //        this.dia = dia;
 //        this.horario = horario;
-//        this.subtopico = subtopicos;
+//        this.subtopico = id_subtopico;
 //        this.endereco = endereco;
 //    }
 //
@@ -76,7 +75,7 @@
 //        this.usuario = usuario;
 //    }
 //
-//    public Monitoria(int monitoria, int usuario, int materia, RealmList<IdSubtopico> subtopicos, String titulo, String descricao, String username, String data, String dia, String hora, String endereco) {
+//    public Monitoria(int monitoria, int usuario, int materia, int ids_subtopico_selecionado, String titulo, String descricao, String username, String data, String dia, String hora, String endereco) {
 //        this.usuario = usuario;
 //        this.id = monitoria;
 //        this.materia = materia;
@@ -86,7 +85,7 @@
 //        this.username = username;
 //        this.dia = dia;
 //        this.horario = hora;
-//        this.subtopico = subtopicos;
+//        this.subtopico = ids_subtopico_selecionado;
 //        this.endereco = endereco;
 //    }
 //
@@ -136,11 +135,11 @@
 //        return this.titulo;
 //    }
 //
-//    public RealmList<IdSubtopico> getId_subtopicos() {
+//    public int getId_subtopico() {
 //        return subtopico;
 //    }
 //
-//    public void setId_subtopico(RealmList<IdSubtopico> subtopicos) {
+//    public void setId_subtopico(int subtopico) {
 //        this.subtopico = subtopico;
 //    }
 //

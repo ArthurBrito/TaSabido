@@ -9,6 +9,7 @@ import java.util.List;
 public class Statics {
     public static String BASE_URL = "https://avalan.herokuapp.com/tasabido/";
 //    public static String BASE_URL = "http://10.0.2.2:8000/tasabido/";
+//    public static String BASE_URL = "http://127.0.0.1:8000/tasabido/";
 
     //CADASTRAR
     public static String CADASTRAR_USUARIO = BASE_URL + "cadastrar_usuario/";
@@ -17,7 +18,7 @@ public class Statics {
     public static String CADASTRAR_MATERIA = BASE_URL + "cadastrar_materia/";
     public static String CADASTRAR_SUBTOPICO = BASE_URL + "cadastrar_subtopico/";
 
-    //AUTENTICAR
+//    AUTENTICAR
     public static String AUTENTICAR_USUARIO = BASE_URL + "autenticar_usuario/";
 
     //LISTAR

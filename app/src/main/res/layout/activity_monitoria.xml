@@ -20,6 +20,7 @@
             android:layout_marginBottom="8dp">
             <EditText android:id="@+id/input_titulo"
                 android:layout_width="match_parent"
+                android:focusableInTouchMode="true"
                 android:layout_height="wrap_content"
                 android:inputType="textCapWords"
                 android:hint="Titulo" />
@@ -34,6 +35,7 @@
             <EditText android:id="@+id/input_descricao"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusableInTouchMode="true"
                 android:inputType="textMultiLine"
                 android:hint="Descricao" />
         </android.support.design.widget.TextInputLayout>
@@ -48,8 +50,9 @@
             <EditText android:id="@+id/input_endereco"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusableInTouchMode="true"
                 android:inputType="textMultiLine"
-                android:hint="Endereco" />
+                android:hint="Local" />
         </android.support.design.widget.TextInputLayout>
 
 
@@ -71,6 +74,7 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:id="@+id/bt_atualizar_monitoria"
             android:text="@string/btn_atualizar_monitoria"
             android:onClick="onClickAtualizarMonitoria"/>
 
@@ -78,6 +82,7 @@
         <!-- Botão Deletar Monitoria -->
         <Button
             android:layout_width="150dp"
+            android:id="@+id/btn_delete"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="@string/btn_deletar_monitoria"
@@ -89,6 +94,7 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:id="@+id/btn_participar"
             android:text="@string/btn_participar_monitoria"
             android:onClick="onClickParticiparMonitoria"/>
 

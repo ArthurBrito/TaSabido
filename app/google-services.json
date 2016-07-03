@@ -1,0 +1,61 @@
+{
+  "project_info": {
+    "project_number": "1044812546422",
+    "project_id": "ta-sabido"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1044812546422:android:8827a3eed60e6f5c",
+        "android_client_info": {
+          "package_name": "br.ufc.engsoftware"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB52-TcTpk6j30jsJykVfXyOpX65oY63Xs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1044812546422:android:af56bcd8415ea792",
+        "android_client_info": {
+          "package_name": "br.ufc.engsoftware.tasabido"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB52-TcTpk6j30jsJykVfXyOpX65oY63Xs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

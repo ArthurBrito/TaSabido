@@ -4,30 +4,34 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Toast;
 
+import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.j256.ormlite.dao.Dao;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
-
-import br.ufc.engsoftware.BDLocalManager.MonitoriaBDManager;
+import br.ufc.engsoftware.Ormlite.Monitoria;
+import br.ufc.engsoftware.auxiliar.MonitoriaOpenDatabaseHelper;
 import br.ufc.engsoftware.auxiliar.Statics;
 import br.ufc.engsoftware.auxiliar.Utils;
-import br.ufc.engsoftware.models.Monitoria;
-import br.ufc.engsoftware.serverDAO.PostCriarMonitoria;
-import br.ufc.engsoftware.serverDAO.PostEnviarEmail;
+import br.ufc.engsoftware.serverDAO.PostDeleteMonitoria;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 public class MonitoriaActivity extends AppCompatActivity {
 
-    String titulo, descricao, data, endereco;
+
+    Button bt_delete, btn_atualizar, btn_participar;
+
+    String titulo, descricao, data, endereco, dia, horario;
     int id_monitoria, id_subtopico, id_materia, id_usuario;
     Activity activity;
 
@@ -42,10 +46,18 @@ public class MonitoriaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_monitoria);
         ButterKnife.inject(this);
         activity = this;
+        bt_delete = (Button) findViewById(R.id.btn_delete);
+        btn_atualizar = (Button) findViewById(R.id.bt_atualizar_monitoria);
+        btn_participar = (Button) findViewById(R.id.btn_participar);
+        bt_delete.setVisibility(View.GONE);
+        btn_atualizar.setVisibility(View.GONE);
+        btn_participar.setVisibility(View.GONE);
 
         // Pega a intent que chamou essa activity
         Intent intent = getIntent();
         data = intent.getStringExtra("DATA");
+        dia = intent.getStringExtra("DIA");
+        horario = intent.getStringExtra("HORARIO");
         titulo = intent.getStringExtra("TITULO");
         descricao = intent.getStringExtra("DESCRICAO");
         endereco = intent.getStringExtra("ENDERECO");
@@ -55,52 +67,48 @@ public class MonitoriaActivity extends AppCompatActivity {
         id_usuario = intent.getIntExtra("ID_USUARIO", 0);
 
 
-        _data.setText(data);
-        _descricao.setText(descricao);
+        Utils util = new Utils(this);
+        int id = Integer.parseInt(util.getFromSharedPreferences("id_usuario", ""));
+        if (id_usuario == id){
+            bt_delete.setVisibility(View.VISIBLE);
+            btn_atualizar.setVisibility(View.VISIBLE);
+            btn_participar.setVisibility(View.VISIBLE);
+        }
+
+
+        _titulo.setKeyListener(null);
+        _descricao.setKeyListener(null);
+        _data.setKeyListener(null);
+        _endereco.setKeyListener(null);
+
         _titulo.setText(titulo);
+        _descricao.setText(descricao);
+        _data.setText(dia + " " + horario);
+        _endereco.setText(endereco);
+
+
     }
 
 
     public void onClickAtualizarMonitoria(View view){
-        Utils utils = new Utils(this);
-        String id_usuario_string = utils.getFromSharedPreferences("id_usuario", "");
-        int id_usuario = Integer.parseInt(id_usuario_string);
-        String titulo = _titulo.getText().toString();
-        String descricao = _descricao.getText().toString();
-        String endereco = _endereco.getText().toString();
-        String data = _data.getText().toString();
+        // Pega a intent que chamou essa activity
+        Intent intent = new Intent(this, CriarMonitoriaActivity.class);
+        intent.setAction("br.ufc.engsoftware.tasabido.CRIAR_MONITORIA");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("TITULO", titulo);
+        intent.putExtra("DESCRICAO", descricao);
+        intent.putExtra("ID", id_materia);
+        intent.putExtra("ID_MONITORIA", id_monitoria);
+        startActivity(intent);
+    }
 
-        Monitoria monitoria = new Monitoria(id_monitoria, id_usuario, id_materia, id_subtopico, titulo, descricao, data, "lima neto", "Quarta", "08:00 as 10:00 h", endereco);
-        JSONObject jsonParam = createJsonParam(monitoria);
 
+    private void deletarMonitoriaBDLocal(){
         try {
-            new PostCriarMonitoria(this, jsonParam, Statics.ATUALIZAR_MONITORIA, new PostCriarMonitoria.AsyncResponse(){
-                public void processFinish(String output){
-                    if (output.equals("200")){
-                        Utils.progressDialog.setMessage("Monitoria atualizada.");
-                        deletarMonitoriaBDLocal();
-                        finish();
-                    }else{
-                        Utils.progressDialog.setMessage("Algum erro ocorreu, tente denovo mais tarde.");
-                    }
-                }
-            }).execute();
-        } catch (Exception e) {
+            getDao().deleteById((long) id_monitoria);
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    private void salvarDuvidaBDLocal() {
-        MonitoriaBDManager db = new MonitoriaBDManager(this);
-        //deleta duvida antiga
-        deletarMonitoriaBDLocal();
-        //salva nova duvida (duvida atualizada)
-//        db.salvarMonitoria(duvida);
-    }
-
-    private void deletarMonitoriaBDLocal() {
-        MonitoriaBDManager db = new MonitoriaBDManager(this);
-        db.deletarMonitoriaPorId(id_monitoria, this);
     }
 
     public void onClickDeletarMonitoria(View view){
@@ -112,15 +120,18 @@ public class MonitoriaActivity extends AppCompatActivity {
         JSONObject jsonParam = createJsonParamToDeleteMonitoria(monitoria);
 
         try {
-            new PostCriarMonitoria(this, jsonParam, Statics.DELETAR_MONITORIA, new PostCriarMonitoria.AsyncResponse(){
+            new PostDeleteMonitoria(this, jsonParam, Statics.DELETAR_MONITORIA, new PostDeleteMonitoria.AsyncResponse(){
+                Toast toast;
                 public void processFinish(String output){
                     if (output.equals("200")){
-                        Utils.progressDialog.setMessage("Monitoria deletada.");
+                        toast = Toast.makeText(activity, "Monitoria deletada.", Toast.LENGTH_SHORT);
                         deletarMonitoriaBDLocal();
                         finish();
                     }else{
-                        Utils.progressDialog.setMessage("Algum erro ocorreu, tente denovo mais tarde.");
+                        toast = Toast.makeText(activity, "Algum erro ocorreu, tente denovo mais tarde.", Toast.LENGTH_SHORT);
                     }
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
                 }
             }).execute();
         } catch (Exception e) {
@@ -195,4 +206,44 @@ public class MonitoriaActivity extends AppCompatActivity {
         }
         return json;
     }
+
+    public Dao getDao(){
+        MonitoriaOpenDatabaseHelper monitoriaOpenDatabaseHelper = OpenHelperManager.getHelper(this,
+                MonitoriaOpenDatabaseHelper.class);
+
+        Dao<Monitoria, Long> monitoriaDao = null;
+        try {
+            monitoriaDao = monitoriaOpenDatabaseHelper.getDao();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return monitoriaDao;
+    }
+    //        Utils utils = new Utils(this);
+//        String id_usuario_string = utils.getFromSharedPreferences("id_usuario", "");
+//        int id_usuario = Integer.parseInt(id_usuario_string);
+//        String titulo = _titulo.getText().toString();
+//        String descricao = _descricao.getText().toString();
+//        String endereco = _endereco.getText().toString();
+//        String data = _data.getText().toString();
+//
+//        Monitoria monitoria = new Monitoria(id_monitoria, id_usuario, id_materia, id_subtopico, titulo, descricao, data, "lima neto", "Quarta", "08:00 as 10:00 h", endereco);
+//        JSONObject jsonParam = createJsonParam(monitoria);
+//
+//        try {
+//            new PostCriarMonitoria(this, jsonParam, Statics.ATUALIZAR_MONITORIA, new PostCriarMonitoria.AsyncResponse(){
+//                public void processFinish(String output){
+//                    if (output.equals("200")){
+//                        Utils.progressDialog.setMessage("Monitoria atualizada.");
+//                        deletarMonitoriaBDLocal();
+//                        finish();
+//                    }else{
+//                        Utils.progressDialog.setMessage("Algum erro ocorreu, tente denovo mais tarde.");
+//                    }
+//                }
+//            }).execute();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 }

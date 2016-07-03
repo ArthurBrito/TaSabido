@@ -13,12 +13,9 @@ import java.util.Set;
 import java.util.Vector;
 
 import br.ufc.engsoftware.BDLocalManager.DuvidaBDManager;
-import br.ufc.engsoftware.BDLocalManager.MonitoriaBDManager;
 import br.ufc.engsoftware.auxiliar.Utils;
 import br.ufc.engsoftware.models.Duvida;
-import br.ufc.engsoftware.models.Monitoria;
 import br.ufc.engsoftware.views.DuvidaListView;
-import br.ufc.engsoftware.views.MonitoriaListView;
 
 
 public class ListaDuvidasConfirmadasActivity extends AppCompatActivity {

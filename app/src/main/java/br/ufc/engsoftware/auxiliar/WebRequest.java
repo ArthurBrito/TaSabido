@@ -26,8 +26,6 @@ public class WebRequest {
         return response.body().string();
     }
 
-    // Envia dados para o web service por POST, os dados do post sao enviados em
-    // formato JSON, entao o servidor precisa tratar isso em JSON
     public static String httpPostJson(String url, String json) throws IOException {
 
         MediaType JSON
@@ -39,6 +37,40 @@ public class WebRequest {
         Request request = new Request.Builder()
                 .url(url)
                 .post(body)
+                .build();
+        Response response = client.newCall(request).execute();
+        return response.body().string();
+    }
+
+    // Envia dados para o web service por POST, os dados do post sao enviados em
+    // formato JSON, entao o servidor precisa tratar isso em JSON
+    public static String httpPostDeleteJson(String url, String json) throws IOException {
+
+        MediaType JSON
+                = MediaType.parse("application/json; charset=utf-8");
+
+        OkHttpClient client = new OkHttpClient();
+
+        RequestBody body = RequestBody.create(JSON, json);
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .build();
+        Response response = client.newCall(request).execute();
+        return String.valueOf(response.code());
+    }
+
+    public static String httpPut(String url, String json) throws IOException {
+
+        MediaType JSON
+                = MediaType.parse("application/json; charset=utf-8");
+
+        OkHttpClient client = new OkHttpClient();
+
+        RequestBody body = RequestBody.create(JSON, json);
+        Request request = new Request.Builder()
+                .url(url)
+                .put(body)
                 .build();
         Response response = client.newCall(request).execute();
         return String.valueOf(response.code());

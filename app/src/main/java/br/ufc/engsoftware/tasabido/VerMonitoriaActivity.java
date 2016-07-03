@@ -13,8 +13,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import br.ufc.engsoftware.auxiliar.Utils;
-import br.ufc.engsoftware.models.Monitoria;
 
 public class VerMonitoriaActivity extends AppCompatActivity {
 
