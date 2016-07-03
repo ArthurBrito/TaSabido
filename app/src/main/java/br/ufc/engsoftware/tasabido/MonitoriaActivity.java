@@ -18,6 +18,8 @@ import org.json.JSONObject;
 import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Vector;
+
 import br.ufc.engsoftware.Ormlite.Monitoria;
 import br.ufc.engsoftware.auxiliar.MonitoriaOpenDatabaseHelper;
 import br.ufc.engsoftware.auxiliar.Statics;
@@ -51,7 +53,7 @@ public class MonitoriaActivity extends AppCompatActivity {
         btn_participar = (Button) findViewById(R.id.btn_participar);
         bt_delete.setVisibility(View.GONE);
         btn_atualizar.setVisibility(View.GONE);
-        btn_participar.setVisibility(View.GONE);
+        btn_participar.setVisibility(View.VISIBLE);
 
         // Pega a intent que chamou essa activity
         Intent intent = getIntent();
@@ -67,14 +69,7 @@ public class MonitoriaActivity extends AppCompatActivity {
         id_usuario = intent.getIntExtra("ID_USUARIO", 0);
 
 
-        Utils util = new Utils(this);
-        int id = Integer.parseInt(util.getFromSharedPreferences("id_usuario", ""));
-        if (id_usuario == id){
-            bt_delete.setVisibility(View.VISIBLE);
-            btn_atualizar.setVisibility(View.VISIBLE);
-            btn_participar.setVisibility(View.VISIBLE);
-        }
-
+        mostrarBotoes();
 
         _titulo.setKeyListener(null);
         _descricao.setKeyListener(null);
@@ -85,8 +80,34 @@ public class MonitoriaActivity extends AppCompatActivity {
         _descricao.setText(descricao);
         _data.setText(dia + " " + horario);
         _endereco.setText(endereco);
+    }
 
+    private void mostrarBotoes() {
+        Utils util = new Utils(this);
+        int id = Integer.parseInt(util.getFromSharedPreferences("id_usuario", ""));
 
+        if (id_usuario == id){
+            bt_delete.setVisibility(View.VISIBLE);
+            btn_atualizar.setVisibility(View.VISIBLE);
+            btn_participar.setVisibility(View.GONE);
+        }
+
+        if(participareiDaMonitoria()){
+            btn_participar.setVisibility(View.GONE);
+        }
+    }
+
+    private boolean participareiDaMonitoria() {
+        Utils util = new Utils(this);
+        Set<String> array_ids = new HashSet<>();
+        array_ids = util.getMonitoriasConfirmadasFromSharedPreferences("monitorias", array_ids);
+
+        for (String m: array_ids) {
+            if (m.equals(String.valueOf(id_monitoria))){
+                return true;
+            }
+        }
+        return false;
     }
 
 
@@ -151,7 +172,6 @@ public class MonitoriaActivity extends AppCompatActivity {
         String param = concatenateParam(String.valueOf(id_usuario), "Monitoria", mensagem);
         utils.sendEmail(param, this);
     }
-
 
     public JSONObject createJsonParam(Monitoria monitoria) {
         JSONObject json = new JSONObject();
