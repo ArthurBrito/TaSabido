@@ -9,39 +9,28 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:padding="5dp"
         android:orientation="horizontal"
         android:background="@color/colorPrimary">
-
-        <br.ufc.engsoftware.views.RoundedImageView
-            android:id="@+id/riv_foto_usuario"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="18dp" />
 
         <!--Nome e Email -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_gravity="center_vertical">
+            android:layout_gravity="left">
 
             <TextView
                 android:id="@+id/tv_nome_usuario"
+                android:layout_marginLeft="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="17sp" />
-
-            <TextView
-                android:id="@+id/tv_email_usuario"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:textColor="@color/colorText"
+                android:textSize="42sp" />
 
         </LinearLayout>
         
     </LinearLayout>
-
 
     <SearchView
         android:id="@+id/searchview_materias"

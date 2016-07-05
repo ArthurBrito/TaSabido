@@ -13,7 +13,7 @@
         android:paddingBottom="15sp"
         android:paddingLeft="20dp"
         android:gravity="left"
-        android:textColor="@color/white"
+        android:textColor="@color/colorText"
         android:textSize="20sp" />
 
 </LinearLayout>
