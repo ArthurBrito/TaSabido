@@ -38,6 +38,7 @@ import br.ufc.engsoftware.auxiliar.Statics;
 import br.ufc.engsoftware.auxiliar.Utils;
 import br.ufc.engsoftware.models.Subtopico;
 import br.ufc.engsoftware.serverDAO.PostCriarMonitoria;
+import br.ufc.engsoftware.serverDAO.PostDeleteMonitoria;
 import br.ufc.engsoftware.serverDAO.PutMonitoria;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -116,9 +117,9 @@ public class EditMonitoriaActivity extends AppCompatActivity implements AdapterV
                 return true;
 
             case R.id.action_delete:
-                Toast.makeText(this, "Deletando Monitoria...", Toast.LENGTH_SHORT);
-                deletarMonitoria();
-                break;
+                //Toast.makeText(this, "Deletando Monitoria...", Toast.LENGTH_SHORT);
+                onClickDeletarMonitoria();
+                return true;
 
             default:
                 return super.onOptionsItemSelected(item);
@@ -441,8 +442,53 @@ public class EditMonitoriaActivity extends AppCompatActivity implements AdapterV
         return monitoriaDao;
     }
 
-    // TODO Metodo para deletar a monitoria que esta sendo editada
-    private void deletarMonitoria(){
 
+    private void onClickDeletarMonitoria(){
+        //Utils utils = new Utils(this);
+        //String id_usuario_string = utils.getFromSharedPreferences("id_usuario", "");
+        //int id_usuario = Integer.parseInt(id_usuario_string);
+
+        Monitoria monitoria = new Monitoria(id_monitoria, id_usuario);
+        JSONObject jsonParam = createJsonParamToDeleteMonitoria(monitoria);
+
+        try {
+            new PostDeleteMonitoria(this, jsonParam, Statics.DELETAR_MONITORIA, new PostDeleteMonitoria.AsyncResponse(){
+                Toast toast;
+                public void processFinish(String output){
+                    if (output.equals("200")){
+                        toast = Toast.makeText(activity, "Monitoria deletada.", Toast.LENGTH_SHORT);
+                        deletarMonitoriaBDLocal();
+                        finish();
+                    }else{
+                        toast = Toast.makeText(activity, "Algum erro ocorreu, tente denovo mais tarde.", Toast.LENGTH_SHORT);
+                    }
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+                }
+            }).execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public JSONObject createJsonParamToDeleteMonitoria(Monitoria monitoria) {
+        JSONObject json = new JSONObject();
+        JSONArray subtopicosJson = new JSONArray();
+        try {
+            json.put("id_usuario", monitoria.getId_usuario());
+            json.put("id_monitoria", monitoria.getId_monitoria());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return json;
+    }
+
+    private void deletarMonitoriaBDLocal(){
+        try {
+            getDao().deleteById((long) id_monitoria);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
