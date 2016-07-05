@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,13 +18,27 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.j256.ormlite.dao.Dao;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.sql.SQLException;
 import java.util.Vector;
 
 import br.ufc.engsoftware.BDLocalManager.SubtopicoBDManager;
+import br.ufc.engsoftware.Ormlite.Monitoria;
 import br.ufc.engsoftware.auxiliar.Locais;
+import br.ufc.engsoftware.auxiliar.MonitoriaOpenDatabaseHelper;
+import br.ufc.engsoftware.auxiliar.Statics;
 import br.ufc.engsoftware.auxiliar.Utils;
 import br.ufc.engsoftware.models.Subtopico;
+import br.ufc.engsoftware.serverDAO.PostCriarMonitoria;
+import br.ufc.engsoftware.serverDAO.PutMonitoria;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -32,7 +47,7 @@ public class EditMonitoriaActivity extends AppCompatActivity implements AdapterV
     private Spinner spinner;
     private Spinner spinnerLocais;
 
-    int id_materia, id_subtopico, id_monitoria;
+    int id_materia, id_subtopico, id_monitoria, id_usuario;
     private Vector<Subtopico> subtopicos;
     private Vector<Integer> subtopicos_selecionados;
     private int spinnerSelectedCount = 0;
@@ -43,6 +58,7 @@ public class EditMonitoriaActivity extends AppCompatActivity implements AdapterV
     private String horario = null;
     private String titulo = null;
     private String descricao = null;
+    Monitoria monitoria;
 
     Activity activity;
 
@@ -96,8 +112,13 @@ public class EditMonitoriaActivity extends AppCompatActivity implements AdapterV
                 return true;
 
             case R.id.action_save:
-                //chamarEditarMonitoriaActivity();
+                salvarAlteracoesMonitoria();
                 return true;
+
+            case R.id.action_delete:
+                Toast.makeText(this, "Deletando Monitoria...", Toast.LENGTH_SHORT);
+                deletarMonitoria();
+                break;
 
             default:
                 return super.onOptionsItemSelected(item);
@@ -111,6 +132,7 @@ public class EditMonitoriaActivity extends AppCompatActivity implements AdapterV
         descricao = intent.getStringExtra("DESCRICAO");
         id_monitoria = intent.getIntExtra("ID_MONITORIA", 0);
         int id_sub = intent.getIntExtra("ID_SUBTOPICO" , 0);
+        id_usuario = intent.getIntExtra("ID_USUARIO", 0);
         dia = intent.getStringExtra("DIA");
         horario = intent.getStringExtra("HORARIO");
         String local = intent.getStringExtra("ENDERECO");
@@ -241,9 +263,9 @@ public class EditMonitoriaActivity extends AppCompatActivity implements AdapterV
                 Subtopico subtopico = subtopicos.get(position);
                 id_subtopico = subtopico.getId_subtopico();
 
-                if (spinnerSelectedCount == 0)
-                    spinnerSelectedCount++;
-                else
+                //if (spinnerSelectedCount == 0)
+                //    spinnerSelectedCount++;
+                //else
                     subtopicos_selecionados.add(0, id_subtopico);
                 break;
 
@@ -321,5 +343,106 @@ public class EditMonitoriaActivity extends AppCompatActivity implements AdapterV
                 }
                 break;
         }
+    }
+
+    private void salvarAlteracoesMonitoria() {
+        //String id_usuario_string = utils.getFromSharedPreferences("id_usuario", "");
+        //int id_usuario = Integer.parseInt(id_usuario_string);
+        String titulo = _titulo.getText().toString();
+        String descricao = _descricao.getText().toString();
+
+        String data = dia + " - " + horario;
+
+        while (titulo.isEmpty() || descricao.isEmpty() || endereco == null || dia == null || horario == null) {
+            Toast toast = Toast.makeText(activity, "Preencha todos os campos", Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
+            toast.show();
+            return;
+        }
+
+        monitoria = new Monitoria(id_usuario, id_materia, id_subtopico, titulo, descricao, data, dia, horario, endereco);
+        monitoria.setDia(dia);
+        monitoria.setHorario(horario);
+
+        JSONObject jsonParam = createJsonParam(monitoria);
+
+        Log.d("Teste", "Json - " + jsonParam.toString());
+
+        try {
+            utils.createProgressDialog("Monitoria sendo atualizada");
+            String url = Statics.ATUALIZAR_MONITORIA + id_monitoria;
+            new PutMonitoria(this, jsonParam, url, new PutMonitoria.AsyncResponse() {
+                Toast toast;
+                public void processFinish(String output) {
+                    if (output.equals("true")) {
+                        updateMonitoria(monitoria);
+                        toast = Toast.makeText(activity, "Monitoria atualizada.", Toast.LENGTH_SHORT);
+                        finish();
+                    } else {
+                        toast = Toast.makeText(activity, "Monitoria não foi atualizada.", Toast.LENGTH_SHORT);
+                    }
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+                }
+            }).execute();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        utils.dismissProgressDialog();
+    }
+
+    public JSONObject createJsonParam(Monitoria monitoria) {
+        JSONObject json = new JSONObject();
+        JSONArray subtopicosJson = new JSONArray();
+        try {
+            json.put("titulo", monitoria.getTitulo());
+            json.put("descricao", monitoria.getDescricao());
+            json.put("endereco", monitoria.getEndereco());
+            json.put("id_usuario", monitoria.getId_usuario());
+            json.put("id_materia", monitoria.getId_materia());
+            json.put("data_monitoria", "2016-07-01 08:00:00");
+            json.put("dia", monitoria.getDia());
+            json.put("hora", monitoria.getHorario());
+
+
+            for (Integer id_sub : subtopicos_selecionados) {
+                subtopicosJson.put(id_sub);
+            }
+
+            json.put("ids_subtopicos", subtopicosJson);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return json;
+    }
+
+    public void updateMonitoria(Monitoria monitoria){
+        try {
+            getDao().update(monitoria);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Dao getDao(){
+        MonitoriaOpenDatabaseHelper monitoriaOpenDatabaseHelper = OpenHelperManager.getHelper(this,
+                MonitoriaOpenDatabaseHelper.class);
+
+        Dao<Monitoria, Long> monitoriaDao = null;
+        try {
+            monitoriaDao = monitoriaOpenDatabaseHelper.getDao();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return monitoriaDao;
+    }
+
+    // TODO Metodo para deletar a monitoria que esta sendo editada
+    private void deletarMonitoria(){
+
     }
 }

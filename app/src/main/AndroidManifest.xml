@@ -152,7 +152,9 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".EditMonitoriaActivity">
+        <activity
+            android:name=".EditMonitoriaActivity"
+            android:theme="@style/AppTheme.Dark.ActionBar">
             <intent-filter>
                 <action android:name="br.ufc.engsoftware.tasabido.EDITAR_MONITORIA" />
 

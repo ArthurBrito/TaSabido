@@ -9,4 +9,11 @@
         android:title="Salvar Alterações"
         app:showAsAction="ifRoom"/>
 
+    <!-- Editar Monitoria -->
+    <item
+        android:id="@+id/action_delete"
+        android:icon="@drawable/delete_1_branco"
+        android:title="Deletar Monitoria"
+        app:showAsAction="ifRoom"/>
+
 </menu>
