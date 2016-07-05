@@ -160,6 +160,7 @@ public class MonitoriaActivity extends AppCompatActivity {
         }
     }
 
+    /*
     public void onClickParticiparMonitoria(View view){
         Utils utils = new Utils(this);
         Set<String> array_ids = new HashSet<String>();
@@ -171,7 +172,7 @@ public class MonitoriaActivity extends AppCompatActivity {
         String mensagem = login + " confirmou presença na sua monitoria.";
         String param = concatenateParam(String.valueOf(id_usuario), "Monitoria", mensagem);
         utils.sendEmail(param, this);
-    }
+    }*/
 
     public JSONObject createJsonParam(Monitoria monitoria) {
         JSONObject json = new JSONObject();

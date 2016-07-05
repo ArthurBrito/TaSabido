@@ -8,12 +8,19 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import br.ufc.engsoftware.auxiliar.Utils;
 
 
 public class VerMonitoriaActivity extends AppCompatActivity {
 
-    String username;
+    private String username;
+    private int id_monitoria, id_usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +46,8 @@ public class VerMonitoriaActivity extends AppCompatActivity {
         String horario = intent.getStringExtra("HORARIO");
         String local = intent.getStringExtra("ENDERECO");
         username = intent.getStringExtra("USERNAME");
+        id_monitoria = intent.getIntExtra("ID_MONITORIA", 0);
+        id_usuario = intent.getIntExtra("ID_USUARIO", 0);
 
         tvTituloMonitoria.setText(titulo);
         tvDescricaoMonitoria.setText(descricao);
@@ -98,5 +107,31 @@ public class VerMonitoriaActivity extends AppCompatActivity {
         intent.putExtra("USERNAME", intentAnt.getStringExtra("USERNAME"));
 
         startActivity(intent);
+    }
+
+    public void onClickParticiparMonitoria(View view){
+        Utils utils = new Utils(this);
+        Set<String> array_ids = new HashSet<String>();
+        array_ids = utils.getMonitoriasConfirmadasFromSharedPreferences("monitorias", array_ids);
+        array_ids.add(String.valueOf(id_monitoria));
+        utils.saveMonitoriasConfirmadasSharedPreferences(array_ids);
+
+        String login = utils.getFromSharedPreferences("login", "");
+        String mensagem = login + " confirmou presença na sua monitoria.";
+        String param = concatenateParam(String.valueOf(id_usuario), "Monitoria", mensagem);
+        utils.sendEmail(param, this);
+    }
+
+    public String concatenateParam(String id_usuario, String assunto, String mensagem){
+        String param = "id_to=";
+        param += id_usuario;
+        param += "&";
+        param += "assunto=";
+        param += assunto;
+        param += "&";
+        param += "message=";
+        param += mensagem;
+
+        return param;
     }
 }
