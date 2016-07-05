@@ -1,6 +1,5 @@
 package br.ufc.engsoftware.tasabido;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
@@ -9,9 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 public class VerMonitoriaActivity extends AppCompatActivity {
@@ -59,12 +56,12 @@ public class VerMonitoriaActivity extends AppCompatActivity {
         if(user.equals(username))
         {
             MenuInflater inflater = getMenuInflater();
-            inflater.inflate(R.menu.edit_monitoria_bar_menu, menu);
+            inflater.inflate(R.menu.ver_monitoria_bar_menu, menu);
         }
         return true;
     }
 
-    // Seta ação do botão de voltar na ActionBar
+    // Seta ação dos botões da ActionBar
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -81,8 +78,8 @@ public class VerMonitoriaActivity extends AppCompatActivity {
     }
 
     private void chamarEditarMonitoriaActivity(){
-        Intent intent = new Intent(this, MonitoriaActivity.class);
-        intent.setAction("br.ufc.engsoftware.tasabido.LISTA_MONITORIA");
+        Intent intent = new Intent(this, EditMonitoriaActivity.class);
+        intent.setAction("br.ufc.engsoftware.tasabido.EDITAR_MONITORIA");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         Intent intentAnt = getIntent();
@@ -92,10 +89,10 @@ public class VerMonitoriaActivity extends AppCompatActivity {
         intent.putExtra("DESCRICAO", intentAnt.getStringExtra("DESCRICAO"));
         intent.putExtra("DATA", intentAnt.getStringExtra("DATA"));
         intent.putExtra("ENDERECO", intentAnt.getStringExtra("ENDERECO"));
-        intent.putExtra("ID_SUBTOPICO", intentAnt.getStringExtra("ID_SUBTOPICO"));
-        intent.putExtra("ID_MONITORIA", intentAnt.getStringExtra("ID_MONITORIA"));
-        intent.putExtra("ID_MATERIA", intentAnt.getStringExtra("ID_MATERIA"));
-        intent.putExtra("ID_USUARIO", intentAnt.getStringExtra("ID_USUARIO"));
+        intent.putExtra("ID_SUBTOPICO", intentAnt.getIntExtra("ID_SUBTOPICO", 0));
+        intent.putExtra("ID_MONITORIA", intentAnt.getIntExtra("ID_MONITORIA", 0));
+        intent.putExtra("ID_MATERIA", intentAnt.getIntExtra("ID_MATERIA", 0));
+        intent.putExtra("ID_USUARIO", intentAnt.getIntExtra("ID_USUARIO", 0));
         intent.putExtra("DIA", intentAnt.getStringExtra("DIA"));
         intent.putExtra("HORARIO", intentAnt.getStringExtra("HORARIO"));
         intent.putExtra("USERNAME", intentAnt.getStringExtra("USERNAME"));

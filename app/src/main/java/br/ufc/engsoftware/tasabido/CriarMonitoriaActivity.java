@@ -290,7 +290,6 @@ public class CriarMonitoriaActivity extends AppCompatActivity implements Adapter
                 break;
         }
 
-
     }
 
     @Override
