@@ -70,8 +70,6 @@ public class PutMonitoria extends AsyncTask<Void, Void, Void> {
             /** TODO analizar o tratamento de erro */
             e.printStackTrace();
         }
-
-
         return null;
     }
 

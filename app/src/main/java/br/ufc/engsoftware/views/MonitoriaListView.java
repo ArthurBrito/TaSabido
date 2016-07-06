@@ -74,7 +74,6 @@ public class MonitoriaListView {
         intent.putExtra("ID_MONITORIA", item.getId_monitoria());
         intent.putExtra("ID_MATERIA", item.getId_materia());
         intent.putExtra("ID_USUARIO", item.getId_usuario());
-        int id = intent.getIntExtra("ID_USUARIO", 0);
         intent.putExtra("DIA", item.getDia());
         intent.putExtra("HORARIO", item.getHorario());
         intent.putExtra("USERNAME", item.getUsername());

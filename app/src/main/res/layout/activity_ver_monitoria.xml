@@ -105,6 +105,14 @@
             android:textSize="@dimen/ver_monitoria_value_textsize"
             android:text="thiago_nrodrigues"/>
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:layout_gravity="center"
+            android:text="@string/btn_participar_monitoria"
+            android:onClick="onClickParticiparMonitoria"/>
+
     </LinearLayout>
 
 </ScrollView>

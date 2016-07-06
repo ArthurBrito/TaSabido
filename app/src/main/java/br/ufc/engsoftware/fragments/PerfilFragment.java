@@ -131,7 +131,7 @@ public class PerfilFragment extends Fragment {
         String username = utils.getFromSharedPreferences("username", "");
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         try {
-            BitMatrix bitMatrix = multiFormatWriter.encode(username, BarcodeFormat.QR_CODE,300,300); //escolhe o tamanho
+            BitMatrix bitMatrix = multiFormatWriter.encode(username, BarcodeFormat.QR_CODE,500,500); //escolhe o tamanho
             BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
             Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
             ivQrCode.setImageBitmap(bitmap); //setando a imagem do QR na image view

@@ -12,6 +12,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -28,11 +30,7 @@ import static java.lang.Integer.parseInt;
  */
 public class PostCriarMonitoria extends AsyncTask<String, String, Void> {
 
-    // URL para pegar os Subtopicos via JSON
-    // private static String url = "http://avalan.herokuapp.com/tasabido/listar_materias/?format=json";
-    private static String url;
     private static int id;
-
 
     public AsyncResponse delegate = null;
 
@@ -63,6 +61,14 @@ public class PostCriarMonitoria extends AsyncTask<String, String, Void> {
     @Override
     protected Void doInBackground(String... params) {
         String jsonStr = null;
+        URL _url = null;
+        try {
+            _url = new URL(params[0]);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        String url = _url.toString();
+
 
         // Fazendo requisição para o web service pelo metodo estatico httpGet
         try {
@@ -75,7 +81,7 @@ public class PostCriarMonitoria extends AsyncTask<String, String, Void> {
         JSONObject jsonResponse = null;
         try {
             jsonResponse = new JSONObject(response);
-            response = jsonResponse.getString("sucesso");
+            response = jsonResponse.getString("success");
             if (response.equals("true")){
                 id = jsonResponse.getInt("id");
             }

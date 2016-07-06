@@ -2,6 +2,7 @@ package br.ufc.engsoftware.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -106,42 +107,14 @@ public class MateriaFragment extends Fragment {
 
     // Seta as informações da barra de usuario, verificando se o usuario esta logado ou nao
     public void setarBarraUsuario(){
-        final Context context = getActivity();
-        SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", context.MODE_PRIVATE);
-
-        // Extrai os valores das preferencias
-        final String nomeUsuario = sharedPreferences.getString("first_name", "Visitante");
-        final String emailUsuario = sharedPreferences.getString("email", "email@example.com");
-        final String fotoUsuario = sharedPreferences.getString("USER_PHOTO_PATH", "http://khojmaster.com/ui/user/realestate/assets/img/no-user.jpg");
-
-        // Alterando as informações da barra de usuario numa thread secundaria
-        tvNomeUsuario.post(new Runnable() {
-            @Override
-            public void run() {
-                tvNomeUsuario.setText(nomeUsuario);
-                tvEmailUsuario.setText(emailUsuario);
-            }
-        });
-
-        rivFotoUsuario.post(new Runnable() {
-            @Override
-            public void run() {
-                // Pega a imagem a partir da URL
-                Picasso.with(context).load(fotoUsuario).into(rivFotoUsuario);
-            }
-        });
+        // Agora a barra de usuário somente aparece o nome TaSabido
+        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(),"fonts/beyond_the_mountains.ttf");
+        tvNomeUsuario.setTypeface(typeface);
+        tvNomeUsuario.setText("Ta Sabido");
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
-        // Atualiza a barra de usuario quando voltar ao fragment
-        rivFotoUsuario.post(new Runnable() {
-            @Override
-            public void run() {
-                setarBarraUsuario();
-            }
-        });
     }
 }

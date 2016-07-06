@@ -79,7 +79,7 @@ public class CadastroActivity extends AppCompatActivity {
 
         // TODO: Implement your own signup logic here.
 
-        new PostCadastroUsuario(param, new PostCadastroUsuario.AsyncResponse(){
+        new PostCadastroUsuario(param,  new PostCadastroUsuario.AsyncResponse(){
             public void processFinish(String output, String mensagem){
 
                 if (output.equals("true")){

@@ -3,6 +3,7 @@ package br.ufc.engsoftware.tasabido;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -164,6 +165,7 @@ public class CriarMonitoriaActivity extends AppCompatActivity implements Adapter
 
         String data = dia + " - " + horario;
 
+
         while (titulo.isEmpty() || descricao.isEmpty() || endereco == null || dia == null || horario == null) {
             Toast toast = Toast.makeText(activity, "Preencha todos os campos", Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
@@ -186,17 +188,20 @@ public class CriarMonitoriaActivity extends AppCompatActivity implements Adapter
                     Toast toast;
                     public void processFinish(String output, int id) {
                         if (output.equals("true")) {
+                            SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                            final String user = sharedPreferences.getString("username", "Visitante");
                             monitoria.setId_monitoria(id);
+                            monitoria.setUsername(user);
                             saveMonitoria(monitoria);
                             toast = Toast.makeText(activity, "Monitoria cadastrada.", Toast.LENGTH_SHORT);
-                            finish();
+                            activity.finish();
                         } else {
                             toast = Toast.makeText(activity, "Monitoria não foi cadastrada.", Toast.LENGTH_SHORT);
                         }
                         toast.setGravity(Gravity.CENTER, 0, 0);
                         toast.show();
                     }
-                }).execute(Statics.CADASTRAR_MONITORIA + id_monitoria);
+                }).execute(Statics.CADASTRAR_MONITORIA);
 
             } else {
                 utils.createProgressDialog("Monitoria sendo atualizada");
@@ -277,7 +282,6 @@ public class CriarMonitoriaActivity extends AppCompatActivity implements Adapter
                 Subtopico subtopico = subtopicos.get(position);
                 id_subtopico = subtopico.getId_subtopico();
 
-
                 if (spinnerSelectedCount == 0)
                     spinnerSelectedCount++;
                 else
@@ -288,7 +292,6 @@ public class CriarMonitoriaActivity extends AppCompatActivity implements Adapter
                 endereco = parent.getItemAtPosition(position).toString();
                 break;
         }
-
 
     }
 

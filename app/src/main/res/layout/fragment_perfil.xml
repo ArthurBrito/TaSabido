@@ -1,18 +1,18 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp" >
-
-    <!-- Pode deletar, feito só para o layout não ficar vazio -->
+    android:orientation="vertical">
 
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorBackgroundLogin"
+    android:orientation="vertical">
 
         <br.ufc.engsoftware.views.RoundedImageView
             android:id="@+id/riv_foto_usuario"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
             android:layout_width="120dp"
             android:layout_height="120dp" />
 
@@ -20,30 +20,75 @@
             android:id="@+id/tv_nome_usuario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nome usuário"
+            android:textColor="@color/colorText"
+            android:layout_gravity="center"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
             android:textSize="23sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="23sp"
+            android:layout_gravity="center"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:textColor="@color/colorTextLighter"
             android:id="@+id/tv_email_usuario" />
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="23sp"
-            android:id="@+id/qt_moedas" />
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="23sp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:textColor="@color/colorTextLighter"
+                android:id="@+id/qt_moedas" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextLighter"
+                android:textSize="20sp"
+                android:text="Moedas"/>
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/coinsicon"
+                android:layout_marginLeft="15dp"
+                android:maxWidth="30dp"
+                android:minWidth="30dp"
+                android:minHeight="30dp"
+                android:maxHeight="30dp"/>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/btReadQr"
+            android:layout_marginTop="8dp"
             android:text="Efetuar pagamento"
             android:textColor="#FFFFFF"/>
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/btCreateQr"
             android:text="Mostrar Carteira"
@@ -53,7 +98,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/ivQrCode"
+            android:layout_gravity="center"
             android:layout_marginLeft="10dp"/>
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

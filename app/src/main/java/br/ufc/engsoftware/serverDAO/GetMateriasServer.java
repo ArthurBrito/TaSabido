@@ -181,8 +181,6 @@ public class GetMateriasServer extends AsyncTask<Void, Void, Void> {
 
 
                             salvarMonitoriaOrmlite(monitoria);
-
-
                         }
                     }
 
