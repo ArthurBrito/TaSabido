@@ -14,6 +14,7 @@
         android:theme="@style/AppTheme.Dark">
         <activity
             android:name=".PaginaPrincipalActivity"
+            android:theme="@style/AppTheme.Dark.ActionBar"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".ListaSubtopicosActivity"
@@ -27,7 +28,7 @@
 
         <activity
             android:name=".MonitoriaActivity"
-            android:theme="@style/AppTheme.Dark"
+            android:theme="@style/AppTheme.Dark.ActionBar"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="br.ufc.engsoftware.tasabido.MONITORIA" />
@@ -40,7 +41,7 @@
             android:name=".LoginActivity"
             android:launchMode="singleTop"
             android:noHistory="true"
-            android:theme="@style/AppTheme.Dark"
+            android:theme="@style/AppTheme.Dark.ActionBar"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -52,7 +53,7 @@
         <activity
             android:name=".CadastroActivity"
             android:label="@string/title_activity_cadastro"
-            android:theme="@style/AppTheme.Dark">
+            android:theme="@style/AppTheme.Dark.ActionBar">
             <intent-filter>
                 <action android:name="br.ufc.engsoftware.tasabido.CADASTRO" />
 
@@ -62,7 +63,7 @@
 
         <activity
             android:name=".CriarDuvidaActivity"
-            android:theme="@style/AppTheme.Dark">
+            android:theme="@style/AppTheme.Dark.ActionBar">
             <intent-filter>
                 <action android:name="br.ufc.engsoftware.tasabido.CRIAR_DUVIDA" />
 
@@ -82,7 +83,7 @@
 
         <activity
             android:name=".DuvidaActivity"
-            android:theme="@style/AppTheme.Dark">
+            android:theme="@style/AppTheme.Dark.ActionBar">
             <intent-filter>
                 <action android:name="br.ufc.engsoftware.tasabido.DUVIDAS" />
 
@@ -114,7 +115,7 @@
 
         <activity
             android:name=".CalendarioActivity"
-            android:theme="@style/AppTheme.Dark">
+            android:theme="@style/AppTheme.Dark.ActionBar">
             <intent-filter>
                 <action android:name="br.ufc.engsoftware.tasabido.CALENDARIO" />
 
