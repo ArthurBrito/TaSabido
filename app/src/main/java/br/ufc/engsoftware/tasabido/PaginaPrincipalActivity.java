@@ -27,6 +27,7 @@ import br.ufc.engsoftware.fragments.PerfilFragment;
 import br.ufc.engsoftware.models.Perfil;
 import br.ufc.engsoftware.retrofit.GetDuvidasServer;
 import br.ufc.engsoftware.retrofit.GetSubtopicosServer;
+import br.ufc.engsoftware.serverDAO.GetMoedasServer;
 import br.ufc.engsoftware.serverDAO.GetMonitoriasServer;
 import br.ufc.engsoftware.serverDAO.GetMateriasServer;
 
@@ -176,7 +177,7 @@ public class PaginaPrincipalActivity extends FragmentActivity {
 //        retrofitDuvidas.pegarDuvidasDoServidor();
 //        retrofitSub.pegarSubtopicosDoServidor();
         new GetMateriasServer(this).execute();
-//        new GetMonitoriasServer(this).execute();
+        new GetMoedasServer(this).execute();
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) { //recebe o resultado da câmera e manda de volta para ser tratado na classe PerfilFragment
