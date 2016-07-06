@@ -11,12 +11,20 @@ public class Duvida implements RealmModel {
 
     private int id;
     private int usuario;
-    private int materia;
     private int subtopico;
     private String titulo;
     private String descricao;
     private String username;
     private String data_duvida;
+
+    public Duvida(int id_usuario, int id_subtopico, String titulo, String descricao, String horariosJSON) {
+        this.usuario = id_usuario;
+        this.subtopico = id_subtopico;
+        this.titulo = titulo;
+        this.descricao = descricao;
+        this.data_duvida = horariosJSON;
+
+    }
 
     public String getData_duvida() {
         return data_duvida;
@@ -41,22 +49,33 @@ public class Duvida implements RealmModel {
         this.usuario = id_usuario;
     }
 
-    public Duvida( int id_usuario, int id_materia, int id_subtopico, String titulo, String descricao){
+    public Duvida( int id_usuario, int id_subtopico, String titulo, String descricao){
         this.usuario = id_usuario;
-        this.materia = id_materia;
         this.subtopico = id_subtopico;
         this.titulo = titulo;
         this.descricao = descricao;
     }
 
-    public Duvida(int id_duvida, int id_usuario, int id_materia, int id_subtopico, String titulo, String descricao){
+    public Duvida(int id_duvida, int id_usuario, int id_subtopico, String titulo, String descricao, String data_duvida){
         this.id = id_duvida;
         this.usuario = id_usuario;
-        this.materia = id_materia;
         this.subtopico = id_subtopico;
         this.titulo = titulo;
         this.descricao = descricao;
+        this.data_duvida = data_duvida;
+        this.username = username;
     }
+
+    public Duvida(int id_d, int usuario_d, int subtopico_d, String titulo_s, String descricao_s, String data_duvida_s, String username_s) {
+        this.id = id_d;
+        this.usuario = usuario_d;
+        this.subtopico = subtopico_d;
+        this.titulo = titulo_s;
+        this.descricao = descricao_s;
+        this.data_duvida = data_duvida_s;
+        this.username = username_s;
+    }
+
 
     public int getId_duvida() {
         return id;
@@ -64,14 +83,6 @@ public class Duvida implements RealmModel {
 
     public void setId_duvida(int id_duvida) {
         this.id = id_duvida;
-    }
-
-    public int getId_materia() {
-        return materia;
-    }
-
-    public void setId_materia(int id_materia) {
-        this.materia = id_materia;
     }
 
     public int getId_subtopico() {

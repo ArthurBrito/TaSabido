@@ -26,7 +26,7 @@ import static java.lang.Integer.parseInt;
 /**
  * Created by Thiago on 26/05/2016.
  */
-public class PostCriarMonitoria extends AsyncTask<Void, Void, Void> {
+public class PostCriarMonitoria extends AsyncTask<String, String, Void> {
 
     // URL para pegar os Subtopicos via JSON
     // private static String url = "http://avalan.herokuapp.com/tasabido/listar_materias/?format=json";
@@ -53,16 +53,15 @@ public class PostCriarMonitoria extends AsyncTask<Void, Void, Void> {
     // Dialog com barra de progresso mostrado na tela
     ProgressDialog proDialog;
 
-    public PostCriarMonitoria(Context context, JSONObject json, String url, AsyncResponse delegate){
+    public PostCriarMonitoria(Context context, JSONObject json, AsyncResponse delegate){
         this.context = context;
         this.json = json;
-        this.url = url;
         this.delegate = delegate;
     }
 
     // Pega o JSON do web service com a lista de subtopicos
     @Override
-    protected Void doInBackground(Void... arg0) {
+    protected Void doInBackground(String... params) {
         String jsonStr = null;
 
         // Fazendo requisição para o web service pelo metodo estatico httpGet
@@ -78,7 +77,7 @@ public class PostCriarMonitoria extends AsyncTask<Void, Void, Void> {
             jsonResponse = new JSONObject(response);
             response = jsonResponse.getString("sucesso");
             if (response.equals("true")){
-                id = jsonResponse.getInt("id_monitoria");
+                id = jsonResponse.getInt("id");
             }
         } catch (JSONException e) {
             e.printStackTrace();

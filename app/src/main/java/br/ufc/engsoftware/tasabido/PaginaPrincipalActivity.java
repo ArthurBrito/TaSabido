@@ -26,9 +26,9 @@ import br.ufc.engsoftware.fragments.MateriaFragment;
 import br.ufc.engsoftware.fragments.PerfilFragment;
 import br.ufc.engsoftware.models.Perfil;
 import br.ufc.engsoftware.retrofit.GetDuvidasServer;
-import br.ufc.engsoftware.retrofit.GetMateriasServer;
 import br.ufc.engsoftware.retrofit.GetSubtopicosServer;
 import br.ufc.engsoftware.serverDAO.GetMonitoriasServer;
+import br.ufc.engsoftware.serverDAO.GetMateriasServer;
 
 
 public class PaginaPrincipalActivity extends FragmentActivity {
@@ -169,13 +169,14 @@ public class PaginaPrincipalActivity extends FragmentActivity {
     // Baixando dados do servidor e salvando no BD local
     public void sincronizarInfo(){
 
-        GetMateriasServer retrofitM = new GetMateriasServer(this);
-        GetDuvidasServer retrofitDuvidas = new GetDuvidasServer(this);
-        GetSubtopicosServer retrofitSub = new GetSubtopicosServer(this);
-        retrofitM.pegarMateriasDoServidor();
-        retrofitDuvidas.pegarDuvidasDoServidor();
-        retrofitSub.pegarSubtopicosDoServidor();
-        new GetMonitoriasServer(this).execute();
+//        GetMateriasServer retrofitM = new GetMateriasServer(this);
+//        GetDuvidasServer retrofitDuvidas = new GetDuvidasServer(this);
+//        GetSubtopicosServer retrofitSub = new GetSubtopicosServer(this);
+//        retrofitM.pegarMateriasDoServidor();
+//        retrofitDuvidas.pegarDuvidasDoServidor();
+//        retrofitSub.pegarSubtopicosDoServidor();
+        new GetMateriasServer(this).execute();
+//        new GetMonitoriasServer(this).execute();
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) { //recebe o resultado da câmera e manda de volta para ser tratado na classe PerfilFragment

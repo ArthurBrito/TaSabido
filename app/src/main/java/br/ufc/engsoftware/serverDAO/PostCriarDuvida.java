@@ -69,7 +69,7 @@ public class PostCriarDuvida extends AsyncTask<String, String, Void>{
 
             //descomentar quando for fazer requisições pro servidor
 //            HttpsURLConnection.setDefaultSSLSocketFactory(NoSSLv3Factory);
-            HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type",
@@ -93,7 +93,7 @@ public class PostCriarDuvida extends AsyncTask<String, String, Void>{
             JSONObject jsonResponse = new JSONObject(response.toString());
             String value = jsonResponse.getString("success");
             if (value.equals("true")){
-                int id_duvida = jsonResponse.getInt("id_duvida");
+                int id_duvida = jsonResponse.getInt("id");
                 id_duvida_criada = id_duvida;
             }
             String mensagemResponse = jsonResponse.getString("message");

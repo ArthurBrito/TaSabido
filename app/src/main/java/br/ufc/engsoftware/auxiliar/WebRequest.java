@@ -27,7 +27,6 @@ public class WebRequest {
     }
 
     public static String httpPostJson(String url, String json) throws IOException {
-
         MediaType JSON
                 = MediaType.parse("application/json; charset=utf-8");
 

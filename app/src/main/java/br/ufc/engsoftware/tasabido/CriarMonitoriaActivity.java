@@ -182,8 +182,7 @@ public class CriarMonitoriaActivity extends AppCompatActivity implements Adapter
         try {
             if (id_monitoria == 0) {
                 utils.createProgressDialog("Monitoria sendo criada");
-                String url = Statics.CADASTRAR_MONITORIA + id_monitoria;
-                new PostCriarMonitoria(this, jsonParam, url, new PostCriarMonitoria.AsyncResponse() {
+                new PostCriarMonitoria(this, jsonParam, new PostCriarMonitoria.AsyncResponse() {
                     Toast toast;
                     public void processFinish(String output, int id) {
                         if (output.equals("true")) {
@@ -197,7 +196,7 @@ public class CriarMonitoriaActivity extends AppCompatActivity implements Adapter
                         toast.setGravity(Gravity.CENTER, 0, 0);
                         toast.show();
                     }
-                }).execute();
+                }).execute(Statics.CADASTRAR_MONITORIA + id_monitoria);
 
             } else {
                 utils.createProgressDialog("Monitoria sendo atualizada");

@@ -28,7 +28,7 @@ public class DuvidaActivity extends AppCompatActivity {
 
     Button bt_delete, btn_atualizar, btn_tirar_duvida;
     public int id_duvida, id_materia, id_subtopico, id_usuario;
-    String titulo, descricao;
+    String titulo, descricao, data;
     Duvida duvida;
     Utils utils;
     public Activity activity;
@@ -56,10 +56,10 @@ public class DuvidaActivity extends AppCompatActivity {
         Intent intent = getIntent();
         id_usuario = intent.getIntExtra("ID_USUARIO", 0);
         id_subtopico = intent.getIntExtra("ID_SUBTOPICO", 0);
-        id_materia = intent.getIntExtra("ID_MATERIA", 0);
         id_duvida = intent.getIntExtra("ID", 0);
         descricao = intent.getStringExtra("DESCRICAO");
         titulo = intent.getStringExtra("TITULO");
+        data = intent.getStringExtra("DATA_DUVIDA");
 
         mostrarBotoes();
 
@@ -100,33 +100,16 @@ public class DuvidaActivity extends AppCompatActivity {
 
     public void onClickAtualizarDuvida(View view){
 
-        String id_usuario_string = utils.getFromSharedPreferences("id_usuario","");
-        int id_usuario = Integer.parseInt(id_usuario_string);
-        String titulo = _titulo.getText().toString();
-        String descricao = _descricao.getText().toString();
-
-        duvida = new Duvida(id_duvida, id_usuario, id_materia, id_subtopico, titulo, descricao);
-        String param = concatenateParam(duvida);
-
-        try {
-            utils.createProgressDialog("Atualizando Dúvida");
-            new PostCriarDuvida(this, param, new PostCriarDuvida.AsyncResponse(){
-                public void processFinish(String output, int id_duvida, String mensagem){
-                    if (output.equals("true")){
-                        utils.progressDialog.setMessage(mensagem);
-                        duvida.setId_duvida(id_duvida);
-                        salvarDuvidaBDLocal();
-                        finish();
-                    }else{
-                        utils.progressDialog.setMessage(mensagem);
-
-                    }
-                }
-            }).execute(Statics.ATUALIZAR_DUVIDA);
-            utils.dismissProgressDialog();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Intent intent = new Intent(this, CriarDuvidaActivity.class);
+        intent.setAction("br.ufc.engsoftware.tasabido.CRIAR_DUVIDA");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("TITULO", titulo);
+        intent.putExtra("DESCRICAO", descricao);
+        intent.putExtra("DATA", data);
+        intent.putExtra("ID_SUBTOPICO", id_subtopico);
+        intent.putExtra("ID_USUARIO", id_usuario);
+        intent.putExtra("ID_DUVIDA", id_duvida);
+        startActivity(intent);
     }
 
     public void onClickDeletarDuvida(View view){
@@ -197,9 +180,6 @@ public class DuvidaActivity extends AppCompatActivity {
         param += "&";
         param += "id_usuario=";
         param += duvida.getId_usuario();
-        param += "&";
-        param += "id_materia=";
-        param += duvida.getId_materia();
         param += "&";
         param += "id_subtopico=";
         param += duvida.getId_subtopico();

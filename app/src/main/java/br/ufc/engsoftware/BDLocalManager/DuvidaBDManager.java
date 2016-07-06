@@ -56,10 +56,29 @@ public class DuvidaBDManager {
             duvida.setUsername(duvidaParam.getUsername());
             duvida.setData_duvida(duvidaParam.getData_duvida());
             duvida.setId_subtopico(duvidaParam.getId_subtopico());
-            duvida.setId_materia(duvidaParam.getId_materia());
             duvida.setId_duvida(duvidaParam.getId_duvida());
         }
     }
+
+    public void updateDuvida(Duvida duvidaParam){
+        activateRealm(context);
+
+        if (duvidaJaSalva(duvidaParam.getId_duvida())) {
+
+            Duvida duvida = realm.where(Duvida.class).equalTo("id", duvidaParam.getId_duvida()).findFirst();
+
+            realm.beginTransaction();
+            duvida.setTitulo(duvidaParam.getTitulo());
+            duvida.setDescricao(duvidaParam.getDescricao());
+            duvida.setId_usuario(duvidaParam.getId_usuario());
+            duvida.setUsername(duvidaParam.getUsername());
+            duvida.setData_duvida(duvidaParam.getData_duvida());
+            duvida.setId_subtopico(duvidaParam.getId_subtopico());
+            duvida.setId_duvida(duvidaParam.getId_duvida());
+            realm.commitTransaction();
+        }
+    }
+
 
     /* METODOS PRA PEGAR DUVIDAS SALVAS NO BANDO DE DADOS DO APARELHO */
     public Vector<Duvida> pegarDuvidas(Context context){

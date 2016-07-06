@@ -10,4 +10,6 @@
     <dimen name="text_size_table_cal">12sp</dimen>
     <dimen name="table_margin_left">12dp</dimen>
     <dimen name="text_size_monitoria_label">16sp</dimen>
+    <dimen name="ver_monitoria_label_textsize">12sp</dimen>
+    <dimen name="ver_monitoria_value_textsize">18sp</dimen>
 </resources>

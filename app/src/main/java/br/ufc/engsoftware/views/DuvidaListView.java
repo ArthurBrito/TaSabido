@@ -65,9 +65,9 @@ public class DuvidaListView {
         // Passa o nome da matéria para ser exibido na activity, e o id para pesquisar no banco
         intent.putExtra("TITULO", item.getTitulo());
         intent.putExtra("DESCRICAO", item.getDescricao());
-        intent.putExtra("ID_MATERIA", item.getId_materia());
         intent.putExtra("ID_SUBTOPICO", item.getId_subtopico());
         intent.putExtra("ID", item.getId_duvida());
+        intent.putExtra("DATA_DUVIDA", item.getData_duvida());
         intent.putExtra("ID_USUARIO", item.getId_usuario());
 
         view.startActivity(intent);
