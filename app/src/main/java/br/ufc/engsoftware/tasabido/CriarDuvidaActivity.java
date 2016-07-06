@@ -117,7 +117,7 @@ public class CriarDuvidaActivity extends AppCompatActivity {
                 if (output.equals("true")){
                     toast = Toast.makeText(activity, mensagem, Toast.LENGTH_SHORT);
                     duvida.setId_duvida(id_duvida);
-                    salvarDuvidaBDLocal();
+                    atualizarDuvidaBDLocal();
                     finish();
                 }else{
                     toast = Toast.makeText(activity, mensagem, Toast.LENGTH_SHORT);
@@ -128,7 +128,15 @@ public class CriarDuvidaActivity extends AppCompatActivity {
         }).execute(Statics.ATUALIZAR_DUVIDA);
     }
 
+
     private void salvarDuvidaBDLocal() {
+        DuvidaBDManager db = new DuvidaBDManager(this);
+        Vector<Duvida> duvidas = new Vector<>();
+        duvidas.add(duvida);
+        db.atualizarDuvidas(this, duvidas);
+    }
+
+    private void atualizarDuvidaBDLocal() {
         DuvidaBDManager db = new DuvidaBDManager(this);
         db.updateDuvida(duvida);
     }
