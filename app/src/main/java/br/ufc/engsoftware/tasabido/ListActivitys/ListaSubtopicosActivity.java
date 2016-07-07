@@ -1,4 +1,4 @@
-package br.ufc.engsoftware.tasabido;
+package br.ufc.engsoftware.tasabido.ListActivitys;
 
 
 import android.content.Intent;
@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.ListView;
 
 import br.ufc.engsoftware.BDLocalManager.SubtopicoBDManager;
+import br.ufc.engsoftware.tasabido.CriarMonitoriaActivity;
+import br.ufc.engsoftware.tasabido.R;
 import br.ufc.engsoftware.views.SubtopicoListView;
 
 

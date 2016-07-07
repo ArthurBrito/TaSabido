@@ -115,8 +115,9 @@ public class VerMonitoriaActivity extends AppCompatActivity {
         array_ids.add(String.valueOf(id_monitoria));
         utils.saveMonitoriasConfirmadasSharedPreferences(array_ids);
 
-        String login = utils.getFromSharedPreferences("login", "");
-        String mensagem = login + " confirmou presença na sua monitoria.";
+        String first_name = utils.getFromSharedPreferences("first_name", "");
+        String email = utils.getFromSharedPreferences("email", "");
+        String mensagem = first_name + " confirmou presença na sua monitoria.\n" + "Email: " + email;
         String param = concatenateParam(String.valueOf(id_usuario), "Monitoria", mensagem);
         utils.sendEmail(param, this);
     }

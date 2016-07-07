@@ -1,4 +1,4 @@
-package br.ufc.engsoftware.tasabido;
+package br.ufc.engsoftware.tasabido.ListActivitys;
 
 
 import android.content.Intent;
@@ -25,6 +25,7 @@ import br.ufc.engsoftware.Ormlite.IdSubtopico;
 import br.ufc.engsoftware.Ormlite.Monitoria;
 import br.ufc.engsoftware.auxiliar.MonitoriaOpenDatabaseHelper;
 import br.ufc.engsoftware.auxiliar.Utils;
+import br.ufc.engsoftware.tasabido.R;
 import br.ufc.engsoftware.views.MonitoriaListView;
 
 
@@ -100,9 +101,10 @@ public class ListaMonitoriasActivity extends AppCompatActivity {
         Vector<Monitoria> vector_monitorias = new Vector<Monitoria>();
 
         for (String id_monitoria: array_ids) {
-
             Monitoria monitoria = (Monitoria) getDao().queryForId(id_monitoria);
-            vector_monitorias.add(monitoria);
+
+            if (monitoria.getId_subtopicos() == id_subtopico)
+                vector_monitorias.add(monitoria);
         }
 
         gerenciadorMonitoriasLV = new MonitoriaListView(listViewMonitorias, this, vector_monitorias);
@@ -121,9 +123,8 @@ public class ListaMonitoriasActivity extends AppCompatActivity {
 
 
         for (Monitoria m: monitoriasFromOrm) {
-            if (m.getId_subtopicos() == id_subtopico && m.getId_usuario() == id_usuario){
+            if (m.getId_subtopicos() == id_subtopico && m.getId_usuario() == id_usuario)
                 monitorias.add(m);
-            }
         }
         gerenciadorMonitoriasLV = new MonitoriaListView(listViewMonitorias, this, monitorias);
     }

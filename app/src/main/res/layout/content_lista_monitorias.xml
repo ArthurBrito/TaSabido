@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="br.ufc.engsoftware.tasabido.ListaMonitoriasActivity"
+    tools:context=".ListActivitys.ListaMonitoriasActivity"
     tools:showIn="@layout/activity_lista_monitorias">
 
 </RelativeLayout>

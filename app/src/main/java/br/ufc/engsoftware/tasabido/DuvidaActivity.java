@@ -141,17 +141,14 @@ public class DuvidaActivity extends AppCompatActivity {
         }
     }
 
-    public void onClickTirarDuvida(View view){
-        Utils utils = new Utils(this);
-        Set<String> array_ids = new HashSet<String>();
-        array_ids = utils.getDuvidasConfirmadasFromSharedPreferences("duvidas", array_ids);
-        array_ids.add(String.valueOf(String.valueOf(id_duvida)));
-        utils.saveDuvidasConfirmadasSharedPreferences(array_ids);
-
-        String login = utils.getFromSharedPreferences("login", "");
-        String mensagem = login + " se disponibiliza pra tirar sua dúvida.";
-        String param = concatenateParamDuvida(String.valueOf(id_usuario), "Monitoria", mensagem);
-        utils.sendEmail(param, this);
+    public void onClickConsultarHorario(View view){
+        Intent intent = new Intent(this, TirarDuvidaActivity.class);
+        intent.setAction("br.ufc.engsoftware.tasabido.TIRAR_DUVIDA");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("DATA_DUVIDA", data);
+        intent.putExtra("ID_USUARIO", id_usuario);
+        intent.putExtra("ID", id_duvida);
+        startActivity(intent);
     }
 
     private void salvarDuvidaBDLocal() {
@@ -197,16 +194,5 @@ public class DuvidaActivity extends AppCompatActivity {
         return param;
     }
 
-    public String concatenateParamDuvida(String id_usuario, String assunto, String mensagem){
-        String param = "id_to=";
-        param += id_usuario;
-        param += "&";
-        param += "assunto=";
-        param += assunto;
-        param += "&";
-        param += "message=";
-        param += mensagem;
 
-        return param;
-    }
 }

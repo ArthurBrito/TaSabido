@@ -1,11 +1,12 @@
-package br.ufc.engsoftware.tasabido;
+package br.ufc.engsoftware.tasabido.ListActivitys;
 
 
 import android.content.Intent;
-import android.support.v4.app.DialogFragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,19 +20,21 @@ import java.util.Vector;
 
 import br.ufc.engsoftware.BDLocalManager.DuvidaBDManager;
 import br.ufc.engsoftware.auxiliar.Utils;
-import br.ufc.engsoftware.fragments.DatePickerFragment;
-import br.ufc.engsoftware.fragments.TimePickerFragment;
 import br.ufc.engsoftware.models.Duvida;
+import br.ufc.engsoftware.retrofit.GetDuvidasServer;
+import br.ufc.engsoftware.tasabido.CriarDuvidaActivity;
+import br.ufc.engsoftware.tasabido.R;
 import br.ufc.engsoftware.views.DuvidaListView;
 
 
-public class ListaDuvidasActivity extends AppCompatActivity {
+public class ListaDuvidasActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     // Informaçoes da duvida selecionada
     String nome_subtopico;
     int id_materia;
     int id_subtopico;
     Spinner spinner;
+    SwipeRefreshLayout swipe;
 
     // Referencia para o ListView da interface
     ListView listViewDuvidas;
@@ -55,6 +58,9 @@ public class ListaDuvidasActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setTitle(nome_subtopico);
         ab.setDisplayHomeAsUpEnabled(true);
+
+        swipe = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+        swipe.setOnRefreshListener(this);
 
         spinner = (Spinner) findViewById(R.id.spinner_lista_duvidas);
         setSpinner();
@@ -125,7 +131,7 @@ public class ListaDuvidasActivity extends AppCompatActivity {
 
     public void setSpinner(){
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.options_search_monitorias, android.R.layout.simple_spinner_item);
+                R.array.options_search_duvidas, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -150,5 +156,14 @@ public class ListaDuvidasActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onRefresh() {
+        //atualizar duvidas do servidor
+        GetDuvidasServer retrofitDuvidas = new GetDuvidasServer(this);
+        retrofitDuvidas.pegarDuvidasDoServidor();
+        montarListViewDuvidas();
+        swipe.setRefreshing(false);
     }
 }

@@ -13,7 +13,7 @@ import java.util.Vector;
 
 
 import br.ufc.engsoftware.models.Subtopico;
-import br.ufc.engsoftware.tasabido.ListaDuvidasActivity;
+import br.ufc.engsoftware.tasabido.ListActivitys.ListaDuvidasActivity;
 import br.ufc.engsoftware.tasabido.R;
 
 /**

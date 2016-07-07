@@ -13,7 +13,7 @@ import android.widget.ListView;
 import java.util.Vector;
 
 import br.ufc.engsoftware.models.Materia;
-import br.ufc.engsoftware.tasabido.ListaSubtopicosActivity;
+import br.ufc.engsoftware.tasabido.ListActivitys.ListaSubtopicosActivity;
 import br.ufc.engsoftware.tasabido.R;
 
 /**

@@ -17,7 +17,7 @@
             android:theme="@style/AppTheme.Dark.ActionBar"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".ListaSubtopicosActivity"
+            android:name=".ListActivitys.ListaSubtopicosActivity"
             android:theme="@style/AppTheme.Dark.ActionBar">
             <intent-filter>
                 <action android:name="br.ufc.engsoftware.tasabido.SUBTOPICOS" />
@@ -51,6 +51,20 @@
         </activity>
 
         <activity
+            android:name=".TirarDuvidaActivity"
+            android:launchMode="singleTop"
+            android:noHistory="true"
+            android:theme="@style/AppTheme.Dark.ActionBar"
+            android:windowSoftInputMode="stateHidden">
+            <intent-filter>
+                <action android:name="br.ufc.engsoftware.tasabido.TIRAR_DUVIDA" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+
+        <activity
             android:name=".CadastroActivity"
             android:label="@string/title_activity_cadastro"
             android:theme="@style/AppTheme.Dark.ActionBar">
@@ -72,7 +86,7 @@
         </activity>
 
         <activity
-            android:name=".ListaDuvidasActivity"
+            android:name=".ListActivitys.ListaDuvidasActivity"
             android:theme="@style/AppTheme.Dark.ActionBar">
             <intent-filter>
                 <action android:name="br.ufc.engsoftware.tasabido.DUVIDAS" />
@@ -103,7 +117,7 @@
         </activity>
 
         <activity
-            android:name=".ListaMonitoriasActivity"
+            android:name=".ListActivitys.ListaMonitoriasActivity"
             android:label="@string/title_activity_lista_monitorias"
             android:theme="@style/AppTheme.Dark.ActionBar">
             <intent-filter>
