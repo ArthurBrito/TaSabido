@@ -74,7 +74,7 @@ public class TirarDuvidaActivity extends AppCompatActivity implements AdapterVie
 
         // Seta as configurações da ActionBar
         ActionBar ab = getSupportActionBar();
-        ab.setTitle("Editar Monitoria");
+        ab.setTitle("Tirar Duvida");
         ab.setDisplayHomeAsUpEnabled(true);
 
         // Configurando spinner do local
