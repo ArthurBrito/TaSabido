@@ -30,8 +30,6 @@ public class CriarDuvidaActivity extends AppCompatActivity {
     private Duvida duvida;
     public Activity activity;
     Utils utils;
-//    @InjectView(R.id.time_picker) TextView time_picker;
-//    @InjectView(R.id.date_picker) TextView date_picker;
     @InjectView(R.id.titulo) EditText _titulo;
     @InjectView(R.id.descricao) EditText _descricao;
 
@@ -53,14 +51,10 @@ public class CriarDuvidaActivity extends AppCompatActivity {
         id_subtopico = intent.getIntExtra("ID_SUBTOPICO", 0);
         id_duvida = intent.getIntExtra("ID_DUVIDA", 0);
         id_usuario = intent.getIntExtra("ID_USUARIO", 0);
-
-
     }
 
 
     public void onClickConfirmarDuvida(View view){
-
-
 
         String id_usuario_string = utils.getFromSharedPreferences("id_usuario", "");
         int id_usuario = Integer.parseInt(id_usuario_string);
@@ -90,7 +84,9 @@ public class CriarDuvidaActivity extends AppCompatActivity {
     public void criarDuvida(){
         String param = concatenateParam(duvida);
         utils.createProgressDialog("Criando Duvida");
-        new PostCriarDuvida(this, param, new PostCriarDuvida.AsyncResponse(){
+
+        if(utils.checkConnection(this))
+            new PostCriarDuvida(this, param, new PostCriarDuvida.AsyncResponse(){
             Toast toast;
             public void processFinish(String output, int id_duvida, String mensagem){
                 if (output.equals("true")){
@@ -105,13 +101,16 @@ public class CriarDuvidaActivity extends AppCompatActivity {
                 toast.show();
             }
         }).execute(Statics.CADASTRAR_DUVIDA);
+        else
+            utils.dismissProgressDialog();
     }
 
     public void editarDuvida(){
         duvida.setId_duvida(id_duvida);
         duvida.setData_duvida(horariosJSON);
         String param = concatenateEdit(duvida);
-        new PostCriarDuvida(this, param, new PostCriarDuvida.AsyncResponse(){
+        if(utils.checkConnection(this))
+            new PostCriarDuvida(this, param, new PostCriarDuvida.AsyncResponse(){
             Toast toast;
             public void processFinish(String output, int id_duvida, String mensagem){
                 if (output.equals("true")){
@@ -127,7 +126,6 @@ public class CriarDuvidaActivity extends AppCompatActivity {
             }
         }).execute(Statics.ATUALIZAR_DUVIDA);
     }
-
 
     private void salvarDuvidaBDLocal() {
         DuvidaBDManager db = new DuvidaBDManager(this);

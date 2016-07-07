@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.HashSet;
@@ -37,6 +38,7 @@ public class VerMonitoriaActivity extends AppCompatActivity {
         TextView tvDataMonitoria = (TextView) findViewById(R.id.tv_data_monitoria);
         TextView tvLocalMonitoria = (TextView) findViewById(R.id.tv_local_monitoria);
         TextView tvMonitorMonitoria = (TextView) findViewById(R.id.tv_monitor_monitoria);
+        Button participar = (Button) findViewById(R.id.btn_participar);
 
         Intent intent = getIntent();
         String titulo = intent.getStringExtra("TITULO");
@@ -47,6 +49,13 @@ public class VerMonitoriaActivity extends AppCompatActivity {
         username = intent.getStringExtra("USERNAME");
         id_monitoria = intent.getIntExtra("ID_MONITORIA", 0);
         id_usuario = intent.getIntExtra("ID_USUARIO", 0);
+
+
+        Utils utils = new Utils(this);
+        String id = utils.getFromSharedPreferences("id_usuario", "");
+        if (id_usuario == Integer.parseInt(id)){
+            participar.setVisibility(View.GONE);
+        }
 
         tvTituloMonitoria.setText(titulo);
         tvDescricaoMonitoria.setText(descricao);

@@ -6,18 +6,18 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Vector;
-
 import br.ufc.engsoftware.BDLocalManager.DuvidaBDManager;
 import br.ufc.engsoftware.auxiliar.Utils;
 import br.ufc.engsoftware.models.Duvida;
@@ -27,7 +27,7 @@ import br.ufc.engsoftware.tasabido.R;
 import br.ufc.engsoftware.views.DuvidaListView;
 
 
-public class ListaDuvidasActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class ListaDuvidasActivity extends AppCompatActivity {
 
     // Informaçoes da duvida selecionada
     String nome_subtopico;
@@ -35,6 +35,9 @@ public class ListaDuvidasActivity extends AppCompatActivity implements SwipeRefr
     int id_subtopico;
     Spinner spinner;
     SwipeRefreshLayout swipe;
+    Vector<Duvida> duvidasAjudarei;
+    Vector<Duvida> duvidasCriadas;
+    Utils utils;
 
     // Referencia para o ListView da interface
     ListView listViewDuvidas;
@@ -53,14 +56,15 @@ public class ListaDuvidasActivity extends AppCompatActivity implements SwipeRefr
         nome_subtopico = intent.getStringExtra("NOME_SUBTOPICO");
         id_subtopico = intent.getIntExtra("ID_SUBTOPICO", 0);
         id_materia = intent.getIntExtra("ID_MATERIA", 0);
+        utils = new Utils(this);
 
         // Seta as configurações da ActionBar
         ActionBar ab = getSupportActionBar();
         ab.setTitle(nome_subtopico);
         ab.setDisplayHomeAsUpEnabled(true);
 
-        swipe = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
-        swipe.setOnRefreshListener(this);
+//        swipe = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+//        swipe.setOnRefreshListener(this);
 
         spinner = (Spinner) findViewById(R.id.spinner_lista_duvidas);
         setSpinner();
@@ -82,30 +86,55 @@ public class ListaDuvidasActivity extends AppCompatActivity implements SwipeRefr
         Utils utils = new Utils(this);
         Set<String> array_ids = new HashSet<>();
         array_ids = utils.getDuvidasConfirmadasFromSharedPreferences("duvidas", array_ids);
-        Vector<Duvida> vector_duvidas = new Vector<Duvida>();
+        duvidasAjudarei = new Vector<Duvida>();
 
         for (String id_duvida: array_ids) {
             Duvida duvida = duvidaDB.pegarDuvidasPorIdDuvida(this, Integer.parseInt(id_duvida));
-            vector_duvidas.add(duvida);
+            duvidasAjudarei.add(duvida);
         }
-        gerenciadorDuvidasLV = new DuvidaListView(listViewDuvidas, this, vector_duvidas);
+        gerenciadorDuvidasLV = new DuvidaListView(listViewDuvidas, this, duvidasAjudarei);
     }
 
     private void montarListViewDuvidasCriei(){
         //pega os subtopicos salvos no banco de dados local pela requisição com o servidor
+        pegarDuvidasCriadas();
+        gerenciadorDuvidasLV = new DuvidaListView(listViewDuvidas, this, duvidasCriadas);
+    }
+
+    private void pegarDuvidasCriadas() {
         DuvidaBDManager duvidaDB = new DuvidaBDManager();
-        Utils u = new Utils(this);
-        int id_usuario = Integer.parseInt(u.getFromSharedPreferences("id_usuario", ""));
-        gerenciadorDuvidasLV = new DuvidaListView(listViewDuvidas, this, duvidaDB.pegarDuvidasPorIdUsuarioSubtopico(this, id_usuario, id_subtopico));
+        int id_usuario = Integer.parseInt(utils.getFromSharedPreferences("id_usuario", ""));
+        duvidasCriadas = duvidaDB.pegarDuvidasPorIdUsuarioSubtopico(this, id_usuario, id_subtopico);
     }
 
     public void onClickChamarCriarDuvida(View view){
-        Intent intent = new Intent(this, CriarDuvidaActivity.class);
-        intent.setAction("br.ufc.engsoftware.tasabido.CRIAR_DUVIDA");
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra("ID_SUBTOPICO", id_subtopico);
-        intent.putExtra("ID_MATERIA", id_materia);
-        startActivity(intent);
+
+        if (!temSaldo()){
+            Toast.makeText(this, "Você não tem moedas suficientes.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+            Intent intent = new Intent(this, CriarDuvidaActivity.class);
+            intent.setAction("br.ufc.engsoftware.tasabido.CRIAR_DUVIDA");
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("ID_SUBTOPICO", id_subtopico);
+            intent.putExtra("ID_MATERIA", id_materia);
+            startActivity(intent);
+
+    }
+
+    private boolean temSaldo() {
+        int qt_moedas = utils.getIntFromSharedPreferences("moedas", 0);
+        pegarDuvidasCriadas();
+
+        if (duvidasCriadas != null){
+            int qt_duvidas_criadas = duvidasCriadas.size();
+
+            if (qt_moedas > qt_duvidas_criadas)
+                return true;
+            else
+                return false;
+        }
+            return true;
     }
 
     // Seta ação do botão de voltar na ActionBar
@@ -158,12 +187,13 @@ public class ListaDuvidasActivity extends AppCompatActivity implements SwipeRefr
         });
     }
 
-    @Override
-    public void onRefresh() {
-        //atualizar duvidas do servidor
-        GetDuvidasServer retrofitDuvidas = new GetDuvidasServer(this);
-        retrofitDuvidas.pegarDuvidasDoServidor();
-        montarListViewDuvidas();
-        swipe.setRefreshing(false);
-    }
+//    @Override
+//    public void onRefresh() {
+//        //atualizar duvidas do servidor
+////        Handler handler = new Handler();
+//        GetDuvidasServer retrofitDuvidas = new GetDuvidasServer(this);
+//        retrofitDuvidas.pegarDuvidasDoServidor();
+//        montarListViewDuvidas();
+//        swipe.setRefreshing(false);
+//    }
 }

@@ -121,7 +121,8 @@ public class DuvidaActivity extends AppCompatActivity {
 
         try {
             utils.createProgressDialog("Deletando Dúvida");
-            new PostDeletarDuvida(this, param, new PostDeletarDuvida.AsyncResponse(){
+            if(utils.checkConnection(this))
+                new PostDeletarDuvida(this, param, new PostDeletarDuvida.AsyncResponse(){
                 Toast toast;
                 public void processFinish(String output, String mensagem){
                     if (output.equals("true")){

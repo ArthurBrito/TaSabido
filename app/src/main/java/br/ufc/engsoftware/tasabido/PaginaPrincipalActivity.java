@@ -21,6 +21,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import br.ufc.engsoftware.auxiliar.Utils;
 import br.ufc.engsoftware.fragments.GpsFragment;
 import br.ufc.engsoftware.fragments.MateriaFragment;
 import br.ufc.engsoftware.fragments.PerfilFragment;
@@ -119,7 +120,7 @@ public class PaginaPrincipalActivity extends FragmentActivity {
         private int[] imageResId = {
                 R.drawable.listazul ,
                 R.drawable.gps,
-                R.drawable.walter
+                R.drawable.profile_maleazul
         };
 
         public ScreenSlidePagerAdapter(FragmentManager fm) {
@@ -170,14 +171,11 @@ public class PaginaPrincipalActivity extends FragmentActivity {
     // Baixando dados do servidor e salvando no BD local
     public void sincronizarInfo(){
 
-//        GetMateriasServer retrofitM = new GetMateriasServer(this);
-//        GetDuvidasServer retrofitDuvidas = new GetDuvidasServer(this);
-//        GetSubtopicosServer retrofitSub = new GetSubtopicosServer(this);
-//        retrofitM.pegarMateriasDoServidor();
-//        retrofitDuvidas.pegarDuvidasDoServidor();
-//        retrofitSub.pegarSubtopicosDoServidor();
-        new GetMateriasServer(this).execute();
-        new GetMoedasServer(this).execute();
+        Utils utils = new Utils();
+        if(utils.checkConnection(this)){
+            new GetMateriasServer(this).execute();
+            new GetMoedasServer(this).execute();
+        }
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) { //recebe o resultado da câmera e manda de volta para ser tratado na classe PerfilFragment

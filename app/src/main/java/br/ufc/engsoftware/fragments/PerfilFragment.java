@@ -50,12 +50,12 @@ public class PerfilFragment extends Fragment {
     TextView qt_moedas;
     Button btReadQr,btCreateQr;
     ImageView ivQrCode;
-    Utils utils;
+    Utils util;
 
 
     public void setarBarraUsuario(){
         final Context context = getActivity();
-        Utils util = new Utils(getActivity());
+        util = new Utils(getActivity());
 
         // Extrai os valores das preferencias
         final String nomeUsuario = util.getFromSharedPreferences("first_name", "");
@@ -92,7 +92,6 @@ public class PerfilFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_perfil, container, false);
 
-        utils = new Utils(getActivity());
 
         // Captura a referencia para os elementos da barra de usuario
         rivFotoUsuario = (RoundedImageView) rootView.findViewById(R.id.riv_foto_usuario);
@@ -175,30 +174,29 @@ public class PerfilFragment extends Fragment {
     public void realizarPagamento(String id_usuario, String username){
 
         if(Integer.parseInt(quantidade_moedas) == 0 ){
-            utils.createProgressDialog("Você não tem moedas suficientes.");
+            util.createProgressDialog("Você não tem moedas suficientes.");
         }else {
 
             JSONObject jsonParam = createJsonParam(id_usuario, username);
 
             try {
-                utils.createProgressDialog("Pagamento sendo efetuado");
+                util.createProgressDialog("Pagamento sendo efetuado");
                 new PostPagamento(getContext(), jsonParam, Statics.PAGAR, new PostPagamento.AsyncResponse() {
-
+                    Toast toast;
                     @Override
-                    public void processFinish(String output) {
-                        if (output.equals("200")) {
-                            utils.progressDialog.setMessage("Pagamento realizado.");
+                    public void processFinish(String output, String mensagem) {
+                        if (output.equals("true")) {
+                            toast = Toast.makeText(getActivity(), mensagem, Toast.LENGTH_SHORT);
+                            qt_moedas.setText(String.valueOf(util.getIntFromSharedPreferences("moedas", 0)));
                         } else {
-                            utils.progressDialog.setMessage("Algum erro ocorreu, tente denovo mais tarde.");
+                            toast = Toast.makeText(getActivity(), "Algum erro ocorreu, tente denovo mais tarde.", Toast.LENGTH_SHORT);
                         }
                     }
                 }).execute();
-                utils.dismissProgressDialog();
+                util.dismissProgressDialog();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-            utils.dismissProgressDialog();
         }
     }
 

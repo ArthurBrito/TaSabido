@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.view.Gravity;
+import android.widget.Toast;
 
 import java.util.Set;
 
@@ -34,12 +36,13 @@ public class Utils {
         ConnectivityManager conMgr = (ConnectivityManager) activity
                 .getSystemService(activity.CONNECTIVITY_SERVICE);
         NetworkInfo i = conMgr.getActiveNetworkInfo();
-        if (i == null)
+        if (i == null || !i.isConnected() || !i.isAvailable())
+        {
+            Toast toast = Toast.makeText(activity, "Sem conexão com a internet.", Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
             return false;
-        if (!i.isConnected())
-            return false;
-        if (!i.isAvailable())
-            return false;
+        }
         return true;
     }
 
@@ -110,18 +113,19 @@ public class Utils {
         utils = new Utils(activity);
         utils.createProgressDialog("Enviando Email");
         try{
-            new PostEnviarEmail(activity, param, new PostEnviarEmail.AsyncResponse(){
+            if (utils.checkConnection(activity))
+                new PostEnviarEmail(activity, param, new PostEnviarEmail.AsyncResponse(){
 
-                @Override
-                public void processFinish(String output) {
-                    if (output.equals("200")){
-                        utils.progressDialog.setMessage("Email Enviado");
-                    }else{
-                        utils.progressDialog.setMessage("Email não enviado");
+                    @Override
+                    public void processFinish(String output) {
+                        if (output.equals("200")){
+                            utils.progressDialog.setMessage("Email Enviado");
+                        }else{
+                            utils.progressDialog.setMessage("Email não enviado");
+                        }
+                        activity.finish();
                     }
-                    activity.finish();
-                }
-            }).execute(Statics.ENVIAR_EMAIL);
+                }).execute(Statics.ENVIAR_EMAIL);
         }catch (Exception e){
             e.printStackTrace();
         }

@@ -17,6 +17,7 @@ import java.util.Vector;
 
 import br.ufc.engsoftware.BDLocalManager.DuvidaBDManager;
 import br.ufc.engsoftware.auxiliar.Statics;
+import br.ufc.engsoftware.auxiliar.Utils;
 import br.ufc.engsoftware.auxiliar.WebRequest;
 import br.ufc.engsoftware.fragments.PerfilFragment;
 import br.ufc.engsoftware.models.Duvida;
@@ -36,12 +37,13 @@ public class PostPagamento extends AsyncTask<Void, Void, Void> {
 
     // Contexto da activity que chamou esta classe
     Context context;
-    String response;
+    String response, mensagem;
+    Utils util;
 
     JSONObject json;
 
     public interface AsyncResponse {
-        void processFinish(String output);
+        void processFinish(String output, String mensagem);
     }
 
     public PostPagamento(AsyncResponse delegate){
@@ -67,6 +69,7 @@ public class PostPagamento extends AsyncTask<Void, Void, Void> {
         proDialog.setMessage("Realizando Pagamento...");
         proDialog.setCancelable(false);
         proDialog.show();
+        util = new Utils(this.context);
     }
 
     // Pega o JSON do web service com a lista de subtopicos
@@ -81,10 +84,30 @@ public class PostPagamento extends AsyncTask<Void, Void, Void> {
             /** TODO analizar o tratamento de erro */
             e.printStackTrace();
         }
-
+        saveMoedasFromJson(response);
 
         return null;
     }
+
+
+    // Metodo responsavel por quebrar o JSON em Subtopicos
+    private void saveMoedasFromJson(String json){
+        if (json != null)
+        {
+            try {
+                JSONObject jsonObj = new JSONObject(json);
+                response = jsonObj.getString("success");
+                int quantia = jsonObj.getInt("moeda");
+                mensagem = jsonObj.getString("message");
+
+                util.saveIntInSharedPreferences("moedas", quantia);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
 
     // Metodo chamado ou terminar o doInBackground
     @Override
@@ -94,6 +117,7 @@ public class PostPagamento extends AsyncTask<Void, Void, Void> {
         if (proDialog.isShowing())
             proDialog.setMessage(response);
         proDialog.dismiss();
-        delegate.processFinish(response);
+        delegate.processFinish(response, mensagem);
     }
+
 }

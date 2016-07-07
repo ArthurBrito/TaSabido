@@ -79,20 +79,22 @@ public class CadastroActivity extends AppCompatActivity {
 
         // TODO: Implement your own signup logic here.
 
-        new PostCadastroUsuario(param,  new PostCadastroUsuario.AsyncResponse(){
-            public void processFinish(String output, String mensagem){
+        if(utils.checkConnection(this)) {
+            new PostCadastroUsuario(param, new PostCadastroUsuario.AsyncResponse() {
+                public void processFinish(String output, String mensagem) {
 
-                if (output.equals("true")){
-                    utils.progressDialog.setMessage(mensagem);
-                    finish();
-                    Intent myIntent = new Intent(CadastroActivity.this, LoginActivity.class);
-                    CadastroActivity.this.startActivity(myIntent);
-                }else{
-                    utils.progressDialog.setMessage(mensagem);
-                    _signupButton.setEnabled(true);
+                    if (output.equals("true")) {
+                        utils.progressDialog.setMessage(mensagem);
+                        finish();
+                        Intent myIntent = new Intent(CadastroActivity.this, LoginActivity.class);
+                        CadastroActivity.this.startActivity(myIntent);
+                    } else {
+                        utils.progressDialog.setMessage(mensagem);
+                        _signupButton.setEnabled(true);
+                    }
                 }
-            }
-        }).execute(Statics.CADASTRAR_USUARIO);
+            }).execute(Statics.CADASTRAR_USUARIO);
+        }
     utils.dismissProgressDialog();
     }
 

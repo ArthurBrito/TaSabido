@@ -118,25 +118,6 @@ public class TirarDuvidaActivity extends AppCompatActivity implements AdapterVie
         return resultados;
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.editar_monitoria_bar_menu, menu);
-//
-//        return true;
-//    }
-
-//    // Seta ação dos botões da ActionBar
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case android.R.id.home:
-//                finish();
-//                return true;
-//            default:
-//                return super.onOptionsItemSelected(item);
-//        }
-//    }
-
     // Seta as configurações do Spinner de subtopicos
     public void setSpinnerView(Context view) {
 

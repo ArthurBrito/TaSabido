@@ -73,23 +73,6 @@
             android:textSize="@dimen/ver_monitoria_value_textsize"
             android:text="Biblioteca Central"/>
 
-        <!--
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:textSize="@dimen/ver_monitoria_label_textsize"
-            android:text="Subtópico:"/>
-
-        <TextView
-            android:id="@+id/tv_subtopico_monitoria"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:textSize="@dimen/ver_monitoria_value_textsize"
-            android:text="Integral por Partes"/>
-        -->
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -110,6 +93,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:layout_gravity="center"
+            android:id="@+id/btn_participar"
             android:text="@string/btn_participar_monitoria"
             android:onClick="onClickParticiparMonitoria"/>
 

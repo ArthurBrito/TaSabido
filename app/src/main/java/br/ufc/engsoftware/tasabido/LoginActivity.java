@@ -104,19 +104,20 @@ public class LoginActivity extends AppCompatActivity {
 
         try {
             utils.createProgressDialog("Autenticando");
-            new PostServerDataAsync(this, param, new PostServerDataAsync.AsyncResponse(){
-                public void processFinish(String output){
-                    if (output.equals("true")){
-                        onLoginSuccess();
-                    }else{
-                        Toast toast = Toast.makeText(ac, "Usuario ou Senha Incorretos", Toast.LENGTH_SHORT);
-                        toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL, 0, 0);
-                        toast.show();
-                        onLoginFailed();
-                    }
+            if(utils.checkConnection(this))
+                new PostServerDataAsync(this, param, new PostServerDataAsync.AsyncResponse(){
+                    public void processFinish(String output){
+                        if (output.equals("true")){
+                            onLoginSuccess();
+                        }else{
+                            Toast toast = Toast.makeText(ac, "Usuario ou Senha Incorretos", Toast.LENGTH_SHORT);
+                            toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL, 0, 0);
+                            toast.show();
+                            onLoginFailed();
+                        }
 
-                }
-            }).execute(Statics.AUTENTICAR_USUARIO);
+                    }
+                }).execute(Statics.AUTENTICAR_USUARIO);
         } catch (Exception e) {
             e.printStackTrace();
         }

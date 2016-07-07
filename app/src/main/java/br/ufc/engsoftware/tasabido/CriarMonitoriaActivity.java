@@ -184,7 +184,8 @@ public class CriarMonitoriaActivity extends AppCompatActivity implements Adapter
         try {
             if (id_monitoria == 0) {
                 utils.createProgressDialog("Monitoria sendo criada");
-                new PostCriarMonitoria(this, jsonParam, new PostCriarMonitoria.AsyncResponse() {
+                if(utils.checkConnection(this))
+                    new PostCriarMonitoria(this, jsonParam, new PostCriarMonitoria.AsyncResponse() {
                     Toast toast;
                     public void processFinish(String output, int id) {
                         if (output.equals("true")) {
@@ -206,7 +207,8 @@ public class CriarMonitoriaActivity extends AppCompatActivity implements Adapter
             } else {
                 utils.createProgressDialog("Monitoria sendo atualizada");
                 String url = Statics.ATUALIZAR_MONITORIA + id_monitoria;
-                new PutMonitoria(this, jsonParam, url, new PutMonitoria.AsyncResponse() {
+                if(utils.checkConnection(this))
+                    new PutMonitoria(this, jsonParam, url, new PutMonitoria.AsyncResponse() {
                     Toast toast;
                     public void processFinish(String output) {
                         if (output.equals("true")) {
@@ -270,7 +272,6 @@ public class CriarMonitoriaActivity extends AppCompatActivity implements Adapter
         }
         return json;
     }
-
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -429,15 +430,3 @@ public class CriarMonitoriaActivity extends AppCompatActivity implements Adapter
         return monitoriaDao;
     }
 }
-
-
-//                new PostCriarMonitoria(this, jsonParam, Statics.CADASTRAR_MONITORIA, new PostCriarMonitoria.AsyncResponse(){
-//                    public void processFinish(String output, int id){
-//                        if (output.equals("200")){
-//                            utils.progressDialog.setMessage("Monitoria criada.");
-//                            finish();
-//                        }else{
-//                            utils.progressDialog.setMessage("Monitoria não foi criada.");
-//                        }
-//                    }
-//                }).execute();

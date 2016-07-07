@@ -375,20 +375,21 @@ public class EditMonitoriaActivity extends AppCompatActivity implements AdapterV
         try {
             utils.createProgressDialog("Monitoria sendo atualizada");
             String url = Statics.ATUALIZAR_MONITORIA + id_monitoria + "/";
-            new PutMonitoria(this, jsonParam, url, new PutMonitoria.AsyncResponse() {
-                Toast toast;
-                public void processFinish(String output) {
-                    if (output.equals("200")) {
-                        updateMonitoria(monitoria);
-                        toast = Toast.makeText(activity, "Monitoria atualizada.", Toast.LENGTH_SHORT);
-                        finish();
-                    } else {
-                        toast = Toast.makeText(activity, "Monitoria não foi atualizada.", Toast.LENGTH_SHORT);
+            if(utils.checkConnection(this))
+                new PutMonitoria(this, jsonParam, url, new PutMonitoria.AsyncResponse() {
+                    Toast toast;
+                    public void processFinish(String output) {
+                        if (output.equals("200")) {
+                            updateMonitoria(monitoria);
+                            toast = Toast.makeText(activity, "Monitoria atualizada.", Toast.LENGTH_SHORT);
+                            finish();
+                        } else {
+                            toast = Toast.makeText(activity, "Monitoria não foi atualizada.", Toast.LENGTH_SHORT);
+                        }
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
                     }
-                    toast.setGravity(Gravity.CENTER, 0, 0);
-                    toast.show();
-                }
-            }).execute();
+                }).execute();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -457,7 +458,8 @@ public class EditMonitoriaActivity extends AppCompatActivity implements AdapterV
         JSONObject jsonParam = createJsonParamToDeleteMonitoria(monitoria);
 
         try {
-            new PostDeleteMonitoria(this, jsonParam, Statics.DELETAR_MONITORIA, new PostDeleteMonitoria.AsyncResponse(){
+            if(utils.checkConnection(this))
+                new PostDeleteMonitoria(this, jsonParam, Statics.DELETAR_MONITORIA, new PostDeleteMonitoria.AsyncResponse(){
                 Toast toast;
                 public void processFinish(String output){
                     if (output.equals("200")){
