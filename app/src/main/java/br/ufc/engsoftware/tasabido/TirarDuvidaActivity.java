@@ -192,4 +192,15 @@ public class TirarDuvidaActivity extends AppCompatActivity implements AdapterVie
 
         return param;
     }
+
+    // Seta ação do botão de voltar na ActionBar
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }

@@ -3,9 +3,11 @@ package br.ufc.engsoftware.tasabido;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -40,6 +42,11 @@ public class CriarDuvidaActivity extends AppCompatActivity {
         ButterKnife.inject(this);
         activity = this;
         utils = new Utils(this);
+
+        // Seta as configurações da ActionBar
+        ActionBar ab = getSupportActionBar();
+        ab.setTitle("Nova Dúvida");
+        ab.setDisplayHomeAsUpEnabled(true);
 
         // Pega a intent que chamou essa activity
         Intent intent = getIntent();
@@ -198,6 +205,17 @@ public class CriarDuvidaActivity extends AppCompatActivity {
 
                 Log.d("Response horariosJson", horariosJson);
             }
+        }
+    }
+
+    // Seta ação do botão de voltar na ActionBar
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }

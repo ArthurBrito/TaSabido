@@ -30,17 +30,23 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.j256.ormlite.dao.Dao;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
 
 import br.ufc.engsoftware.Ormlite.Monitoria;
 import br.ufc.engsoftware.auxiliar.Locais;
+import br.ufc.engsoftware.auxiliar.MonitoriaOpenDatabaseHelper;
 import br.ufc.engsoftware.tasabido.LoginActivity;
 import br.ufc.engsoftware.tasabido.PaginaPrincipalActivity;
 import br.ufc.engsoftware.tasabido.R;
+import br.ufc.engsoftware.tasabido.VerMonitoriaActivity;
 
 /**
  * Created by Thiago on 09/05/2016.
@@ -48,12 +54,13 @@ import br.ufc.engsoftware.tasabido.R;
 public class GpsFragment extends Fragment implements OnMapReadyCallback , GoogleMap.OnInfoWindowClickListener {
 
     // Create the hash map on the beginning
-    HashMap<String, Monitoria> markerPostoMap;
+    HashMap<String, Monitoria> markerMonitoriaMap;
 
     LocationManager locationManager;
     LatLng meLocationLatLong;
     MarkerOptions markerMe = null;
     private GoogleMap mMap = null;
+    String markerMeId;
 
     // Método principal do fragment, respectivo ao onCreate nas activities
     // Ele retorna a view que vai ser montada na tela
@@ -110,42 +117,16 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback , Google
 
         mMapView.getMapAsync(this);
 
-        markerPostoMap = new HashMap<String, Monitoria>();
+        markerMonitoriaMap = new HashMap<String, Monitoria>();
 
 
         buildLocationService();
 
         //mapFragment.getMapAsync(this);
 
+
         return rootView;
     }
-
-
-    /***** Sets up the map if it is possible to do so *****/
-    /*
-    public void setUpMapIfNeeded() {
-        // Do a null check to confirm that we have not already instantiated the map.
-        if (mMap == null) {
-            // Try to obtain the map from the SupportMapFragment.
-            mMap = ((SupportMapFragment) PaginaPrincipalActivity.fragmentManager
-                    .findFragmentById(R.id.map)).getMap();
-            // Check if we were successful in obtaining the map.
-            if (mMap != null)
-            {
-                setUpMap();
-            }
-        }
-    }
-
-    private void setUpMap() {
-        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-        mMap.setOnInfoWindowClickListener(this);
-
-        if(markerMe != null) {
-            setCamera();
-        }
-    }
-    */
 
     private void logout(){
         final Context context = getActivity();
@@ -202,15 +183,15 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback , Google
         Location location = locationManager.getLastKnownLocation(provider);
         if(location == null)
         {
-            meLocationLatLong = new LatLng(-3.731628, -38.588563);
+            meLocationLatLong = new LatLng(-3.745942, -38.574203);
+            markerMe = new MarkerOptions().position(meLocationLatLong).title("Local Padrão").snippet("Não foi possivel obter sua localização");
         }
         else
         {
             meLocationLatLong = new LatLng(location.getLatitude(), location.getLongitude());
+            markerMe = new MarkerOptions().position(meLocationLatLong).title("Você está aqui!");
         }
 
-        // Adiciona o marcador com a nova posição
-        markerMe = new MarkerOptions().position(meLocationLatLong).title("Você está aqui!");
 
         if(mMap != null){
             setCamera();
@@ -219,7 +200,7 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback , Google
     }
 
     private void setCamera(){
-        mMap.addMarker(markerMe);
+        markerMeId = mMap.addMarker(markerMe).getId();
 
         mMap.moveCamera(CameraUpdateFactory.newLatLng(meLocationLatLong));
         CameraPosition cameraPosition = new CameraPosition.Builder().target(meLocationLatLong).zoom(16).build();
@@ -234,33 +215,25 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback , Google
     private void buildMarkers(double latitude, double longitude){
         List<Monitoria> list = new ArrayList<Monitoria>();
 
-        // TODO construir a classe do SQLite
-        // Aqui o list receberia o list do SQLite com os postos perto da latitude e longitude informados
-
-        Location location = new Location("eu"); //= getLocation(); //pega a localização do usuário
-        location.setLatitude(-3.731628);
-        location.setLongitude(-38.588563);
-        Location location2 = new Location("posto"); // localização de algum posto
         Monitoria pTemp;
 
+        // Pega o dia da semana
+        String[] dias = new String[]{"Domingo" , "Segunda" , "Terça" , "Quarta" , "Quinta" , "Sexta" , "Sabado"};
+        String hoje = dias[(Calendar.getInstance().get(Calendar.DAY_OF_WEEK)) - 1];
+        Log.d("Data", hoje);
 
-        // TODO Pegar as monitorias do BDLocal
-        // Dados para simulação
-        Monitoria p1 = new Monitoria();
-        p1.setEndereco("Lec 1");
-        Monitoria p2 = new Monitoria();
-        p2.setEndereco("Lec 2");
-        Monitoria p3 = new Monitoria();
-        p3.setEndereco("Biblioteca da Matemática");
+        // Pega as monitorias do dia, do BDLocal
+        try {
+            list = getDao().queryBuilder().where().eq("dia", hoje).query();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-        list.add(p1);
-        list.add(p2);
-        list.add(p3);
 
         Locais locais = new Locais();
 
-        // Inserindo os marcadores de cada posto no mapa
-        for (int i = 0; i < list.size(); i++) //(Posto pTemp: list)
+        // Inserindo os marcadores de cada monitoria no mapa
+        for (int i = 0; i < list.size(); i++)
         {
             pTemp = list.get(i);
             LatLng locationLatLong = locais.getLatLng(pTemp.getEndereco());
@@ -275,8 +248,8 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback , Google
 
             Marker m = mMap.addMarker(markerPosto);
 
-            // Adicionando marcador e posto no hashMap para pegar quando o usuario clicar
-            markerPostoMap.put(m.getId(), pTemp);
+            // Adicionando marcador e monitoria no hashMap para pegar quando o usuario clicar
+            markerMonitoriaMap.put(m.getId(), pTemp);
         }
 
     }
@@ -284,17 +257,47 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback , Google
     @Override
     public void onInfoWindowClick(Marker marker) {
 
-        Monitoria pTemp = markerPostoMap.get(marker.getId());
-        Toast.makeText(getActivity(), "Clicou" , Toast.LENGTH_SHORT).show();
+        if(!marker.getId().equals(markerMeId)) {
 
-        /*
-        Intent intent = new Intent(this, PostoActivity.class);
-        intent.setAction("br.ufc.dc.dspm.cadesaude.POSTOACTIVITY");
-        intent.putExtra("ID", pTemp.getId());
-        intent.putExtra("NOME", pTemp.getName());
-        startActivity(intent);
-        */
+            Monitoria item = markerMonitoriaMap.get(marker.getId());
+            //Toast.makeText(getActivity(), "Clicou" , Toast.LENGTH_SHORT).show();
 
+            Intent intent = new Intent(getActivity(), VerMonitoriaActivity.class);
+            intent.setAction("br.ufc.engsoftware.tasabido.VER_MONITORIA");
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            // Passa o nome da matéria para ser exibido na activity, e o id para pesquisar no banco
+            intent.putExtra("TITULO", item.getTitulo());
+            intent.putExtra("DESCRICAO", item.getDescricao());
+            intent.putExtra("DATA", item.getData());
+            intent.putExtra("ENDERECO", item.getEndereco());
+            intent.putExtra("DIA", item.getDia());
+            intent.putExtra("HORARIO", item.getHorario());
+            intent.putExtra("ID_SUBTOPICO", item.getId_subtopicos());
+            intent.putExtra("ID_MONITORIA", item.getId_monitoria());
+            intent.putExtra("ID_MATERIA", item.getId_materia());
+            intent.putExtra("ID_USUARIO", item.getId_usuario());
+            intent.putExtra("DIA", item.getDia());
+            intent.putExtra("HORARIO", item.getHorario());
+            intent.putExtra("USERNAME", item.getUsername());
+
+            startActivity(intent);
+        }
+
+    }
+
+    public Dao getDao(){
+        MonitoriaOpenDatabaseHelper monitoriaOpenDatabaseHelper = OpenHelperManager.getHelper(getActivity() , MonitoriaOpenDatabaseHelper.class);
+
+        Dao<Monitoria, Long> monitoriaDao = null;
+
+        try{
+            monitoriaDao = monitoriaOpenDatabaseHelper.getDao();
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+
+        return monitoriaDao;
     }
 
 }
