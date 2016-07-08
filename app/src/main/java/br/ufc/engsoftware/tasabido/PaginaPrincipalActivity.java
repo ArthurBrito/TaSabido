@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -73,10 +74,13 @@ public class PaginaPrincipalActivity extends FragmentActivity {
 
     PerfilFragment perfilFragment;
 
+    //public static FragmentManager fragmentManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pagina_principal);
+
 
         // Instancia o ViewPager e o PageAdapter
         mPager = (ViewPager) findViewById(R.id.pager);
@@ -87,6 +91,7 @@ public class PaginaPrincipalActivity extends FragmentActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(mPager);
 
+        //fragmentManager = getSupportFragmentManager();
 
         sincronizarInfo();
 
