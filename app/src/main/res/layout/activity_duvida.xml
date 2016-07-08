@@ -70,7 +70,7 @@
             android:layout_gravity="center_horizontal"
             android:id="@+id/btn_tirar_duvida"
             android:text="@string/btn_consular_horarios"
-            android:onClick="onClickC"/>
+            android:onClick="onClickConsultarHorario"/>
 
 
     </LinearLayout>
