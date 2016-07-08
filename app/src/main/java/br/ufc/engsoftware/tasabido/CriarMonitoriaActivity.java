@@ -283,9 +283,9 @@ public class CriarMonitoriaActivity extends AppCompatActivity implements Adapter
                 Subtopico subtopico = subtopicos.get(position);
                 id_subtopico = subtopico.getId_subtopico();
 
-                if (spinnerSelectedCount == 0)
-                    spinnerSelectedCount++;
-                else
+//                if (spinnerSelectedCount == 0)
+//                    spinnerSelectedCount++;
+//                else
                     subtopicos_selecionados.add(0, id_subtopico);
                 break;
 
