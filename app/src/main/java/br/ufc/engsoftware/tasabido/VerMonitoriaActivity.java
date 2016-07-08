@@ -1,27 +1,43 @@
 package br.ufc.engsoftware.tasabido;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.j256.ormlite.dao.Dao;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 
+import br.ufc.engsoftware.Ormlite.Monitoria;
+import br.ufc.engsoftware.auxiliar.MonitoriaOpenDatabaseHelper;
+import br.ufc.engsoftware.auxiliar.Statics;
 import br.ufc.engsoftware.auxiliar.Utils;
+import br.ufc.engsoftware.serverDAO.PostDeleteMonitoria;
 
 
 public class VerMonitoriaActivity extends AppCompatActivity {
 
     private String username;
     private int id_monitoria, id_usuario;
+    Activity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,13 +48,16 @@ public class VerMonitoriaActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setTitle("Monitoria");
         ab.setDisplayHomeAsUpEnabled(true);
+        activity = this;
 
         TextView tvTituloMonitoria = (TextView) findViewById(R.id.tv_titulo_monitoria);
         TextView tvDescricaoMonitoria = (TextView) findViewById(R.id.tv_descricao_monitoria);
         TextView tvDataMonitoria = (TextView) findViewById(R.id.tv_data_monitoria);
         TextView tvLocalMonitoria = (TextView) findViewById(R.id.tv_local_monitoria);
         TextView tvMonitorMonitoria = (TextView) findViewById(R.id.tv_monitor_monitoria);
+        Button bt_delete = (Button) findViewById(R.id.btn_delete);
         Button participar = (Button) findViewById(R.id.btn_participar);
+        bt_delete.setVisibility(View.GONE);
 
         Intent intent = getIntent();
         String titulo = intent.getStringExtra("TITULO");
@@ -55,6 +74,7 @@ public class VerMonitoriaActivity extends AppCompatActivity {
         String id = utils.getFromSharedPreferences("id_usuario", "");
         if (id_usuario == Integer.parseInt(id)){
             participar.setVisibility(View.GONE);
+            bt_delete.setVisibility(View.VISIBLE);
         }
 
         tvTituloMonitoria.setText(titulo);
@@ -131,6 +151,55 @@ public class VerMonitoriaActivity extends AppCompatActivity {
         utils.sendEmail(param, this);
     }
 
+    public void onClickDeletarMonitoria(View view){
+        Utils utils = new Utils(this);
+        String id_usuario_string = utils.getFromSharedPreferences("id_usuario", "");
+        int id_usuario = Integer.parseInt(id_usuario_string);
+
+        Monitoria monitoria = new Monitoria(id_monitoria, id_usuario);
+        JSONObject jsonParam = createJsonParamToDeleteMonitoria(monitoria);
+
+        try {
+            new PostDeleteMonitoria(this, jsonParam, Statics.DELETAR_MONITORIA, new PostDeleteMonitoria.AsyncResponse(){
+                Toast toast;
+                public void processFinish(String output){
+                    if (output.equals("200")){
+                        toast = Toast.makeText(activity, "Monitoria deletada.", Toast.LENGTH_SHORT);
+                        deletarMonitoriaBDLocal();
+                        finish();
+                    }else{
+                        toast = Toast.makeText(activity, "Algum erro ocorreu, tente denovo mais tarde.", Toast.LENGTH_SHORT);
+                    }
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+                }
+            }).execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void deletarMonitoriaBDLocal(){
+        try {
+            getDao().deleteById((long) id_monitoria);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public JSONObject createJsonParamToDeleteMonitoria(Monitoria monitoria) {
+        JSONObject json = new JSONObject();
+        JSONArray subtopicosJson = new JSONArray();
+        try {
+            json.put("id_usuario", monitoria.getId_usuario());
+            json.put("id_monitoria", monitoria.getId_monitoria());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return json;
+    }
+
     public String concatenateParam(String id_usuario, String assunto, String mensagem){
         String param = "id_to=";
         param += id_usuario;
@@ -142,5 +211,19 @@ public class VerMonitoriaActivity extends AppCompatActivity {
         param += mensagem;
 
         return param;
+    }
+
+    public Dao getDao(){
+        MonitoriaOpenDatabaseHelper monitoriaOpenDatabaseHelper = OpenHelperManager.getHelper(this,
+                MonitoriaOpenDatabaseHelper.class);
+
+        Dao<Monitoria, Long> monitoriaDao = null;
+        try {
+            monitoriaDao = monitoriaOpenDatabaseHelper.getDao();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return monitoriaDao;
     }
 }

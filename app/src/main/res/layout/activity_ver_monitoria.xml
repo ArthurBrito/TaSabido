@@ -88,6 +88,16 @@
             android:textSize="@dimen/ver_monitoria_value_textsize"
             android:text="thiago_nrodrigues"/>
 
+        <!-- Botão Deletar Monitoria -->
+        <Button
+            android:layout_width="150dp"
+            android:id="@+id/btn_delete"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/btn_deletar_monitoria"
+            android:onClick="onClickDeletarMonitoria"/>
+
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
