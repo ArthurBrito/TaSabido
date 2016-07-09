@@ -73,6 +73,12 @@ public class ListaDuvidasActivity extends AppCompatActivity {
         listViewDuvidas = (ListView) findViewById(R.id.listview_duvidas);
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        montarListViewDuvidas();
+    }
+
     private void montarListViewDuvidas(){
         //pega os subtopicos salvos no banco de dados local pela requisição com o servidor
         DuvidaBDManager duvidaDB = new DuvidaBDManager();

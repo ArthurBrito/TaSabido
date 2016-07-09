@@ -70,13 +70,17 @@ public class ListaMonitoriasActivity extends AppCompatActivity {
         // Captura a referencia pro ListView a partir do id
         listViewMonitorias = (ListView) findViewById(R.id.listview_monitorias);
 
-        //Metodo responsável por montar o ListView das Dúvidas
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         try {
             montarListViewMonitorias();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     private void montarListViewMonitorias() throws SQLException {
