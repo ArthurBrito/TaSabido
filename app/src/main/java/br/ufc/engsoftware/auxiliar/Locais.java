@@ -38,4 +38,8 @@ public class Locais {
 
         return list;
     }
+
+    public LatLng getLatLng(String local){
+        return locaisMap.get(local);
+    }
 }

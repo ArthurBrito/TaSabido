@@ -2,9 +2,11 @@ package br.ufc.engsoftware.tasabido;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -50,6 +52,11 @@ public class DuvidaActivity extends AppCompatActivity {
         bt_delete.setVisibility(View.GONE);
         btn_atualizar.setVisibility(View.GONE);
         btn_tirar_duvida.setVisibility(View.VISIBLE);
+
+        // Seta as configurações da ActionBar
+        ActionBar ab = getSupportActionBar();
+        ab.setTitle("Duvida");
+        ab.setDisplayHomeAsUpEnabled(true);
 
 
         // Pega a intent que chamou essa activity
@@ -193,6 +200,17 @@ public class DuvidaActivity extends AppCompatActivity {
         param += duvida.getId_usuario();
 
         return param;
+    }
+
+    // Seta ação do botão de voltar na ActionBar
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 
