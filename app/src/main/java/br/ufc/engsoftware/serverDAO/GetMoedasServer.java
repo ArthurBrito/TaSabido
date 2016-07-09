@@ -76,19 +76,6 @@ public class GetMoedasServer extends AsyncTask<Void, Void, Void> {
         return null;
     }
 
-    // Metodo chamado ou terminar o doInBackground
-    @Override
-    protected void onPostExecute(Void requestresult) {
-        super.onPostExecute(requestresult);
-
-        //atualiza o banco de dados local com os dados vindos do servidor
-        DuvidaBDManager sinc = new DuvidaBDManager();
-        if (listaDuvidas == null)
-            listaDuvidas = new Vector<>();
-        sinc.atualizarDuvidas(context, listaDuvidas);
-
-    }
-
     // Metodo responsavel por quebrar o JSON em Subtopicos
     private void saveMoedasFromJson(String json){
         if (json != null)
@@ -101,5 +88,18 @@ public class GetMoedasServer extends AsyncTask<Void, Void, Void> {
                 e.printStackTrace();
             }
         }
+    }
+
+    // Metodo chamado ou terminar o doInBackground
+    @Override
+    protected void onPostExecute(Void requestresult) {
+        super.onPostExecute(requestresult);
+
+        //atualiza o banco de dados local com os dados vindos do servidor
+        DuvidaBDManager sinc = new DuvidaBDManager();
+        if (listaDuvidas == null)
+            listaDuvidas = new Vector<>();
+        sinc.atualizarDuvidas(context, listaDuvidas);
+
     }
 }
