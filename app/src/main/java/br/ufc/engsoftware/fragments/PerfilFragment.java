@@ -33,6 +33,7 @@ import org.json.JSONObject;
 import br.ufc.engsoftware.auxiliar.Statics;
 import br.ufc.engsoftware.auxiliar.Utils;
 import br.ufc.engsoftware.serverDAO.PostPagamento;
+import br.ufc.engsoftware.tasabido.LoginActivity;
 import br.ufc.engsoftware.tasabido.R;
 import br.ufc.engsoftware.views.RoundedImageView;
 
@@ -116,12 +117,36 @@ public class PerfilFragment extends Fragment {
             }
         });
 
+        Button btnLogout = (Button) rootView.findViewById(R.id.btn_logout);
+        btnLogout.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                logout();
+            }
+        });
+
         // Insere os dados da barra de usuario
         setarBarraUsuario();
         createQr();
         Log.d("activity", "lol");
 
         return rootView;
+    }
+
+    private void logout(){
+        final Context context = getActivity();
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.commit();
+
+        Intent in = new Intent(context, LoginActivity.class);
+        in.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(in);
+
+        getActivity().finish();
     }
 
     public void createQr(){ // cria QR CODE, o QR sempre é criado porém só mostra na tela ao criar se clicar no botão

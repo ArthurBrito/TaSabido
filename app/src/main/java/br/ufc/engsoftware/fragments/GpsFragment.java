@@ -89,18 +89,6 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback , Google
             }
         });
 
-        Button btnLogout = (Button) rootView.findViewById(R.id.btn_logout);
-
-        btnLogout.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                logout();
-            }
-        });
-
-        */
         /*********************/
 
 
@@ -128,19 +116,6 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback , Google
         return rootView;
     }
 
-    private void logout(){
-        final Context context = getActivity();
-        SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.clear();
-        editor.commit();
-
-        Intent in = new Intent(context, LoginActivity.class);
-        in.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(in);
-
-        getActivity().finish();
-    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
