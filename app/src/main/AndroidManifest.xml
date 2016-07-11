@@ -57,7 +57,7 @@
             android:name=".LoginActivity"
             android:launchMode="singleTop"
             android:noHistory="true"
-            android:theme="@style/AppTheme.Dark.ActionBar"
+            android:theme="@style/AppTheme.Dark"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
