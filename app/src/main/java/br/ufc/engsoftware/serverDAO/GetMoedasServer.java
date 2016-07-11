@@ -31,7 +31,7 @@ public class GetMoedasServer extends AsyncTask<Void, Void, Void> {
 
     // URL para pegar os Subtopicos via JSON
     // private static String url = "http://avalan.herokuapp.com/tasabido/listar_materias/?format=json";
-    private static String url = Statics.BUSCAR_MOEDA;
+    private String url = Statics.BUSCAR_MOEDA;
 
     // Contexto da activity que chamou esta classe
     Context context;

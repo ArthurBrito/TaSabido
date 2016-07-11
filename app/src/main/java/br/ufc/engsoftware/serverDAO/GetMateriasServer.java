@@ -99,6 +99,7 @@ public class GetMateriasServer extends AsyncTask<Void, Void, Void> {
         MateriaBDManager sinc = new MateriaBDManager();
         SubtopicoBDManager sincSub = new SubtopicoBDManager();
         DuvidaBDManager sincDuv = new DuvidaBDManager();
+        sincDuv.deleteTodasDuvidas(context);
         sinc.atualizarMaterias(context, listaMaterias);
         sincSub.atualizarSubtopicos(context, listaSubtopicos);
         sincDuv.atualizarDuvidas(context, listaDuvidas);

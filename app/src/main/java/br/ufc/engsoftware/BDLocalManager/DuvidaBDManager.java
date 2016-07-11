@@ -48,7 +48,6 @@ public class DuvidaBDManager {
     // Salva subtopico ao banco de dados local caso não exista
     public void salvarDuvida(Duvida duvidaParam){
             activateRealm(context);
-        if (!duvidaJaSalva(duvidaParam.getId_duvida())) {
             Duvida duvida = realm.createObject(Duvida.class);
             duvida.setTitulo(duvidaParam.getTitulo());
             duvida.setDescricao(duvidaParam.getDescricao());
@@ -57,7 +56,6 @@ public class DuvidaBDManager {
             duvida.setData_duvida(duvidaParam.getData_duvida());
             duvida.setId_subtopico(duvidaParam.getId_subtopico());
             duvida.setId_duvida(duvidaParam.getId_duvida());
-        }
     }
 
     public void updateDuvida(Duvida duvidaParam){
@@ -115,8 +113,8 @@ public class DuvidaBDManager {
         return castRealmQuery(results);
     }
 
-    public void deleteTodasDuvidas(Activity activity){
-        activateRealm(activity);
+    public void deleteTodasDuvidas(Context context){
+        activateRealm(context);
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
