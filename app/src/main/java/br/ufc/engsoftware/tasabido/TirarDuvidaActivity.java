@@ -3,50 +3,22 @@ package br.ufc.engsoftware.tasabido;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.Spinner;
-import android.widget.Toast;
-
 import com.google.gson.Gson;
-import com.j256.ormlite.android.apptools.OpenHelperManager;
-import com.j256.ormlite.dao.Dao;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Vector;
-
-import br.ufc.engsoftware.BDLocalManager.SubtopicoBDManager;
-import br.ufc.engsoftware.Ormlite.Monitoria;
 import br.ufc.engsoftware.auxiliar.Locais;
-import br.ufc.engsoftware.auxiliar.MonitoriaOpenDatabaseHelper;
-import br.ufc.engsoftware.auxiliar.Statics;
 import br.ufc.engsoftware.auxiliar.Utils;
-import br.ufc.engsoftware.models.Subtopico;
-import br.ufc.engsoftware.serverDAO.PostCriarMonitoria;
-import br.ufc.engsoftware.serverDAO.PostDeleteMonitoria;
-import br.ufc.engsoftware.serverDAO.PutMonitoria;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 public class TirarDuvidaActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 

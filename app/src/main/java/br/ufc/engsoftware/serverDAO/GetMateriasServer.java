@@ -60,6 +60,7 @@ public class GetMateriasServer extends AsyncTask<Void, Void, Void> {
     protected void onPreExecute() {
         super.onPreExecute();
         // Showing progress loading dialog
+
         proDialog = new ProgressDialog(context);
         proDialog.setMessage("Sincronizando Matérias...");
         proDialog.setCancelable(false);
