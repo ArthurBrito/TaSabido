@@ -11,11 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import br.ufc.engsoftware.auxiliar.PostServerDataAsync;
 import br.ufc.engsoftware.auxiliar.Statics;
 import br.ufc.engsoftware.auxiliar.Utils;
-import br.ufc.engsoftware.models.Perfil;
+import br.ufc.engsoftware.Ormlite.Perfil;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -73,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void alreadyLoged() {
-        Intent in = new Intent(this, PaginaPrincipalActivity.class);
+        Intent in = new Intent(this, MainActivity.class);
         in.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(in);
 
@@ -151,7 +150,7 @@ public class LoginActivity extends AppCompatActivity {
         //Intent myIntent = new Intent(LoginActivity.this, PaginaPrincipalActivity.class);
         //LoginActivity.this.startActivity(myIntent);
 
-        Intent in = new Intent(this, PaginaPrincipalActivity.class);
+        Intent in = new Intent(this, MainActivity.class);
         in.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(in);
     }

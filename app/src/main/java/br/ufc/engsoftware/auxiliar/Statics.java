@@ -7,12 +7,12 @@ import java.util.List;
  * Created by limaneto on 18/05/16.
  */
 public class Statics {
-    public static String BASE_URL = "https://avalan.herokuapp.com/tasabido/";
+//    public static String BASE_URL = "https://avalan.herokuapp.com/tasabido/";
 //    public static String BASE_URL = "http://10.0.2.2:8080/tasabido/";
 //    public static String BASE_URL = "http://127.0.0.1:8000/tasabido/";
 //    public static String BASE_URL = "http://10.99.171.93:8000/tasabido/";
 
-//    public static String BASE_URL = "http://192.168.25.21:8000/tasabido/";
+    public static String BASE_URL = "http://192.168.25.13:8000/tasabido/";
 
     //CADASTRAR
     public static String CADASTRAR_USUARIO = BASE_URL + "cadastrar_usuario/";
@@ -26,10 +26,7 @@ public class Statics {
 
     //LISTAR
     public static String LISTAR_USUARIOS = BASE_URL + "listar_usuarios/";
-    public static String LISTAR_DUVIDAS = BASE_URL + "listar_duvidas/";
-    public static String LISTAR_MONITORIAS = BASE_URL + "listar_monitorias/";
-    public static String LISTAR_MATERIAS = BASE_URL + "listar_materias/";
-    public static String LISTAR_SUBTOPICOS = BASE_URL + "listar_subtopicos/";
+    public static String LISTAR_CURSOS = BASE_URL + "listar_cursos/";
 
     //ATUALIZAR
     public static String ATUALIZAR_DUVIDA = BASE_URL + "atualizar_duvida/";

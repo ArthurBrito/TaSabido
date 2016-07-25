@@ -1,29 +1,14 @@
 package br.ufc.engsoftware.serverDAO;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
-import android.widget.ListView;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Vector;
-
-import br.ufc.engsoftware.BDLocalManager.DuvidaBDManager;
 import br.ufc.engsoftware.auxiliar.Statics;
 import br.ufc.engsoftware.auxiliar.Utils;
 import br.ufc.engsoftware.auxiliar.WebRequest;
-import br.ufc.engsoftware.fragments.PerfilFragment;
-import br.ufc.engsoftware.models.Duvida;
-import br.ufc.engsoftware.views.DuvidaListView;
-
-import static java.lang.Integer.parseInt;
 
 /**
  * Created by Thiago on 26/05/2016.

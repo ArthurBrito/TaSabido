@@ -1,4 +1,4 @@
-package br.ufc.engsoftware.models;
+package br.ufc.engsoftware.Ormlite;
 
 /**
  * Created by limaneto on 26/06/16.

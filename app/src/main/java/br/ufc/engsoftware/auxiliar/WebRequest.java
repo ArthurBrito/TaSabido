@@ -3,8 +3,6 @@ package br.ufc.engsoftware.auxiliar;
 
 import java.io.IOException;
 
-import br.ufc.engsoftware.models.Duvida;
-import br.ufc.engsoftware.models.Perfil;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;

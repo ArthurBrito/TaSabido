@@ -1,4 +1,4 @@
-package br.ufc.engsoftware.auxiliar;
+package br.ufc.engsoftware.Ormlite.config;
 
 import android.database.SQLException;
 
@@ -7,7 +7,11 @@ import com.j256.ormlite.android.apptools.OrmLiteConfigUtil;
 import java.io.File;
 import java.io.IOException;
 
+import br.ufc.engsoftware.Ormlite.Curso;
+import br.ufc.engsoftware.Ormlite.Duvida;
+import br.ufc.engsoftware.Ormlite.Materia;
 import br.ufc.engsoftware.Ormlite.Monitoria;
+import br.ufc.engsoftware.Ormlite.Subtopico;
 
 /**
  * OrmliteDatabaseConfigUtil is a separate program from the actual android app,
@@ -20,7 +24,7 @@ public class OrmliteDatabaseConfigUtil extends OrmLiteConfigUtil {
     /**
      * classes represents the models to use for generating the ormlite_config.txt file
      */
-    private static final Class<?>[] classes = new Class[] {Monitoria.class};
+    private static final Class<?>[] classes = new Class[] {Curso.class, Materia.class, Subtopico.class, Monitoria.class, Duvida.class};
 
     /**
      * Given that this is a separate program from the android app, we have to use

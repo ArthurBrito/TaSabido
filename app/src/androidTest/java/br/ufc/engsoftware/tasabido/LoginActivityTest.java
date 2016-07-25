@@ -1,6 +1,5 @@
 package br.ufc.engsoftware.tasabido;
 
-import android.content.Context;
 import android.test.ActivityInstrumentationTestCase2;
 import com.robotium.solo.Solo;
 
@@ -8,10 +7,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.ufc.engsoftware.auxiliar.Utils;
-import br.ufc.engsoftware.models.Perfil;
-
-import static org.junit.Assert.*;
+import br.ufc.engsoftware.Ormlite.Perfil;
 
 /**
  * Created by RH on 27/06/2016.

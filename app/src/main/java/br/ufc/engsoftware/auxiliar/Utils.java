@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import java.util.Set;
 
-import br.ufc.engsoftware.retrofit.TaSabidoApi;
+import br.ufc.engsoftware.retrofit.UrlsRetrofit;
 import br.ufc.engsoftware.serverDAO.PostEnviarEmail;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -131,12 +131,12 @@ public class Utils {
         }
     }
 
-    public static TaSabidoApi retornarApi(){
+    public static UrlsRetrofit retornarApi(){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Statics.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        return retrofit.create(TaSabidoApi.class);
+        return retrofit.create(UrlsRetrofit.class);
     }
 
     public void createProgressDialog(String mensagem){

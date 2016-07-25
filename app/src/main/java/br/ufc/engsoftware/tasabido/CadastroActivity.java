@@ -10,10 +10,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import br.ufc.engsoftware.auxiliar.PostServerDataAsync;
 import br.ufc.engsoftware.auxiliar.Statics;
 import br.ufc.engsoftware.auxiliar.Utils;
-import br.ufc.engsoftware.models.Perfil;
+import br.ufc.engsoftware.Ormlite.Perfil;
 import br.ufc.engsoftware.serverDAO.PostCadastroUsuario;
 import butterknife.ButterKnife;
 import butterknife.InjectView;

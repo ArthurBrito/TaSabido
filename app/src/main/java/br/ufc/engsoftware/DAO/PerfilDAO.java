@@ -10,7 +10,7 @@ import java.util.Vector;
 import br.ufc.engsoftware.auxiliar.GetServerDataAsync;
 import br.ufc.engsoftware.auxiliar.PostServerDataAsync;
 import br.ufc.engsoftware.auxiliar.Statics;
-import br.ufc.engsoftware.models.Perfil;
+import br.ufc.engsoftware.Ormlite.Perfil;
 
 public class PerfilDAO {
     private Vector<Perfil> perfis = new Vector<Perfil>();

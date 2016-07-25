@@ -42,14 +42,27 @@
             </intent-filter>
         </activity>
 
+        <!--<activity-->
+            <!--android:name=".MonitoriaActivity"-->
+            <!--android:theme="@style/AppTheme.Dark.ActionBar"-->
+            <!--android:windowSoftInputMode="stateHidden">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="br.ufc.engsoftware.tasabido.MONITORIA" />-->
+
+                <!--<category android:name="android.intent.category.DEFAULT" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
+
         <activity
-            android:name=".MonitoriaActivity"
-            android:theme="@style/AppTheme.Dark.ActionBar"
+            android:name=".MainActivity"
+            android:launchMode="singleTop"
+            android:noHistory="true"
+            android:theme="@style/AppTheme.Dark"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
-                <action android:name="br.ufc.engsoftware.tasabido.MONITORIA" />
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
@@ -60,9 +73,8 @@
             android:theme="@style/AppTheme.Dark"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="br.ufc.engsoftware.tasabido.LOGIN" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
@@ -121,27 +133,27 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".CriarMonitoriaActivity"
-            android:label="@string/title_activity_criar_monitoria"
-            android:theme="@style/AppTheme.Dark.ActionBar">
-            <intent-filter>
-                <action android:name="br.ufc.engsoftware.tasabido.CRIAR_MONITORIA" />
+        <!--<activity-->
+            <!--android:name=".CriarMonitoriaActivity"-->
+            <!--android:label="@string/title_activity_criar_monitoria"-->
+            <!--android:theme="@style/AppTheme.Dark.ActionBar">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="br.ufc.engsoftware.tasabido.CRIAR_MONITORIA" />-->
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+                <!--<category android:name="android.intent.category.DEFAULT" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
 
-        <activity
-            android:name=".ListActivitys.ListaMonitoriasActivity"
-            android:label="@string/title_activity_lista_monitorias"
-            android:theme="@style/AppTheme.Dark.ActionBar">
-            <intent-filter>
-                <action android:name="br.ufc.engsoftware.tasabido.LISTA_MONITORIA" />
+        <!--<activity-->
+            <!--android:name=".ListActivitys.ListaMonitoriasActivity"-->
+            <!--android:label="@string/title_activity_lista_monitorias"-->
+            <!--android:theme="@style/AppTheme.Dark.ActionBar">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="br.ufc.engsoftware.tasabido.LISTA_MONITORIA" />-->
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+                <!--<category android:name="android.intent.category.DEFAULT" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
 
         <activity
             android:name=".CalendarioActivity"
@@ -161,15 +173,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
 
 
-        <activity
-            android:name=".VerMonitoriaActivity"
-            android:theme="@style/AppTheme.Dark.ActionBar">
-            <intent-filter>
-                <action android:name="br.ufc.engsoftware.tasabido.VER_MONITORIA" />
+        <!--<activity-->
+            <!--android:name=".VerMonitoriaActivity"-->
+            <!--android:theme="@style/AppTheme.Dark.ActionBar">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="br.ufc.engsoftware.tasabido.VER_MONITORIA" />-->
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+                <!--<category android:name="android.intent.category.DEFAULT" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
 
         <!--
         ATTENTION: This was auto-generated to add Google Play services to your project for
@@ -201,14 +213,14 @@
             android:value="@string/google_maps_key" />
 
 
-        <activity
-            android:name=".EditMonitoriaActivity"
-            android:theme="@style/AppTheme.Dark.ActionBar">
-            <intent-filter>
-                <action android:name="br.ufc.engsoftware.tasabido.EDITAR_MONITORIA" />
+        <!--<activity-->
+            <!--android:name=".EditMonitoriaActivity"-->
+            <!--android:theme="@style/AppTheme.Dark.ActionBar">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="br.ufc.engsoftware.tasabido.EDITAR_MONITORIA" />-->
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+                <!--<category android:name="android.intent.category.DEFAULT" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
     </application>
 </manifest>
