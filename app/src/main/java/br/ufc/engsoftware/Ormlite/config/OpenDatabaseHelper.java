@@ -43,9 +43,6 @@ public class OpenDatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
         try {
 
-            /**
-             * creates the Monitoria database table
-             */
             TableUtils.createTable(connectionSource, Curso.class);
             TableUtils.createTable(connectionSource, Subtopico.class);
             TableUtils.createTable(connectionSource, Materia.class);
@@ -118,53 +115,5 @@ public class OpenDatabaseHelper extends OrmLiteSqliteOpenHelper {
     }
 
 
-    public void salvarCurso(Curso cursoParam){
-        Dao<Curso, Long> cursoDao = null;
-        try {
-            cursoDao = getCursoDao();
-            cursoDao.create(cursoParam);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
-    public void salvarMateria(Materia materiaParam){
-        Dao<Materia, Long> materiaDao = null;
-        try {
-            materiaDao = getMateriaDao();
-            materiaDao.create(materiaParam);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void salvarSubtopico(Subtopico subtopicoParam){
-        Dao<Subtopico, Long> subtopicoDao = null;
-        try {
-            subtopicoDao = getSubtopicoDao();
-            subtopicoDao.create(subtopicoParam);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void salvarMonitoria(Monitoria monitoriaParam){
-        Dao<Monitoria, Long> monitoriaDao = null;
-        try {
-            monitoriaDao = getMonitoriaDao();
-            monitoriaDao.create(monitoriaParam);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void salvarDuvida(Duvida duvidaParam){
-        Dao<Duvida, Long> duvidaDao = null;
-        try {
-            duvidaDao = getDuvidaDao();
-            duvidaDao.create(duvidaParam);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 }

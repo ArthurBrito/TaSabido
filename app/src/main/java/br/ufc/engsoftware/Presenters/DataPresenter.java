@@ -23,7 +23,7 @@ public class DataPresenter {
 
 
     public interface DataCallbackListener {
-        void dadosPreparados(Data dados);
+        void finishedGettingServerData(Data dados);
     }
 
 
@@ -33,16 +33,12 @@ public class DataPresenter {
     }
 
 
-    public void getData(){
-//        List<Data> cursos =  (List<Data>) CacheUtil.retrieveObject(context, CACHE_PODCASTS);
-//
-//        if( audios != null)
-//            activity.podcastReady(audios);
-        pegarDataFromService();
+    public void getServerData(){
+        getDataFromServer();
     }
 
 
-    protected void pegarDataFromService(){
+    protected void getDataFromServer(){
         dataService
                 .getApi()
                 .getData()
@@ -52,7 +48,7 @@ public class DataPresenter {
                         Data dados = response.body();
 
                         if (dados != null) {
-                            activity.dadosPreparados(dados);
+                            activity.finishedGettingServerData(dados);
                         }
                     }
 

@@ -12,7 +12,8 @@ public class Statics {
 //    public static String BASE_URL = "http://127.0.0.1:8000/tasabido/";
 //    public static String BASE_URL = "http://10.99.171.93:8000/tasabido/";
 
-    public static String BASE_URL = "http://192.168.25.13:8000/tasabido/";
+    public static String BASE_URL = "http://10.0.1.25:8000/tasabido/";
+//    public static String BASE_URL = "http://192.168.25.13:8000/tasabido/";
 
     //CADASTRAR
     public static String CADASTRAR_USUARIO = BASE_URL + "cadastrar_usuario/";
